@@ -494,15 +494,21 @@ document.getElementById('modalFechar').addEventListener('click', fecharModal);
 modal.addEventListener('click', function(e){ if(e.target === modal) fecharModal(); });
 
 /* Botões da sidebar */
+/* Botões da sidebar */
 document.querySelectorAll('.btn-acao').forEach(function(btn){
   btn.addEventListener('click', function(){
     if(btn.dataset.acao === 'ponto'){
       abrirModal(
         '<div class="modal-titulo">🕒 Ponto eletrônico</div>' +
         '<p style="font-size:13px;color:#6B7280;margin-top:8px">Demonstração — tela do sistema Dimep Kairos (acesso real disponível apenas no domínio corporativo).</p>' +
-        '<img class="modal-imagem" src="ponto-eletronico-demo.png" alt="Tela de login do ponto eletrônico Kairos" onerror="this.outerHTML=\'<div style=\\'padding:40px;text-align:center;color:#6B7280;border:1px dashed #E5E7EB;border-radius:12px;margin-top:14px\\'>Imagem não encontrada — verifique se o arquivo <b>ponto-eletronico-demo.png</b> está na mesma pasta do demo.html</div>\';">' +
+        '<img class="modal-imagem" id="imgPonto" src="ponto-eletronico-demo.png" alt="Tela de login do ponto eletrônico Kairos">' +
         '<p class="modal-aviso">Imagem ilustrativa exibida apenas para demonstração. Em produção, o acesso é feito pela rede interna.</p>'
       );
+      /* Fallback limpo: se a imagem não carregar, mostra aviso */
+      var img = document.getElementById('imgPonto');
+      img.addEventListener('error', function(){
+        this.outerHTML = '<div style="padding:40px;text-align:center;color:#6B7280;border:1px dashed #E5E7EB;border-radius:12px;margin-top:14px">Imagem não encontrada — verifique se o arquivo <b>ponto-eletronico-demo.png</b> está na mesma pasta do demo.html</div>';
+      });
     } else {
       abrirModal(
         '<div class="modal-emoji">🚧</div>' +
@@ -512,7 +518,6 @@ document.querySelectorAll('.btn-acao').forEach(function(btn){
     }
   });
 });
-
 /* Botões de redes sociais */
 document.querySelectorAll('.btn-social').forEach(function(btn){
   btn.addEventListener('click', function(){
