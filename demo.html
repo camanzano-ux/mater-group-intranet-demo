@@ -18,13 +18,13 @@
     background:linear-gradient(135deg,#F9FAFB 0%,#F3F4F6 100%);
     min-height:100vh; overflow-x:hidden;
   }
-  /* ============ LOADER ============ */
+  /* ============ LOADER (à prova de falhas) ============ */
   #loader{
     position:fixed; inset:0; z-index:9999; display:flex; flex-direction:column;
     align-items:center; justify-content:center; gap:22px;
-    background:#ffffff; transition:opacity .6s ease;
+    background:#ffffff; transition:opacity .5s ease;
   }
-  #loader.oculto{opacity:0;pointer-events:none}
+  #loader.oculto{opacity:0;pointer-events:none;visibility:hidden}
   .loader-logo{font-size:40px;font-weight:800;letter-spacing:4px;color:var(--vinho);animation:pulso 1.6s ease-in-out infinite}
   .loader-logo span{color:var(--azul)}
   .loader-bar{width:220px;height:4px;border-radius:4px;background:var(--cinza-claro);overflow:hidden}
@@ -42,12 +42,9 @@
     position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center;
     font-size:34px; font-weight:800; letter-spacing:2px; color:var(--vinho);
     white-space:nowrap;
-  }
-  .boas-vindas .destacado{color:#666666}
-  /* animação: desliza da direita p/ esquerda, pisca no centro, recomeça */
-  .boas-vindas{
     animation: bemVindo 9s ease-in-out infinite;
   }
+  .boas-vindas .destacado{color:#666666}
   @keyframes bemVindo{
     0%   { transform:translateX(110%); opacity:0; }
     18%  { transform:translateX(0);    opacity:1; }
@@ -398,7 +395,7 @@
       </div>
     </div>
 
-    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v0.2 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
+    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v0.3 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
   </main>
 </div>
 
@@ -412,7 +409,7 @@
 <script>
 /* ================= RELÓGIO ================= */
 function tickRelogio(){
-  const agora = new Date();
+  var agora = new Date();
   document.getElementById('relogioData').textContent =
     agora.toLocaleDateString('pt-BR', { weekday:'short', day:'2-digit', month:'short', year:'numeric' });
   document.getElementById('relogioHora').textContent =
@@ -421,26 +418,26 @@ function tickRelogio(){
 tickRelogio(); setInterval(tickRelogio, 1000);
 
 /* ================= STAND BY ================= */
-const STANDBY = [
+var STANDBY = [
   { texto:'Corpo clínico Mater Lab — medicina reprodutiva',   cor:'#6C3483' },
   { texto:'Mater Prime — unidades São Paulo, Sorocaba e Nordeste', cor:'#7A1F3D' },
   { texto:'TheraSeq — análise genética (NGS + IA)',           cor:'#0D9488' },
   { texto:'Lüna — health tech do grupo',                      cor:'#A32684' }
 ];
 (function(){
-  const slidesBox = document.getElementById('slidesStandby');
-  const pontosBox = document.getElementById('pontosStandby');
-  let htmlS = '', htmlP = '';
-  STANDBY.forEach((s,i)=>{
+  var slidesBox = document.getElementById('slidesStandby');
+  var pontosBox = document.getElementById('pontosStandby');
+  var htmlS = '', htmlP = '';
+  STANDBY.forEach(function(s,i){
     htmlS += '<div class="slide-st'+(i===0?' ativa':'')+'">'+
              '<span class="dot" style="background:'+s.cor+';color:'+s.cor+'"></span>'+s.texto+'</div>';
     htmlP += '<span class="'+(i===0?'ativa':'')+'" data-i="'+i+'"></span>';
   });
   slidesBox.innerHTML = htmlS;
   pontosBox.innerHTML = htmlP;
-  const slides = slidesBox.querySelectorAll('.slide-st');
-  const pontos = pontosBox.querySelectorAll('span');
-  let atual = 0;
+  var slides = slidesBox.querySelectorAll('.slide-st');
+  var pontos = pontosBox.querySelectorAll('span');
+  var atual = 0;
   function ir(n){
     slides[atual].classList.remove('ativa');
     pontos[atual].classList.remove('ativa');
@@ -448,100 +445,100 @@ const STANDBY = [
     slides[atual].classList.add('ativa');
     pontos[atual].classList.add('ativa');
   }
-  pontos.forEach(p => p.addEventListener('click', () => ir(+p.dataset.i)));
-  setInterval(() => ir(atual + 1), 4000);
+  pontos.forEach(function(p){ p.addEventListener('click', function(){ ir(+p.dataset.i); }); });
+  setInterval(function(){ ir(atual + 1); }, 4000);
 })();
 
 /* ================= CONTADORES ================= */
 function animaContador(el){
-  const alvo = +el.dataset.count;
-  const prefixo = el.dataset.prefixo || '';
-  const sufixo = el.dataset.sufixo || '';
-  const dur = 1400; const inicio = performance.now();
+  var alvo = +el.dataset.count;
+  var prefixo = el.dataset.prefixo || '';
+  var sufixo = el.dataset.sufixo || '';
+  var dur = 1400; var inicio = performance.now();
   function passo(agora){
-    const t = Math.min((agora - inicio) / dur, 1);
-    const ease = 1 - Math.pow(1 - t, 3);
-    const val = Math.round(alvo * ease);
+    var t = Math.min((agora - inicio) / dur, 1);
+    var ease = 1 - Math.pow(1 - t, 3);
+    var val = Math.round(alvo * ease);
     el.textContent = prefixo + val.toLocaleString('pt-BR') + sufixo;
     if(t < 1) requestAnimationFrame(passo);
   }
   requestAnimationFrame(passo);
 }
-const obsContador = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting){ animaContador(e.target); obsContador.unobserve(e.target); } });
+var obsContador = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting){ animaContador(e.target); obsContador.unobserve(e.target); } });
 }, { threshold:.5 });
-document.querySelectorAll('.numero').forEach(n => obsContador.observe(n));
+document.querySelectorAll('.numero').forEach(function(n){ obsContador.observe(n); });
 
 /* ================= TABS ================= */
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('ativa'));
-    document.querySelectorAll('.painel').forEach(p => p.classList.remove('ativa'));
+document.querySelectorAll('.tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('ativa'); });
+    document.querySelectorAll('.painel').forEach(function(p){ p.classList.remove('ativa'); });
     tab.classList.add('ativa');
     document.getElementById('painel-' + tab.dataset.tab).classList.add('ativa');
   });
 });
 
 /* ================= REVEAL ================= */
-const obsReveal = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visivel'); obsReveal.unobserve(e.target); } });
+var obsReveal = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visivel'); obsReveal.unobserve(e.target); } });
 }, { threshold:.15 });
-document.querySelectorAll('.reveal').forEach(el => obsReveal.observe(el));
+document.querySelectorAll('.reveal').forEach(function(el){ obsReveal.observe(el); });
 
 /* ================= MODAL ================= */
-const modal = document.getElementById('modal');
-const modalConteudo = document.getElementById('modalConteudo');
+var modal = document.getElementById('modal');
+var modalConteudo = document.getElementById('modalConteudo');
 function abrirModal(html){ modalConteudo.innerHTML = html; modal.classList.add('aberto'); }
 function fecharModal(){ modal.classList.remove('aberto'); }
 document.getElementById('modalFechar').addEventListener('click', fecharModal);
-modal.addEventListener('click', e => { if(e.target === modal) fecharModal(); });
+modal.addEventListener('click', function(e){ if(e.target === modal) fecharModal(); });
 
 /* Botões da sidebar */
-document.querySelectorAll('.btn-acao').forEach(btn => {
-  btn.addEventListener('click', () => {
+document.querySelectorAll('.btn-acao').forEach(function(btn){
+  btn.addEventListener('click', function(){
     if(btn.dataset.acao === 'ponto'){
-      /* Demonstração: exibe a imagem da tela de login do Kairos (anexada),
-         pois o sistema real bloqueia exibição fora do domínio. */
       abrirModal(
-    '<div class="modal-titulo">🕒 Ponto eletrônico</div>' +
-    '<p style="font-size:13px;color:var(--cinza);margin-top:8px">Demonstração — tela do sistema Dimep Kairos (acesso real disponível apenas no domínio corporativo).</p>' +
-    '<img class="modal-imagem" src="ponto-eletronico-demo.png" alt="Tela de login do ponto eletrônico Kairos" onerror="this.outerHTML=\'<div style=\\'padding:40px;text-align:center;color:#6B7280;border:1px dashed #E5E7EB;border-radius:12px;margin-top:14px\\'>Imagem não encontrada — verifique se o arquivo <b>ponto-eletronico-demo.png</b> está na mesma pasta do demo.html</div>\';">' +
-    '<p class="modal-aviso">Imagem ilustrativa exibida apenas para demonstração. Em produção, o acesso é feito pela rede interna.</p>'
-  );
-}else {
+        '<div class="modal-titulo">🕒 Ponto eletrônico</div>' +
+        '<p style="font-size:13px;color:#6B7280;margin-top:8px">Demonstração — tela do sistema Dimep Kairos (acesso real disponível apenas no domínio corporativo).</p>' +
+        '<img class="modal-imagem" src="ponto-eletronico-demo.png" alt="Tela de login do ponto eletrônico Kairos" onerror="this.outerHTML=\'<div style=\\'padding:40px;text-align:center;color:#6B7280;border:1px dashed #E5E7EB;border-radius:12px;margin-top:14px\\'>Imagem não encontrada — verifique se o arquivo <b>ponto-eletronico-demo.png</b> está na mesma pasta do demo.html</div>\';">' +
+        '<p class="modal-aviso">Imagem ilustrativa exibida apenas para demonstração. Em produção, o acesso é feito pela rede interna.</p>'
+      );
+    } else {
       abrirModal(
         '<div class="modal-emoji">🚧</div>' +
         '<div class="modal-titulo">Em breve</div>' +
-        '<p style="font-size:13px;color:var(--cinza);margin-top:8px">Este botão ainda não possui direcionamento definido. A peça final será publicada em arquivo HTML separado, como combinado.</p>'
+        '<p style="font-size:13px;color:#6B7280;margin-top:8px">Este botão ainda não possui direcionamento definido. A peça final será publicada em arquivo HTML separado, como combinado.</p>'
       );
     }
   });
 });
 
 /* Botões de redes sociais */
-document.querySelectorAll('.btn-social').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const url = btn.dataset.rede;
+document.querySelectorAll('.btn-social').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var url = btn.dataset.rede;
     abrirModal(
       '<div class="modal-titulo">Rede social</div>' +
-      '<p style="font-size:13px;color:var(--cinza);margin-top:8px">Exibida dentro da intranet (sem abrir nova aba).</p>' +
-      '<iframe src="' + url + '" title="Rede social" style="width:100%;height:440px;border:1px solid var(--borda);border-radius:12px;margin-top:14px;background:#fff"></iframe>' +
+      '<p style="font-size:13px;color:#6B7280;margin-top:8px">Exibida dentro da intranet (sem abrir nova aba).</p>' +
+      '<iframe src="' + url + '" title="Rede social" style="width:100%;height:440px;border:1px solid #E5E7EB;border-radius:12px;margin-top:14px;background:#fff"></iframe>' +
       '<p class="modal-aviso">Instagram, LinkedIn e Facebook costumam bloquear exibição em iframe. Em produção, o acesso é feito por página interna do grupo.</p>' +
-      '<a class="modal-link" href="' + url + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;font-weight:700;color:var(--azul);text-decoration:none">Abrir em nova aba ↗</a>'
+      '<a class="modal-link" href="' + url + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;font-weight:700;color:#4A9BD4;text-decoration:none">Abrir em nova aba ↗</a>'
     );
   });
 });
 
-/* ================= LOADER ================= */
+/* ================= LOADER (à prova de falhas) ================= */
 (function(){
-  const loader = document.getElementById('loader');
-  const some = () => loader.classList.add('oculto');
-  window.addEventListener('load', () => setTimeout(some, 700));
-  setTimeout(some, 3500);
+  var loader = document.getElementById('loader');
+  function some(){ loader.classList.add('oculto'); }
+  /* remove em qualquer um destes eventos — nunca trava */
+  window.addEventListener('load', function(){ setTimeout(some, 600); });
+  setTimeout(some, 2500);          /* segurança: some mesmo sem load */
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(some, 1200); });
 })();
 
 /* ================= BOTÃO EXPLORAR ================= */
-document.getElementById('btnExplorar').addEventListener('click', () => {
+document.getElementById('btnExplorar').addEventListener('click', function(){
   document.querySelector('.stats').scrollIntoView({ behavior:'smooth', block:'center' });
 });
 </script>
