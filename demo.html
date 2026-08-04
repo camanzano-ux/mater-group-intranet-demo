@@ -43,7 +43,7 @@
     font-size:34px; font-weight:800; letter-spacing:2px; color:var(--vinho);
     white-space:nowrap;
   }
-  .boas-vindas .destacado{color:var(--azul)}
+  .boas-vindas .destacado{color:#666666}
   /* animação: desliza da direita p/ esquerda, pisca no centro, recomeça */
   .boas-vindas{
     animation: bemVindo 9s ease-in-out infinite;
@@ -503,12 +503,12 @@ document.querySelectorAll('.btn-acao').forEach(btn => {
       /* Demonstração: exibe a imagem da tela de login do Kairos (anexada),
          pois o sistema real bloqueia exibição fora do domínio. */
       abrirModal(
-        '<div class="modal-titulo">🕒 Ponto eletrônico</div>' +
-        '<p style="font-size:13px;color:var(--cinza);margin-top:8px">Demonstração — tela do sistema Dimep Kairos (acesso real disponível apenas no domínio corporativo).</p>' +
-        '<img class="modal-imagem" src="image-019fcef5-1eaa-721c-b2bc-23fa9271be6a.png" alt="Tela de login do ponto eletrônico Kairos">' +
-        '<p class="modal-aviso">Imagem ilustrativa exibida apenas para demonstração. Em produção, o acesso é feito pela rede interna.</p>'
-      );
-    } else {
+    '<div class="modal-titulo">🕒 Ponto eletrônico</div>' +
+    '<p style="font-size:13px;color:var(--cinza);margin-top:8px">Demonstração — tela do sistema Dimep Kairos (acesso real disponível apenas no domínio corporativo).</p>' +
+    '<img class="modal-imagem" src="ponto-eletronico-demo.png" alt="Tela de login do ponto eletrônico Kairos" onerror="this.outerHTML=\'<div style=\\'padding:40px;text-align:center;color:#6B7280;border:1px dashed #E5E7EB;border-radius:12px;margin-top:14px\\'>Imagem não encontrada — verifique se o arquivo <b>ponto-eletronico-demo.png</b> está na mesma pasta do demo.html</div>\';">' +
+    '<p class="modal-aviso">Imagem ilustrativa exibida apenas para demonstração. Em produção, o acesso é feito pela rede interna.</p>'
+  );
+}else {
       abrirModal(
         '<div class="modal-emoji">🚧</div>' +
         '<div class="modal-titulo">Em breve</div>' +
