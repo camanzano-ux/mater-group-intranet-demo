@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mater Group · Intranet — Demonstração</title>
+<title>Mater Group · Intranet Corporativa</title>
 <style>
   :root{
     --vinho:#7A1F3D; --vinho-2:#5C162E;
@@ -30,34 +30,33 @@
   .loader-bar span{display:block;height:100%;width:40%;border-radius:4px;background:linear-gradient(90deg,var(--vinho),var(--azul));animation:carrega 1.2s ease-in-out infinite}
   @keyframes carrega{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
   @keyframes pulso{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:.85}}
+  /* ===== BARRA SUPERIOR ===== */
   .topo{
-    position:relative; z-index:2; display:flex; align-items:center; justify-content:center;
+    position:relative; z-index:5; display:flex; align-items:center; justify-content:center;
     height:92px; padding:0 22px;
     background:#ffffff; border-bottom:1px solid var(--borda);
     box-shadow:0 1px 3px rgba(0,0,0,.04); overflow:hidden;
   }
-  .boas-vindas{
-    position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center;
-    font-size:34px; font-weight:800; letter-spacing:2px; color:var(--vinho);
-    white-space:nowrap;
-    animation: bemVindo 9s ease-in-out infinite;
+  .boas-vindas{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+  .boas-vindas .msg{
+    position:absolute;font-size:34px;font-weight:800;letter-spacing:2px;color:var(--vinho);
+    opacity:0;transition:opacity 1.2s ease;
   }
-  .boas-vindas .destacado{color:#666666}
-  @keyframes bemVindo{
-    0%   { transform:translateX(110%); opacity:0; }
-    18%  { transform:translateX(0);    opacity:1; }
-    40%  { transform:translateX(0);    opacity:1; }
-    55%  { transform:translateX(0);    opacity:0; }
-    60%  { transform:translateX(0);    opacity:1; }
-    70%  { transform:translateX(0);    opacity:0; }
-    75%  { transform:translateX(0);    opacity:1; }
-    85%  { transform:translateX(0);    opacity:1; }
-    100% { transform:translateX(-110%); opacity:0; }
+  .boas-vindas .msg span{color:#666666}
+  .boas-vindas .msg.ativa{opacity:1}
+  .clima{
+    position:absolute;left:22px;top:50%;transform:translateY(-50%);
+    display:flex;align-items:center;gap:14px;padding:8px 16px;
+    background:var(--cinza-claro);border:1px solid var(--borda);border-radius:30px;
   }
+  .clima .icone{font-size:30px;line-height:1}
+  .clima .dados{display:flex;flex-direction:column;font-size:11px;color:var(--cinza)}
+  .clima .dados .temp{font-size:16px;font-weight:800;color:var(--texto)}
+  .clima .descricao{font-size:11px;color:var(--vinho);font-weight:600}
   .topo-info{
-    position:absolute; right:22px; top:50%; transform:translateY(-50%);
-    display:flex; align-items:center; gap:10px; font-size:13px; white-space:nowrap;
-    background:var(--cinza-claro); border:1px solid var(--borda); border-radius:30px; padding:8px 16px; color:var(--cinza);
+    position:absolute;right:22px;top:50%;transform:translateY(-50%);
+    display:flex;align-items:center;gap:10px;font-size:13px;white-space:nowrap;
+    background:var(--cinza-claro);border:1px solid var(--borda);border-radius:30px;padding:8px 16px;color:var(--cinza);
   }
   .topo-info .hora{font-weight:700;font-size:15px;color:var(--texto)}
   .faixa-avisos{
@@ -114,50 +113,62 @@
   .btn-acao.clt svg{color:#fff}
   .btn-acao.clt .badge-demo{background:#fff;color:#0D9488}
   .btn-acao.oculto{display:none}
-  /* ===== CASCATA DO RH ===== */
-  .rh-wrapper{position:relative}
-  .rh-cascata{
-    position:absolute;left:100%;top:0;margin-left:8px;min-width:230px;z-index:50;
-    background:#fff;border:1px solid var(--borda);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.15);
-    opacity:0;visibility:hidden;transform:translateX(-8px);transition:all .2s ease;overflow:hidden;
-  }
-  .rh-wrapper:hover .rh-cascata,
-  .rh-wrapper:focus-within .rh-cascata{
-    opacity:1;visibility:visible;transform:translateX(0);
-  }
-  .rh-cascata .rh-item{
-    display:flex;align-items:center;gap:10px;padding:13px 16px;cursor:pointer;
-    font-size:13.5px;font-weight:600;color:var(--texto);border-bottom:1px solid var(--cinza-claro);
-    transition:background .15s;
-  }
-  .rh-cascata .rh-item:last-child{border-bottom:none}
-  .rh-cascata .rh-item:hover{background:var(--cinza-claro);color:var(--vinho)}
-  .rh-cascata .rh-item svg{width:17px;height:17px;stroke:var(--vinho);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+  /* ===== GRÁFICO DE ANEL (novo, 3D brilhante) ===== */
   .grafico-sidebar{
     margin-top:auto;padding-top:16px;border-top:1px solid var(--borda);
     display:flex;flex-direction:column;align-items:center;gap:10px;
   }
   .grafico-sidebar .rotulo{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--cinza);font-weight:700}
-  .anel-wrapper{position:relative;width:150px;height:150px;flex-shrink:0}
-  .anel-wrapper svg{width:100%;height:100%;transform:rotate(-90deg)}
+  .anel-wrapper{position:relative;width:170px;height:170px;flex-shrink:0}
+  .anel-wrapper svg{width:100%;height:100%;transform:rotate(-90deg);filter:drop-shadow(0 4px 10px rgba(0,0,0,.2))}
   .anel-wrapper .fatia{cursor:pointer;transition:transform .3s ease,opacity .3s ease;transform-origin:50% 50%}
-  .anel-wrapper .fatia:hover{transform:scale(1.05);opacity:.85}
+  .anel-wrapper .fatia:hover{transform:scale(1.08);opacity:.9}
+  .anel-wrapper .fatia .brilho{fill:rgba(255,255,255,.25)}
   .anel-logo{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
-  .anel-logo img{width:52px;height:52px;object-fit:contain;animation:logoFade 4s ease-in-out infinite}
+  .anel-logo img{width:58px;height:58px;object-fit:contain;animation:logoFade 4s ease-in-out infinite}
   @keyframes logoFade{0%{opacity:0;transform:scale(.6)}15%{opacity:1;transform:scale(1)}85%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.6)}}
-  .legenda-anel{display:flex;flex-direction:column;gap:6px;width:100%}
-  .legenda-anel-item{display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:background .2s}
-  .legenda-anel-item:hover{background:var(--cinza-claro)}
-  .legenda-anel-item .cor{width:10px;height:10px;border-radius:3px;flex-shrink:0}
-  .legenda-anel-item .nome{font-weight:600}
-  .legenda-anel-item .valor{margin-left:auto;font-weight:700;color:var(--vinho)}
+  .anel-tooltip{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    background:rgba(17,24,39,.85);color:#fff;padding:8px 14px;border-radius:10px;
+    font-size:13px;font-weight:700;pointer-events:none;opacity:0;transition:opacity .2s;white-space:nowrap;z-index:10;
+  }
+  .anel-tooltip.visivel{opacity:1}
   .conteudo{overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.2) transparent;min-height:0}
   .conteudo::-webkit-scrollbar{width:8px}
   .conteudo::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:8px}
+  /* ===== QUADRO CSC (fixo, topo do conteúdo) ===== */
+  .csc-quadro{
+    background:linear-gradient(135deg,#ffffff,#F9FAFB);
+    border:1px solid var(--borda);border-radius:18px;padding:28px;margin-bottom:18px;
+    box-shadow:0 4px 16px rgba(0,0,0,.05);
+  }
+  .csc-titulo{font-size:22px;font-weight:800;color:var(--vinho);display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .csc-titulo::before{content:"";width:6px;height:26px;background:var(--azul);border-radius:3px}
+  .csc-sub{font-size:13px;color:var(--cinza);margin-bottom:18px}
+  .csc-botoes{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .csc-btn{
+    display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 12px;
+    background:#fff;border:1px solid var(--borda);border-radius:14px;cursor:pointer;
+    font-family:inherit;font-size:13px;font-weight:700;color:var(--texto);
+    transition:all .2s ease;position:relative;
+  }
+  .csc-btn:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(122,31,61,.12);border-color:var(--vinho);color:var(--vinho)}
+  .csc-btn svg{width:30px;height:30px;stroke:var(--vinho);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .csc-btn .seta{position:absolute;top:10px;right:10px;font-size:12px;color:var(--azul);opacity:0;transition:opacity .2s}
+  .csc-btn:hover .seta{opacity:1}
+  .csc-sub-botoes{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:18px;padding-top:18px;border-top:1px solid var(--borda)}
+  .csc-sub-btn{
+    display:flex;align-items:center;gap:10px;padding:14px;background:var(--cinza-claro);
+    border:1px solid var(--borda);border-radius:10px;cursor:pointer;font-family:inherit;
+    font-size:13px;font-weight:600;color:var(--texto);transition:all .2s;
+  }
+  .csc-sub-btn:hover{background:#fff;border-color:var(--vinho);color:var(--vinho);transform:translateX(3px)}
+  .csc-sub-btn svg{width:18px;height:18px;stroke:var(--vinho);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+  /* ===== HERO (movido para baixo) ===== */
   .hero{
     position:relative;border-radius:18px;overflow:hidden;padding:44px 40px;
     background:linear-gradient(120deg,#ffffff,#F9FAFB);
-    border:1px solid var(--borda);min-height:280px;display:flex;flex-direction:column;justify-content:center;gap:14px;
+    border:1px solid var(--borda);min-height:260px;display:flex;flex-direction:column;justify-content:center;gap:14px;margin-bottom:18px;
   }
   .hero h1{font-size:38px;font-weight:800;letter-spacing:2px;color:var(--texto)}
   .hero h1 span{color:var(--vinho)}
@@ -248,6 +259,14 @@
   .modal-aviso{font-size:12px;color:var(--cinza);margin-top:10px;line-height:1.5}
   .modal-emoji{font-size:44px}
   .modal-imagem{width:100%;border:1px solid var(--borda);border-radius:12px;margin-top:14px;display:block}
+  /* ===== HISTÓRICO DE SOLICITAÇÕES ===== */
+  .historico{width:100%;border-collapse:collapse;margin-top:14px}
+  .historico th{text-align:left;padding:10px;border-bottom:2px solid var(--cinza-claro);color:var(--cinza);font-size:12px}
+  .historico td{padding:10px;border-bottom:1px solid var(--cinza-claro);font-size:13px}
+  .status-badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+  .status-aberto{background:#FEF3C7;color:#92400E}
+  .status-em-andamento{background:#DBEAFE;color:#1E40AF}
+  .status-concluido{background:#D1FAE5;color:#065F46}
   @media (max-width:900px){
     .corpo{grid-template-columns:1fr;height:auto}
     .sidebar{flex-direction:row;overflow-x:auto;align-items:stretch}
@@ -256,11 +275,10 @@
     .faixa-avisos{grid-template-columns:1fr}
     .grid-treinamentos{grid-template-columns:repeat(2,1fr)}
     .rodape-info{grid-template-columns:1fr}
-    .topo-info{display:none}
+    .topo-info,.clima{display:none}
     .hero h1{font-size:28px}
-    .boas-vindas{font-size:22px}
-    .grafico-sidebar{display:none}
-    .rh-cascata{position:static;margin-left:0;margin-top:8px;transform:none;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+    .boas-vindas .msg{font-size:22px}
+    .csc-botoes{grid-template-columns:repeat(2,1fr)}
   }
 </style>
 </head>
@@ -272,7 +290,19 @@
 </div>
 
 <header class="topo">
-  <div class="boas-vindas">Seja Bem-vindo à Intranet&nbsp;<span class="destacado">Mater Group</span></div>
+  <div class="clima" id="clima-widget">
+    <span class="icone" id="clima-icone">☀️</span>
+    <div class="dados">
+      <span class="temp" id="clima-temp">28°C</span>
+      <span id="clima-umidade">Umidade: 45%</span>
+      <span id="clima-vento">Vento: 12 km/h</span>
+    </div>
+    <span class="descricao" id="clima-desc">Dia ensolarado</span>
+  </div>
+  <div class="boas-vindas">
+    <div class="msg" id="msg1">Seja muito bem vindo</div>
+    <div class="msg" id="msg2">Intranet <span>Mater Group</span></div>
+  </div>
   <div class="topo-info"><span id="relogioData"></span> · <span class="hora" id="relogioHora"></span></div>
 </header>
 
@@ -290,39 +320,10 @@
 <div class="corpo">
   <aside class="sidebar">
     <div class="titulo">Acesso rápido</div>
-
-    <!-- Bater Ponto: aparece apenas para contratados CLT -->
     <button class="btn-acao clt" data-acao="bater-ponto" data-tipo="clt">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       Bater Ponto <span class="badge-demo">CLT</span>
     </button>
-
-    <!-- RH: cascata de opções à direita -->
-    <div class="rh-wrapper">
-      <button class="btn-acao" data-acao="rh">
-        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-        RH <span class="badge-demo">MENU</span>
-      </button>
-      <div class="rh-cascata">
-        <div class="rh-item" data-acao="justificar">
-          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-          Justificar Ponto
-        </div>
-        <div class="rh-item" data-acao="espelho">
-          <svg viewBox="0 0 24 24"><path d="M3 5v14l8-7-8-7zm10 0v14h8V5h-8z"/></svg>
-          Espelho de Ponto
-        </div>
-        <div class="rh-item" data-acao="holerite">
-          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4v-4h4v2h8v-2h4v4zm0-6H4V6h16v6z"/></svg>
-          Holerite
-        </div>
-        <div class="rh-item" data-acao="ferias">
-          <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-          Solicitação de Férias
-        </div>
-      </div>
-    </div>
-
     <button class="btn-acao embreve" data-acao="embreve">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       Localizador de Pessoas <span class="badge-demo">BREVE</span>
@@ -344,20 +345,49 @@
       Administração <span class="badge-demo">ADMIN</span>
     </button>
 
-    <!-- GRÁFICO DE ANEL NA PARTE INFERIOR DA SIDEBAR -->
     <div class="grafico-sidebar">
       <div class="rotulo">Colaboradores por empresa</div>
       <div class="anel-wrapper">
-        <svg viewBox="0 0 150 150" id="svg-anel"></svg>
+        <svg viewBox="0 0 170 170" id="svg-anel"></svg>
         <div class="anel-logo" id="anel-logo">
           <img id="logo-anel-img" src="" alt="logo">
         </div>
+        <div class="anel-tooltip" id="anel-tooltip"></div>
       </div>
-      <div class="legenda-anel" id="legenda-anel"></div>
     </div>
   </aside>
 
   <main class="conteudo">
+    <!-- QUADRO CSC (fixo, topo) -->
+    <section class="csc-quadro reveal" id="csc-quadro">
+      <div class="csc-titulo">Solicitações CSC - Mater Group</div>
+      <div class="csc-sub">Central de Serviços Compartilhados — selecione a área para abrir uma solicitação.</div>
+      <div class="csc-botoes">
+        <button class="csc-btn" data-csc="ti">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          TI & Engenharia Clínica <span class="seta">›</span>
+        </button>
+        <button class="csc-btn" data-csc="suprimentos">
+          <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          Suprimentos/Facilities <span class="seta">›</span>
+        </button>
+        <button class="csc-btn" data-csc="rh">
+          <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          RH <span class="seta">›</span>
+        </button>
+        <button class="csc-btn" data-csc="financeiro">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Financeiro <span class="seta">›</span>
+        </button>
+        <button class="csc-btn" data-csc="qualidade">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Gestão da Qualidade <span class="seta">›</span>
+        </button>
+      </div>
+      <div class="csc-sub-botoes" id="csc-sub-botoes"></div>
+    </section>
+
+    <!-- HERO (movido para baixo) -->
     <section class="hero reveal">
       <h1>MATER <span>GROUP</span></h1>
       <p>Mater Prime · Mater Lab · TheraSeq · Lüna — empresas de medicina reprodutiva e saúde, unidas pelo mesmo acolhimento e excelência técnica.</p>
@@ -449,7 +479,7 @@
       </div>
     </div>
 
-    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v0.8 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
+    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v1.0 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
   </main>
 </div>
 
@@ -461,10 +491,9 @@
 </div>
 
 <script>
-/* ===== CONFIGURAÇÃO DO USUÁRIO (simulação) =====
-   Em produção, o tipo de contratação (CLT/CNPJ) vem do Kairos via integração.
-   No modo demonstração, controlamos por uma variável. */
-var TIPO_CONTRATACAO = 'CLT'; // 'CLT' ou 'CNPJ'
+/* ===== CONFIGURAÇÃO DO USUÁRIO ===== */
+var TIPO_CONTRATACAO = 'CLT';
+var EH_ADMIN_GLOBAL = true; // em produção vem do M365
 
 /* ===== RELÓGIO ===== */
 function tickRelogio(){
@@ -476,6 +505,42 @@ function tickRelogio(){
 }
 tickRelogio();
 setInterval(tickRelogio, 1000);
+
+/* ===== MENSAGENS DE BOAS-VINDAS (fade in/out) ===== */
+(function(){
+  var msg1 = document.getElementById('msg1');
+  var msg2 = document.getElementById('msg2');
+  var atual = 'msg1';
+  msg1.classList.add('ativa');
+  setInterval(function(){
+    if(atual === 'msg1'){
+      msg1.classList.remove('ativa');
+      setTimeout(function(){ msg2.classList.add('ativa'); }, 1200);
+      atual = 'msg2';
+    } else {
+      msg2.classList.remove('ativa');
+      setTimeout(function(){ msg1.classList.add('ativa'); }, 1200);
+      atual = 'msg1';
+    }
+  }, 5000);
+})();
+
+/* ===== CLIMA (simulação) ===== */
+function atualizarClima(){
+  var condicoes = [
+    { icone:'☀️', temp:'28°C', umid:'Umidade: 45%', vento:'Vento: 12 km/h', desc:'Dia ensolarado' },
+    { icone:'🌧️', temp:'19°C', umid:'Umidade: 88%', vento:'Vento: 24 km/h', desc:'Chuvoso' },
+    { icone:'⛅', temp:'24°C', umid:'Umidade: 62%', vento:'Vento: 15 km/h', desc:'Parcialmente nublado' },
+    { icone:'❄️', temp:'12°C', umid:'Umidade: 70%', vento:'Vento: 18 km/h', desc:'Frio' }
+  ];
+  var c = condicoes[Math.floor(Math.random() * condicoes.length)];
+  document.getElementById('clima-icone').textContent = c.icone;
+  document.getElementById('clima-temp').textContent = c.temp;
+  document.getElementById('clima-umidade').textContent = c.umid;
+  document.getElementById('clima-vento').textContent = c.vento;
+  document.getElementById('clima-desc').textContent = c.desc;
+}
+atualizarClima();
 
 /* ===== STAND BY ===== */
 var STANDBY = [
@@ -506,9 +571,7 @@ var STANDBY = [
     slides[atual].classList.add('ativa');
     pontos[atual].classList.add('ativa');
   }
-  pontos.forEach(function(p){
-    p.addEventListener('click', function(){ ir(+p.dataset.i); });
-  });
+  pontos.forEach(function(p){ p.addEventListener('click', function(){ ir(+p.dataset.i); }); });
   setInterval(function(){ ir(atual + 1); }, 4000);
 })();
 
@@ -516,11 +579,8 @@ var STANDBY = [
 function aplicarTipoContratacao(){
   var btnBaterPonto = document.querySelector('.btn-acao[data-acao="bater-ponto"]');
   if(btnBaterPonto){
-    if(TIPO_CONTRATACAO === 'CLT'){
-      btnBaterPonto.classList.remove('oculto');
-    } else {
-      btnBaterPonto.classList.add('oculto'); // CNPJ não vê "Bater Ponto"
-    }
+    if(TIPO_CONTRATACAO === 'CLT'){ btnBaterPonto.classList.remove('oculto'); }
+    else { btnBaterPonto.classList.add('oculto'); }
   }
 }
 
@@ -544,36 +604,31 @@ var TREINAMENTOS_TODOS = [
   { nome:'Congelamento de óvulos', url:'https://materprime.com.br/tratamentos/congelamento-de-ovulos/' },
   { nome:'Mini FIV', url:'https://materprime.com.br/tratamentos/mini-fiv/' }
 ];
-
 function montarTreinamentos(){
   var grid = document.getElementById('grid-treinamentos');
   grid.innerHTML = TREINAMENTOS.map(function(t){
     return '<a class="card-treino" href="' + t.url + '" target="_blank" rel="noopener">' +
-      '<div class="faixa"></div>' +
-      '<div class="corpo">' +
-      '<span class="tag">' + t.tag + '</span>' +
-      '<h3>' + t.nome + '</h3>' +
-      '<span class="link">Saiba mais →</span>' +
-      '</div></a>';
+      '<div class="faixa"></div><div class="corpo">' +
+      '<span class="tag">' + t.tag + '</span><h3>' + t.nome + '</h3>' +
+      '<span class="link">Saiba mais →</span></div></a>';
   }).join('');
 }
 
-/* ===== GRÁFICO DE ANEL NA SIDEBAR ===== */
+/* ===== GRÁFICO DE ANEL (3D brilhante, sem tabela) ===== */
 var DADOS_EMPRESAS = [
   { nome:'Mater Prime', cor:'#7A1F3D', valor:120, logo:'logoMP.png' },
   { nome:'Mater Lab', cor:'#6C3483', valor:85, logo:'Logo-Mater-Lab_Horizontal.png' },
   { nome:'TheraSeq', cor:'#0D9488', valor:40, logo:'LogoTheraSeq.png' },
   { nome:'Lüna', cor:'#A32684', valor:25, logo:'luna.png' }
 ];
+var tooltip = document.getElementById('anel-tooltip');
 
 function desenharAnel(){
   var svg = document.getElementById('svg-anel');
-  var legenda = document.getElementById('legenda-anel');
   var total = DADOS_EMPRESAS.reduce(function(s, d){ return s + d.valor; }, 0);
-  var cx = 75, cy = 75, raio = 62, espessura = 20;
+  var cx = 85, cy = 85, raio = 68, espessura = 30; // anel mais grosso
   var anguloInicio = 0;
   var htmlSvg = '';
-  var htmlLegenda = '';
   DADOS_EMPRESAS.forEach(function(d, i){
     var fracao = d.valor / total;
     var anguloFim = anguloInicio + fracao * 360;
@@ -591,40 +646,29 @@ function desenharAnel(){
                ' A' + raioExt + ',' + raioExt + ' 0 ' + grande + ' 1 ' + x2e + ',' + y2e +
                ' L' + x1i + ',' + y1i +
                ' A' + raioInt + ',' + raioInt + ' 0 ' + grande + ' 0 ' + x2i + ',' + y2i + ' Z';
-    htmlSvg += '<path class="fatia" d="' + path + '" fill="' + d.cor + '" data-nome="' + d.nome + '" data-valor="' + d.valor + '">' +
-               '<title>' + d.nome + ': ' + d.valor + ' colaboradores</title></path>';
-    htmlLegenda += '<div class="legenda-anel-item" data-nome="' + d.nome + '">' +
-      '<span class="cor" style="background:' + d.cor + '"></span>' +
-      '<span class="nome">' + d.nome + '</span>' +
-      '<span class="valor">' + d.valor + '</span></div>';
+    /* Efeito 3D brilhante: gradiente + brilho no topo */
+    htmlSvg += '<path class="fatia" d="' + path + '" fill="' + d.cor + '" data-nome="' + d.nome + '" data-valor="' + d.valor + '" data-porc="' + Math.round(fracao*100) + '">' +
+               '<title>' + d.nome + ': ' + d.valor + '</title></path>';
     anguloInicio = anguloFim;
   });
   svg.innerHTML = htmlSvg;
-  legenda.innerHTML = htmlLegenda;
+
+  /* Hover: mostra tooltip com número dentro do anel */
   svg.querySelectorAll('.fatia').forEach(function(fatia){
     fatia.addEventListener('mouseenter', function(){
-      fatia.style.transform = 'scale(1.05)';
-      var nome = fatia.dataset.nome;
-      legenda.querySelectorAll('.legenda-anel-item').forEach(function(item){
-        item.style.background = (item.dataset.nome === nome) ? 'var(--cinza-claro)' : '';
-      });
+      fatia.style.transform = 'scale(1.08)';
+      fatia.style.filter = 'brightness(1.15)';
+      tooltip.textContent = fatia.dataset.nome + ': ' + fatia.dataset.valor + ' (' + fatia.dataset.porc + '%)';
+      tooltip.classList.add('visivel');
     });
     fatia.addEventListener('mouseleave', function(){
       fatia.style.transform = '';
-      legenda.querySelectorAll('.legenda-anel-item').forEach(function(item){ item.style.background = ''; });
+      fatia.style.filter = '';
+      tooltip.classList.remove('visivel');
     });
   });
-  legenda.querySelectorAll('.legenda-anel-item').forEach(function(item){
-    item.addEventListener('mouseenter', function(){
-      var nome = item.dataset.nome;
-      svg.querySelectorAll('.fatia').forEach(function(fatia){
-        fatia.style.transform = (fatia.dataset.nome === nome) ? 'scale(1.05)' : '';
-      });
-    });
-    item.addEventListener('mouseleave', function(){
-      svg.querySelectorAll('.fatia').forEach(function(fatia){ fatia.style.transform = ''; });
-    });
-  });
+
+  /* Animação das logos dentro do anel */
   var logos = DADOS_EMPRESAS.map(function(d){ return d.logo; });
   var img = document.getElementById('logo-anel-img');
   var idx = 0;
@@ -633,6 +677,172 @@ function desenharAnel(){
     idx = (idx + 1) % logos.length;
     img.src = logos[idx];
   }, 4000);
+}
+
+/* ===== QUADRO CSC ===== */
+var CSC = {
+  ti: {
+    titulo:'TI & Engenharia Clínica',
+    botoes:[
+      { nome:'ServiceDesk', acao:'servicedesk' },
+      { nome:'Eng. de Climatização', acao:'climatizacao' },
+      { nome:'Eng. Elétrica', acao:'eletrica' }
+    ]
+  },
+  suprimentos: {
+    titulo:'Suprimentos/Facilities',
+    botoes:[
+      { nome:'Solicitação de Compras', acao:'compras' },
+      { nome:'Manutenção Predial', acao:'manutencao' },
+      { nome:'Equipe de limpeza', acao:'limpeza' },
+      { nome:'Dispensário', acao:'dispensario' }
+    ]
+  },
+  rh: {
+    titulo:'RH',
+    botoes:[
+      { nome:'Justificar ocorrência de ponto', acao:'justificar' },
+      { nome:'Espelho de Ponto', acao:'espelho' },
+      { nome:'Holerites', acao:'holerite' },
+      { nome:'Solicitação de Férias', acao:'ferias' }
+    ]
+  },
+  financeiro: { titulo:'Financeiro', botoes:[] },
+  qualidade: { titulo:'Gestão da Qualidade', botoes:[] }
+};
+
+var cscAtivo = null;
+document.querySelectorAll('.csc-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var chave = btn.dataset.csc;
+    var secao = CSC[chave];
+    var container = document.getElementById('csc-sub-botoes');
+    if(cscAtivo === chave){
+      container.innerHTML = '';
+      cscAtivo = null;
+      return;
+    }
+    cscAtivo = chave;
+    if(secao.botoes.length === 0){
+      container.innerHTML = '<div style="grid-column:1/-1;padding:20px;text-align:center;color:var(--cinza);font-size:13px">' +
+        'As opções de <strong>' + secao.titulo + '</strong> ainda estão sendo mapeadas. As configurações de integração com o Desk Manager estão disponíveis na tela de Administração.</div>';
+      return;
+    }
+    container.innerHTML = secao.botoes.map(function(b){
+      return '<button class="csc-sub-btn" data-acao="' + b.acao + '">' +
+        '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>' +
+        b.nome + '</button>';
+    }).join('');
+    /* Re-aplica listeners nos sub-botões */
+    document.querySelectorAll('.csc-sub-btn').forEach(function(sb){
+      sb.addEventListener('click', function(){
+        abrirAcaoCSC(sb.dataset.acao);
+      });
+    });
+  });
+});
+
+/* ===== AÇÕES CSC ===== */
+function abrirAcaoCSC(acao){
+  if(acao === 'servicedesk'){ abrirServiceDesk(); }
+  else if(acao === 'justificar'){ abrirJustificar(); }
+  else if(acao === 'espelho'){ abrirEspelho(); }
+  else if(acao === 'holerite'){ abrirHolerite(); }
+  else if(acao === 'ferias'){ abrirFerias(); }
+  else {
+    abrirModal(
+      '<div class="modal-titulo">' + acao + '</div>' +
+      '<p style="font-size:13px;color:#6B7280;margin-top:8px">Esta solicitação será registrada no Desk Manager via integração.</p>' +
+      '<div class="form-group" style="margin-top:14px"><label>Descrição da solicitação</label><textarea rows="4" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px" placeholder="Descreva sua solicitação..."></textarea></div>' +
+      '<button class="btn btn-primario" onclick="registrarSolicitacaoDeskManager(\'' + acao + '\')">Enviar Solicitação</button>' +
+      '<p id="msg-desk" style="font-size:12px;color:var(--cinza);margin-top:10px"></p>' +
+      '<p class="modal-aviso">Demonstração. A integração real com o Desk Manager será ativada após configurar a conexão na tela de Administração.</p>'
+    );
+  }
+}
+
+function registrarSolicitacaoDeskManager(acao){
+  var msg = document.getElementById('msg-desk');
+  msg.textContent = 'Solicitação "' + acao + '" registrada no Desk Manager com sucesso (protocolo DM-2026-0001).';
+  msg.style.color = '#03543F';
+}
+
+function abrirServiceDesk(){
+  abrirModal(
+    '<div class="modal-titulo">Service Desk Mater Group</div>' +
+    '<p style="font-size:15px;color:var(--texto);margin-top:10px;font-weight:600">Bem-vindo ao Service Desk Mater Group</p>' +
+    '<p style="font-size:13px;color:#6B7280;margin-top:6px;line-height:1.6">Estamos aqui para ajudar você. Escolha a melhor forma de atendimento:</p>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px">' +
+    '<div style="background:var(--cinza-claro);border:1px solid var(--borda);border-radius:12px;padding:18px;text-align:center">' +
+    '<div style="font-size:13px;font-weight:700;color:var(--texto);margin-bottom:8px">Precisa de atendimento imediato?</div>' +
+    '<p style="font-size:12px;color:var(--cinza);margin-bottom:12px">Fale agora com um especialista via Teams da Strati.</p>' +
+    '<a class="btn btn-primario" href="https://teams.microsoft.com/l/chat/0/0?users=suporte@strati.com.br" target="_blank" rel="noopener" style="text-decoration:none;display:inline-flex">' +
+    '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>' +
+    'Strati — Atendimento Imediato</a></div>' +
+    '<div style="background:var(--cinza-claro);border:1px solid var(--borda);border-radius:12px;padding:18px;text-align:center">' +
+    '<div style="font-size:13px;font-weight:700;color:var(--texto);margin-bottom:8px">Não precisa de atendimento imediato?</div>' +
+    '<p style="font-size:12px;color:var(--cinza);margin-bottom:12px">Registre sua solicitação e aguarde o atendimento pelo sistema de chamados.</p>' +
+    '<button class="btn btn-contorno" onclick="abrirSistemaChamados()">Sistema de Chamados</button>' +
+    '<p style="font-size:11px;color:var(--cinza);margin-top:10px">Ou envie por e-mail: <strong>suporte@strati.com.br</strong></p>' +
+    '</div></div>' +
+    '<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--borda)">' +
+    '<div style="font-size:14px;font-weight:700;color:var(--vinho);margin-bottom:8px">Seu histórico de solicitações</div>' +
+    '<table class="historico"><thead><tr><th>Protocolo</th><th>Assunto</th><th>Status</th><th>Data</th></tr></thead><tbody>' +
+    '<tr><td>DM-2026-0001</td><td>Troca de senha</td><td><span class="status-badge status-concluido">Concluído</span></td><td>02/08/2026</td></tr>' +
+    '<tr><td>DM-2026-0007</td><td>Manutenção notebook</td><td><span class="status-badge status-em-andamento">Em andamento</span></td><td>04/08/2026</td></tr>' +
+    '</tbody></table></div>'
+  );
+}
+function abrirSistemaChamados(){
+  /* Em produção, abre o sistema de chamados do Desk Manager */
+  var msg = document.getElementById('msg-desk');
+  if(msg){ msg.textContent = 'Abrindo sistema de chamados do Desk Manager...'; }
+}
+
+function abrirJustificar(){
+  abrirModal(
+    '<div class="modal-titulo">Justificar ocorrência de ponto</div>' +
+    '<p style="font-size:13px;color:#6B7280;margin-top:8px">Envie uma justificativa de ponto para o sistema Kairos.</p>' +
+    '<div class="form-group" style="margin-top:14px"><label>Data da ocorrência</label><input type="date" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px"></div>' +
+    '<div class="form-group"><label>Motivo</label><textarea rows="3" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px" placeholder="Descreva o motivo..."></textarea></div>' +
+    '<button class="btn btn-primario" onclick="this.parentNode.querySelector(\'p\').textContent=\'Justificativa enviada ao Kairos com sucesso.\';this.parentNode.querySelector(\'p\').style.color=\'#03543F\'">Enviar Justificativa</button>' +
+    '<p style="font-size:12px;color:var(--cinza);margin-top:10px"></p>' +
+    '<p class="modal-aviso">Demonstração. A integração real com o Kairos será ativada após configurar a conexão.</p>'
+  );
+}
+function abrirEspelho(){
+  abrirModal(
+    '<div class="modal-titulo">Espelho de Ponto</div>' +
+    '<p style="font-size:13px;color:#6B7280;margin-top:8px">Consulte o espelho de ponto mensal no sistema Kairos.</p>' +
+    '<div style="text-align:center;padding:30px;background:var(--cinza-claro);border-radius:12px;margin-top:14px">' +
+    '<div style="font-size:14px;color:var(--cinza)">Espelho de ponto — Julho/2026</div>' +
+    '<div style="font-size:24px;font-weight:800;color:var(--vinho);margin-top:10px">176h 30min</div>' +
+    '<div style="font-size:13px;color:var(--cinza);margin-top:4px">22 dias trabalhados · 2 faltas · 1 justificada</div></div>' +
+    '<p class="modal-aviso">Demonstração. A integração real com o Kairos será ativada após configurar a conexão.</p>'
+  );
+}
+function abrirHolerite(){
+  abrirModal(
+    '<div class="modal-titulo">Holerite</div>' +
+    '<p style="font-size:13px;color:#6B7280;margin-top:8px">Consulte seu holerite mensal.</p>' +
+    '<div style="text-align:center;padding:30px;background:var(--cinza-claro);border-radius:12px;margin-top:14px">' +
+    '<div style="font-size:14px;color:var(--cinza)">Holerite — Julho/2026</div>' +
+    '<div style="font-size:26px;font-weight:800;color:var(--vinho);margin-top:10px">R$ 8.450,00</div>' +
+    '<div style="font-size:13px;color:var(--cinza);margin-top:4px">Salário bruto · INSS · IRRF</div></div>' +
+    '<p class="modal-aviso">Demonstração. A integração real com o Kairos será ativada após configurar a conexão.</p>'
+  );
+}
+function abrirFerias(){
+  abrirModal(
+    '<div class="modal-titulo">Solicitação de Férias</div>' +
+    '<p style="font-size:13px;color:#6B7280;margin-top:8px">Solicite suas férias. A solicitação será registrada no Desk Manager.</p>' +
+    '<div class="form-group" style="margin-top:14px"><label>Data de início</label><input type="date" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px"></div>' +
+    '<div class="form-group"><label>Data de retorno</label><input type="date" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px"></div>' +
+    '<div class="form-group"><label>Dias de férias</label><input type="number" value="30" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px"></div>' +
+    '<button class="btn btn-primario" onclick="this.parentNode.querySelector(\'p\').textContent=\'Solicitação de férias registrada no Desk Manager (protocolo DM-2026-0012).\';this.parentNode.querySelector(\'p\').style.color=\'#03543F\'">Enviar Solicitação</button>' +
+    '<p style="font-size:12px;color:var(--cinza);margin-top:10px"></p>' +
+    '<p class="modal-aviso">Demonstração. A integração real com o Desk Manager será ativada após configurar a conexão.</p>'
+  );
 }
 
 /* ===== TABS ===== */
@@ -648,10 +858,7 @@ document.querySelectorAll('.tab').forEach(function(tab){
 /* ===== REVEAL ===== */
 var obsReveal = new IntersectionObserver(function(entries){
   entries.forEach(function(e){
-    if(e.isIntersecting){
-      e.target.classList.add('visivel');
-      obsReveal.unobserve(e.target);
-    }
+    if(e.isIntersecting){ e.target.classList.add('visivel'); obsReveal.unobserve(e.target); }
   });
 }, { threshold:.15 });
 document.querySelectorAll('.reveal').forEach(function(el){ obsReveal.observe(el); });
@@ -659,36 +866,45 @@ document.querySelectorAll('.reveal').forEach(function(el){ obsReveal.observe(el)
 /* ===== MODAL ===== */
 var modal = document.getElementById('modal');
 var modalConteudo = document.getElementById('modalConteudo');
-function abrirModal(html){
-  modalConteudo.innerHTML = html;
-  modal.classList.add('aberto');
-}
+function abrirModal(html){ modalConteudo.innerHTML = html; modal.classList.add('aberto'); }
 function fecharModal(){ modal.classList.remove('aberto'); }
 document.getElementById('modalFechar').addEventListener('click', fecharModal);
 modal.addEventListener('click', function(e){ if(e.target === modal){ fecharModal(); } });
 
-/* ===== FUNÇÕES DAS AÇÕES RH (integração Kairos) ===== */
+/* ===== BOTÕES DA SIDEBAR ===== */
+document.querySelectorAll('.btn-acao').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    if(btn.dataset.acao === 'admin'){ window.location.href = 'plataforma-mater-group.html'; return; }
+    if(btn.dataset.acao === 'bater-ponto'){ abrirBaterPonto(); return; }
+    if(btn.dataset.acao === 'treinamentos'){
+      var lista = TREINAMENTOS_TODOS.map(function(t){
+        return '<a href="' + t.url + '" target="_blank" rel="noopener" style="display:block;padding:12px 14px;border:1px solid var(--borda);border-radius:10px;margin-bottom:8px;text-decoration:none;color:var(--texto);font-size:14px;font-weight:600">' +
+          t.nome + ' <span style="float:right;color:var(--azul)">→</span></a>';
+      }).join('');
+      abrirModal('<div class="modal-titulo">Treinamentos Mater Prime</div>' +
+        '<p style="font-size:13px;color:#6B7280;margin-top:8px;margin-bottom:14px">Todos os treinamentos disponíveis.</p>' + lista);
+      return;
+    }
+    abrirModal('<div class="modal-emoji">🚧</div><div class="modal-titulo">Em breve</div>' +
+      '<p style="font-size:13px;color:#6B7280;margin-top:8px">Este botão ainda não possui direcionamento definido.</p>');
+  });
+});
+
 function abrirBaterPonto(){
   abrirModal(
     '<div class="modal-titulo">Bater Ponto</div>' +
-    '<p style="font-size:13px;color:#6B7280;margin-top:8px">Integração com o sistema Kairos (Dimep). Em produção, esta ação registra a marcação de ponto via API.</p>' +
+    '<p style="font-size:13px;color:#6B7280;margin-top:8px">Integração com o sistema Kairos (Dimep).</p>' +
     '<div style="text-align:center;padding:30px;background:var(--cinza-claro);border-radius:12px;margin-top:14px">' +
     '<div style="font-size:40px;font-weight:800;color:var(--vinho)" id="hora-ponto">--:--:--</div>' +
-    '<div style="font-size:13px;color:var(--cinza);margin-top:6px">Data: <span id="data-ponto"></span></div>' +
+    '<div style="font-size:13px;color:var(--cinza);margin-top:6px" id="data-ponto"></div>' +
     '<button class="btn btn-primario" style="margin-top:18px" onclick="marcarPonto()">Marcar Ponto Agora</button>' +
-    '<p id="msg-ponto" style="font-size:12px;color:var(--cinza);margin-top:10px"></p>' +
-    '</div>' +
-    '<p class="modal-aviso">Demonstração. A integração real com o Kairos será ativada após configurar a conexão na tela de Administração.</p>'
+    '<p id="msg-ponto" style="font-size:12px;color:var(--cinza);margin-top:10px"></p></div>' +
+    '<p class="modal-aviso">Demonstração. A integração real com o Kairos será ativada após configurar a conexão.</p>'
   );
   var hora = document.getElementById('hora-ponto');
   var data = document.getElementById('data-ponto');
-  function atualizar(){
-    var agora = new Date();
-    hora.textContent = agora.toLocaleTimeString('pt-BR');
-    data.textContent = agora.toLocaleDateString('pt-BR');
-  }
-  atualizar();
-  setInterval(atualizar, 1000);
+  function atualizar(){ var agora = new Date(); hora.textContent = agora.toLocaleTimeString('pt-BR'); data.textContent = agora.toLocaleDateString('pt-BR'); }
+  atualizar(); setInterval(atualizar, 1000);
 }
 function marcarPonto(){
   var msg = document.getElementById('msg-ponto');
@@ -696,122 +912,20 @@ function marcarPonto(){
   msg.style.color = '#03543F';
 }
 
-function abrirJustificar(){
-  abrirModal(
-    '<div class="modal-titulo">Justificar Ponto</div>' +
-    '<p style="font-size:13px;color:#6B7280;margin-top:8px">Envie uma justificativa de ponto para o sistema Kairos.</p>' +
-    '<div class="form-group" style="margin-top:14px"><label>Data da ocorrência</label><input type="date" class="modal-input" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px"></div>' +
-    '<div class="form-group"><label>Motivo</label><textarea rows="3" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px" placeholder="Descreva o motivo..."></textarea></div>' +
-    '<button class="btn btn-primario" onclick="this.parentNode.querySelector(\'p\').textContent=\'Justificativa enviada ao Kairos com sucesso.\';this.parentNode.querySelector(\'p\').style.color=\'#03543F\'">Enviar Justificativa</button>' +
-    '<p style="font-size:12px;color:var(--cinza);margin-top:10px"></p>' +
-    '<p class="modal-aviso">Demonstração. A integração real com o Kairos será ativada após configurar a conexão.</p>'
-  );
-}
-
-function abrirEspelho(){
-  abrirModal(
-    '<div class="modal-titulo">Espelho de Ponto</div>' +
-    '<p style="font-size:13px;color:#6B7280;margin-top:8px">Consulte o espelho de ponto mensal no sistema Kairos.</p>' +
-    '<div style="text-align:center;padding:30px;background:var(--cinza-claro);border-radius:12px;margin-top:14px">' +
-    '<div style="font-size:14px;color:var(--cinza)">Espelho de ponto — Julho/2026</div>' +
-    '<div style="font-size:24px;font-weight:800;color:var(--vinho);margin-top:10px">176h 30min</div>' +
-    '<div style="font-size:13px;color:var(--cinza);margin-top:4px">22 dias trabalhados · 2 faltas · 1 justificada</div>' +
-    '</div>' +
-    '<p class="modal-aviso">Demonstração. A integração real com o Kairos será ativada após configurar a conexão.</p>'
-  );
-}
-
-function abrirHolerite(){
-  abrirModal(
-    '<div class="modal-titulo">Holerite</div>' +
-    '<p style="font-size:13px;color:#6B7280;margin-top:8px">Consulte seu holerite mensal.</p>' +
-    '<div style="text-align:center;padding:30px;background:var(--cinza-claro);border-radius:12px;margin-top:14px">' +
-    '<div style="font-size:14px;color:var(--cinza)">Holerite — Julho/2026</div>' +
-    '<div style="font-size:26px;font-weight:800;color:var(--vinho);margin-top:10px">R$ 8.450,00</div>' +
-    '<div style="font-size:13px;color:var(--cinza);margin-top:4px">Salário bruto · INSS · IRRF</div>' +
-    '</div>' +
-    '<p class="modal-aviso">Demonstração. A integração real com o Kairos será ativada após configurar a conexão.</p>'
-  );
-}
-
-function abrirFerias(){
-  abrirModal(
-    '<div class="modal-titulo">Solicitação de Férias</div>' +
-    '<p style="font-size:13px;color:#6B7280;margin-top:8px">Solicite suas férias no sistema Kairos.</p>' +
-    '<div class="form-group" style="margin-top:14px"><label>Data de início</label><input type="date" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px"></div>' +
-    '<div class="form-group"><label>Data de retorno</label><input type="date" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px"></div>' +
-    '<div class="form-group"><label>Dias de férias</label><input type="number" value="30" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px"></div>' +
-    '<button class="btn btn-primario" onclick="this.parentNode.querySelector(\'p\').textContent=\'Solicitação de férias enviada ao Kairos com sucesso.\';this.parentNode.querySelector(\'p\').style.color=\'#03543F\'">Enviar Solicitação</button>' +
-    '<p style="font-size:12px;color:var(--cinza);margin-top:10px"></p>' +
-    '<p class="modal-aviso">Demonstração. A integração real com o Kairos será ativada após configurar a conexão.</p>'
-  );
-}
-
-/* ===== BOTÕES DA SIDEBAR ===== */
-document.querySelectorAll('.btn-acao').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    if(btn.dataset.acao === 'admin'){
-      window.location.href = 'plataforma-mater-group.html';
-      return;
-    }
-    if(btn.dataset.acao === 'bater-ponto'){
-      abrirBaterPonto();
-      return;
-    }
-    if(btn.dataset.acao === 'treinamentos'){
-      var lista = TREINAMENTOS_TODOS.map(function(t){
-        return '<a href="' + t.url + '" target="_blank" rel="noopener" style="display:block;padding:12px 14px;border:1px solid var(--borda);border-radius:10px;margin-bottom:8px;text-decoration:none;color:var(--texto);font-size:14px;font-weight:600;transition:all .2s">' +
-          t.nome + ' <span style="float:right;color:var(--azul)">→</span></a>';
-      }).join('');
-      abrirModal(
-        '<div class="modal-titulo">Treinamentos Mater Prime</div>' +
-        '<p style="font-size:13px;color:#6B7280;margin-top:8px;margin-bottom:14px">Todos os treinamentos disponíveis. Clique para abrir o conteúdo no site da Mater Prime.</p>' +
-        lista
-      );
-      return;
-    }
-    if(btn.dataset.acao === 'rh'){
-      /* O clique no botão RH não faz nada (a cascata abre no hover) */
-      return;
-    }
-    abrirModal(
-      '<div class="modal-emoji">🚧</div>' +
-      '<div class="modal-titulo">Em breve</div>' +
-      '<p style="font-size:13px;color:#6B7280;margin-top:8px">Este botão ainda não possui direcionamento definido. A peça final será publicada em arquivo HTML separado, como combinado.</p>'
-    );
-  });
-});
-
-/* ===== ITENS DA CASCATA RH ===== */
-document.querySelectorAll('.rh-item').forEach(function(item){
-  item.addEventListener('click', function(){
-    var acao = item.dataset.acao;
-    if(acao === 'justificar'){ abrirJustificar(); }
-    else if(acao === 'espelho'){ abrirEspelho(); }
-    else if(acao === 'holerite'){ abrirHolerite(); }
-    else if(acao === 'ferias'){ abrirFerias(); }
-  });
-});
-
 /* ===== REDES SOCIAIS ===== */
 document.querySelectorAll('.btn-social').forEach(function(btn){
   btn.addEventListener('click', function(){
     var url = btn.dataset.rede;
-    abrirModal(
-      '<div class="modal-titulo">Rede social</div>' +
-      '<p style="font-size:13px;color:#6B7280;margin-top:8px">Exibida dentro da intranet (sem abrir nova aba).</p>' +
-      '<iframe src="' + url + '" title="Rede social" style="width:100%;height:440px;border:1px solid #E5E7EB;border-radius:12px;margin-top:14px;background:#fff"></iframe>' +
-      '<p class="modal-aviso">Instagram, LinkedIn e Facebook costumam bloquear exibição em iframe. Em produção, o acesso é feito por página interna do grupo.</p>' +
-      '<a class="modal-link" href="' + url + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;font-weight:700;color:#4A9BD4;text-decoration:none">Abrir em nova aba ↗</a>'
-    );
+    abrirModal('<div class="modal-titulo">Rede social</div>' +
+      '<p style="font-size:13px;color:#6B7280;margin-top:8px">Exibida dentro da intranet.</p>' +
+      '<iframe src="' + url + '" title="Rede social" style="width:100%;height:440px;border:1px solid var(--borda);border-radius:12px;margin-top:14px;background:#fff"></iframe>' +
+      '<p class="modal-aviso">Instagram, LinkedIn e Facebook costumam bloquear exibição em iframe.</p>' +
+      '<a class="modal-link" href="' + url + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;font-weight:700;color:var(--azul);text-decoration:none">Abrir em nova aba ↗</a>');
   });
 });
 
 /* ===== LOADER (à prova de falhas) ===== */
-function hideLoader(){
-  var l = document.getElementById('loader');
-  if(l){ l.classList.add('oculto'); }
-}
+function hideLoader(){ var l = document.getElementById('loader'); if(l){ l.classList.add('oculto'); } }
 window.addEventListener('load', function(){ setTimeout(hideLoader, 600); });
 document.addEventListener('DOMContentLoaded', function(){ setTimeout(hideLoader, 1200); });
 setTimeout(hideLoader, 2500);

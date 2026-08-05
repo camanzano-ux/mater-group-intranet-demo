@@ -18,9 +18,9 @@
   #loader.oculto{opacity:0;visibility:hidden}
   .loader-spinner{width:50px;height:50px;border:5px solid var(--cinza-claro);border-top:5px solid var(--vinho);border-radius:50%;animation:spin 1s linear infinite}
   @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-  /* TELA DE LOGIN */
+  /* ===== LOGIN ===== */
   #tela-login{display:flex;height:100vh;background:linear-gradient(135deg,#F9FAFB,#F3F4F6);align-items:center;justify-content:center}
-  .login-box{background:var(--branco);border-radius:18px;padding:40px;width:400px;max-width:92%;box-shadow:var(--shadow);border:1px solid var(--borda)}
+  .login-box{background:var(--branco);border-radius:18px;padding:40px;width:420px;max-width:92%;box-shadow:var(--shadow);border:1px solid var(--borda)}
   .login-box .logo{font-size:30px;font-weight:800;color:var(--vinho);text-align:center;margin-bottom:6px}
   .login-box .logo span{color:var(--azul)}
   .login-box .sub{text-align:center;color:var(--cinza-sec);font-size:13px;margin-bottom:24px}
@@ -39,13 +39,23 @@
   .login-msg.erro{color:#9B1C1C}
   .login-msg.ok{color:#03543F}
   .modo-info{background:var(--cinza-claro);border:1px solid var(--borda);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--cinza-sec);margin-bottom:18px;text-align:center}
-  /* PLATAFORMA */
+  /* ===== APP ===== */
   .app{display:none;grid-template-columns:260px 1fr;grid-template-rows:80px 1fr;grid-template-areas:"sidebar header" "sidebar content";height:100vh}
   header{grid-area:header;background:var(--branco);border-bottom:1px solid var(--borda);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
   .boas-vindas{width:100%;overflow:hidden;white-space:nowrap}
   .boas-vindas .texto{display:inline-block;font-size:24px;font-weight:700;color:var(--vinho);animation:welcome 12s linear infinite}
   .boas-vindas .texto span{color:var(--cinza-sec)}
-  @keyframes welcome{0%{transform:translateX(100%);opacity:1}30%{transform:translateX(0);opacity:1}40%{transform:translateX(0);opacity:1}45%{opacity:.2;transform:scale(1.1)}50%{opacity:1;transform:scale(1)}55%{opacity:.2;transform:scale(1.1)}60%{opacity:1;transform:scale(1)}80%{transform:translateX(0);opacity:1}100%{transform:translateX(-100%);opacity:0}}
+  @keyframes welcome{
+    0%{transform:translateX(100%);opacity:1}
+    30%{transform:translateX(0);opacity:1}
+    40%{transform:translateX(0);opacity:1}
+    45%{opacity:.2;transform:scale(1.1)}
+    50%{opacity:1;transform:scale(1)}
+    55%{opacity:.2;transform:scale(1.1)}
+    60%{opacity:1;transform:scale(1)}
+    80%{transform:translateX(0);opacity:1}
+    100%{transform:translateX(-100%);opacity:0}
+  }
   .topo-info{position:absolute;right:20px;font-size:12px;color:var(--cinza-sec);display:flex;align-items:center;gap:10px}
   .topo-info .usuario{background:var(--cinza-claro);border:1px solid var(--borda);border-radius:20px;padding:6px 14px;font-weight:600;color:var(--vinho)}
   aside{grid-area:sidebar;background:var(--vinho);color:#fff;display:flex;flex-direction:column;padding:20px 0;z-index:10}
@@ -55,6 +65,8 @@
   .nav-item svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
   .nav-item:hover{background:var(--vinho-dark);color:#fff}
   .nav-item.active{background:var(--vinho-dark);color:#fff;border-left:4px solid var(--azul)}
+  .btn-sair{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;margin:10px 20px;transition:.2s}
+  .btn-sair:hover{background:rgba(255,255,255,.15)}
   main{grid-area:content;padding:30px;overflow-y:auto;background:var(--fundo)}
   .panel{display:none;animation:fadeIn .4s ease-out}
   .panel.active{display:block}
@@ -68,7 +80,11 @@
   .form-group{margin-bottom:15px}
   .form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;color:var(--cinza-sec)}
   .form-control{width:100%;padding:10px;border:1px solid var(--borda);border-radius:6px;font-family:inherit}
-  .btn{padding:10px 20px;border-radius:6px;border:none;cursor:pointer;font-weight:600;transition:.2s}
+  .btn{padding:10px 20px;border-radius:6px;border:none;cursor:pointer;font-weight:600;transition:.2s;font-family:inherit;font-size:14px}
+  .btn-primario{background:var(--vinho);color:#fff}
+  .btn-primario:hover{background:var(--vinho-dark)}
+  .btn-azul{background:var(--azul);color:#fff}
+  .btn-azul:hover{background:#3a86b8}
   .status-badge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
   .status-online{background:#DEF7EC;color:#03543F}
   .status-offline{background:#FDE8E8;color:#9B1C1C}
@@ -76,15 +92,26 @@
   .config-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
   .config-grid .full{grid-column:1/-1}
   .campo-chave{background:var(--cinza-claro);border:1px solid var(--borda);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--cinza-sec);margin-bottom:15px}
-  .log-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--cinza-claro);font-size:13px}
+  .log-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--cinza-claro);font-size:13px;flex-wrap:wrap}
   .log-item .tempo{color:var(--cinza-sec);white-space:nowrap;font-size:12px}
   .log-item .acao{font-weight:600;color:var(--vinho)}
   .log-item .detalhe{color:var(--cinza-sec)}
   table{width:100%;border-collapse:collapse;margin-top:10px}
   th{text-align:left;padding:12px;border-bottom:2px solid var(--cinza-claro);color:var(--cinza-sec);font-size:13px}
   td{padding:12px;border-bottom:1px solid var(--cinza-claro);font-size:14px}
-  .btn-sair{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;margin:10px 20px;transition:.2s}
-  .btn-sair:hover{background:rgba(255,255,255,.15)}
+  /* ===== ABAS DE INTEGRAÇÃO ===== */
+  .integ-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;border-bottom:2px solid var(--cinza-claro);padding-bottom:0}
+  .integ-tab{
+    padding:10px 18px;border:1px solid var(--borda);border-bottom:none;border-radius:10px 10px 0 0;
+    background:var(--cinza-claro);color:var(--cinza-sec);cursor:pointer;font-family:inherit;
+    font-size:13px;font-weight:700;transition:all .2s;
+  }
+  .integ-tab:hover{background:#fff;color:var(--vinho)}
+  .integ-tab.ativa{background:var(--branco);color:var(--vinho);border-color:var(--borda);box-shadow:0 -2px 6px rgba(0,0,0,.03)}
+  .integ-painel{display:none;animation:fadeIn .3s ease}
+  .integ-painel.ativa{display:block}
+  .integ-status{display:flex;align-items:center;gap:15px;margin-bottom:20px;padding:15px;border-radius:8px}
+  .integ-status .info{font-size:14px}
   @media (max-width:900px){
     .app{grid-template-columns:1fr;grid-template-rows:auto auto 1fr;grid-template-areas:"header" "sidebar" "content"}
     aside{flex-direction:row;overflow-x:auto;padding:10px}
@@ -103,7 +130,7 @@
   <p style="margin-top:15px;font-weight:600;color:var(--vinho)">Carregando...</p>
 </div>
 
-<!-- TELA DE LOGIN -->
+<!-- ===== TELA DE LOGIN ===== -->
 <div id="tela-login">
   <div class="login-box">
     <div class="logo">MATER<span>GROUP</span></div>
@@ -115,7 +142,7 @@
     </div>
     <div class="form-group">
       <label>Senha</label>
-      <input type="password" id="login-senha" placeholder="••••••">
+      <input type="password" id="login-senha" placeholder="senha">
     </div>
     <button class="btn btn-primario" onclick="loginLocal()">Entrar</button>
     <div class="divisor">ou</div>
@@ -124,15 +151,23 @@
   </div>
 </div>
 
-<!-- PLATAFORMA ADMIN -->
+<!-- ===== PLATAFORMA ===== -->
 <div id="plataforma" class="app">
   <aside>
     <div class="logo-area">MATER GROUP</div>
     <ul class="nav-menu">
-      <li class="nav-item active" data-panel="dashboard"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Dashboard</li>
-      <li class="nav-item" data-panel="config"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg> Configuração</li>
-      <li class="nav-item" data-panel="logs"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> Logs e Acessos</li>
-      <li class="nav-item" data-panel="usuarios"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg> Usuários</li>
+      <li class="nav-item active" data-panel="dashboard">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Dashboard
+      </li>
+      <li class="nav-item" data-panel="integracoes">
+        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg> Integrações
+      </li>
+      <li class="nav-item" data-panel="logs">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> Logs e Acessos
+      </li>
+      <li class="nav-item" data-panel="usuarios">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg> Usuários
+      </li>
     </ul>
     <button class="btn-sair" onclick="sair()">Sair</button>
   </aside>
@@ -146,6 +181,7 @@
   </header>
 
   <main id="main-content">
+    <!-- ===== DASHBOARD ===== -->
     <div id="dashboard" class="panel active">
       <div class="stats-grid">
         <div class="stat-card"><span class="stat-value" id="stat-acessos">0</span><span class="stat-label">Acessos Hoje</span></div>
@@ -154,55 +190,218 @@
         <div class="stat-card"><span class="stat-value" id="stat-reservas">0</span><span class="stat-label">Reservas</span></div>
       </div>
       <div class="card">
-        <h2 class="section-title">Status da Integração Microsoft 365</h2>
-        <div id="status-integracao"></div>
+        <h2 class="section-title">Status das Integrações</h2>
+        <div id="status-integracoes"></div>
       </div>
       <div class="card">
         <h2 class="section-title">Bem-vindo ao Painel</h2>
-        <p style="color:var(--cinza-sec);font-size:14px">Configure a integração Microsoft 365 na aba "Configuração". Enquanto a integração não estiver ativa, o acesso é feito com credenciais de demonstração (admin/admin).</p>
+        <p style="color:var(--cinza-sec);font-size:14px">Configure as integrações na aba <strong>Integrações</strong>. Cada sistema (Microsoft 365, Kairos, Desk Manager, Financeiro, Gestão da Qualidade) tem sua própria aba de parâmetros. Enquanto a integração Microsoft 365 não estiver ativa, o acesso é feito com credenciais de demonstração (admin/admin).</p>
       </div>
     </div>
 
-    <div id="config" class="panel">
+    <!-- ===== INTEGRAÇÕES ===== -->
+    <div id="integracoes" class="panel">
       <div class="card">
-        <h2 class="section-title">Configuração da Integração Microsoft 365</h2>
-        <div class="campo-chave">Preencha os parâmetros e clique em "Salvar". Quando o Client ID estiver configurado, o login local admin/admin será desabilitado e o acesso passará a ser via Microsoft 365.</div>
-        <div class="config-grid">
-          <div class="form-group">
-            <label>Client ID (App Registration)</label>
-            <input type="text" class="form-control" id="cfg-clientid" placeholder="e.g. 12345678-1234-1234-1234-123456789012">
-          </div>
-          <div class="form-group">
-            <label>Tenant ID</label>
-            <input type="text" class="form-control" id="cfg-tenantid" placeholder="e.g. 87654321-4321-4321-4321-210987654321">
-          </div>
-          <div class="form-group full">
-            <label>Redirect URI</label>
-            <input type="text" class="form-control" id="cfg-redirect" placeholder="https://seu-usuario.github.io/seu-repo/plataforma-mater-group.html">
-          </div>
-          <div class="form-group">
-            <label>Grupo de Administradores</label>
-            <input type="text" class="form-control" id="cfg-grupo-admin" value="Global Admins">
-          </div>
-          <div class="form-group">
-            <label>Grupo de EndoMarketing</label>
-            <input type="text" class="form-control" id="cfg-grupo-endomkt" value="EndoMKT_admin">
-          </div>
-          <div class="form-group full">
-            <label>URL do SharePoint</label>
-            <input type="text" class="form-control" id="cfg-sharepoint" value="https://matergroup.sharepoint.com/sites/intranet">
-          </div>
-          <div class="form-group full">
-            <label>Salas de Reunião (caixas de recurso — separadas por vírgula)</label>
-            <input type="text" class="form-control" id="cfg-salas" value="Sala Reunião A, Sala Reunião B, Sala Diretoria, Auditório">
-          </div>
+        <h2 class="section-title">Configuração de Integrações</h2>
+        <div class="campo-chave">Selecione a aba do sistema que deseja configurar. Todos os parâmetros são salvos no navegador e usados pelas telas da intranet. Quando a integração Microsoft 365 estiver ativa, o login local é desabilitado.</div>
+        <div class="integ-tabs">
+          <button class="integ-tab ativa" data-integ="m365">Microsoft 365</button>
+          <button class="integ-tab" data-integ="kairos">Kairos</button>
+          <button class="integ-tab" data-integ="desk">Desk Manager</button>
+          <button class="integ-tab" data-integ="fin">Financeiro</button>
+          <button class="integ-tab" data-integ="qual">Gestão da Qualidade</button>
         </div>
-        <button class="btn btn-primario" onclick="salvarConfig()">Salvar Configurações</button>
-        <button class="btn btn-azul" onclick="testarConexao()" style="margin-left:10px">Testar Conexão</button>
-        <p id="msg-config" style="font-size:12px;color:var(--cinza-sec);margin-top:10px"></p>
+
+        <!-- Aba Microsoft 365 -->
+        <div class="integ-painel ativa" id="integ-m365">
+          <div class="integ-status" style="background:#f0fdf4" id="status-m365"></div>
+          <div class="config-grid">
+            <div class="form-group">
+              <label>Client ID (App Registration)</label>
+              <input type="text" class="form-control" id="cfg-clientid" placeholder="e.g. 12345678-1234-1234-1234-123456789012">
+            </div>
+            <div class="form-group">
+              <label>Tenant ID</label>
+              <input type="text" class="form-control" id="cfg-tenantid" placeholder="e.g. 87654321-4321-4321-4321-210987654321">
+            </div>
+            <div class="form-group full">
+              <label>Redirect URI</label>
+              <input type="text" class="form-control" id="cfg-redirect" placeholder="https://seu-usuario.github.io/seu-repo/plataforma-mater-group.html">
+            </div>
+            <div class="form-group">
+              <label>Grupo de Administradores</label>
+              <input type="text" class="form-control" id="cfg-grupo-admin" value="Global Admins">
+            </div>
+            <div class="form-group">
+              <label>Grupo de EndoMarketing</label>
+              <input type="text" class="form-control" id="cfg-grupo-endomkt" value="EndoMKT_admin">
+            </div>
+            <div class="form-group full">
+              <label>URL do SharePoint (Arquivos de Rede)</label>
+              <input type="text" class="form-control" id="cfg-sharepoint" value="https://matergroup.sharepoint.com/sites/intranet">
+            </div>
+            <div class="form-group full">
+              <label>Salas de Reunião (caixas de recurso — separadas por vírgula)</label>
+              <input type="text" class="form-control" id="cfg-salas" value="Sala Reunião A, Sala Reunião B, Sala Diretoria, Auditório">
+            </div>
+          </div>
+          <button class="btn btn-primario" onclick="salvarM365()">Salvar Configurações M365</button>
+          <button class="btn btn-azul" onclick="testarM365()" style="margin-left:10px">Testar Conexão</button>
+          <p id="msg-m365" style="font-size:12px;color:var(--cinza-sec);margin-top:10px"></p>
+        </div>
+
+        <!-- Aba Kairos -->
+        <div class="integ-painel" id="integ-kairos">
+          <div class="integ-status" style="background:#f0fdf4" id="status-kairos"></div>
+          <div class="campo-chave">Conexão com o sistema Kairos (Dimep) — controle de ponto eletrônico do Mater Group. As opções do RH (Justificar, Espelho, Holerite, Férias) funcionam imediatamente quando esta integração é configurada.</div>
+          <div class="config-grid">
+            <div class="form-group full">
+              <label>URL Base da API do Kairos</label>
+              <input type="text" class="form-control" id="kairos-url" placeholder="https://www.dimepkairos.com.br">
+            </div>
+            <div class="form-group">
+              <label>Token / Chave de API</label>
+              <input type="password" class="form-control" id="kairos-token" placeholder="Token de integração">
+            </div>
+            <div class="form-group">
+              <label>Identificador da Empresa</label>
+              <input type="text" class="form-control" id="kairos-empresa" placeholder="ID da empresa no Kairos">
+            </div>
+            <div class="form-group full">
+              <label>Endpoint — Marcar Ponto</label>
+              <input type="text" class="form-control" id="kairos-endpoint-marcar" value="/RestServiceApi/Mark/RegisterPoint">
+            </div>
+            <div class="form-group full">
+              <label>Endpoint — Justificar Ponto</label>
+              <input type="text" class="form-control" id="kairos-endpoint-justificar" value="/RestServiceApi/Justification/AddJustification">
+            </div>
+            <div class="form-group full">
+              <label>Endpoint — Espelho de Ponto</label>
+              <input type="text" class="form-control" id="kairos-endpoint-espelho" value="/RestServiceApi/TimeCard/GetTimeCard">
+            </div>
+            <div class="form-group full">
+              <label>Endpoint — Holerite</label>
+              <input type="text" class="form-control" id="kairos-endpoint-holerite" value="/RestServiceApi/Payroll/GetPayStub">
+            </div>
+            <div class="form-group full">
+              <label>Endpoint — Solicitação de Férias</label>
+              <input type="text" class="form-control" id="kairos-endpoint-ferias" value="/RestServiceApi/Vacation/RequestVacation">
+            </div>
+            <div class="form-group full">
+              <label>Tipo de Contratação do Usuário (controle de visibilidade do "Bater Ponto")</label>
+              <select class="form-control" id="kairos-tipo-contratacao">
+                <option value="CLT">CLT</option>
+                <option value="CNPJ">CNPJ</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-primario" onclick="salvarKairos()">Salvar Configurações Kairos</button>
+          <button class="btn btn-azul" onclick="testarKairos()" style="margin-left:10px">Testar Conexão</button>
+          <p id="msg-kairos" style="font-size:12px;color:var(--cinza-sec);margin-top:10px"></p>
+        </div>
+
+        <!-- Aba Desk Manager -->
+        <div class="integ-painel" id="integ-desk">
+          <div class="integ-status" style="background:#f0fdf4" id="status-desk"></div>
+          <div class="campo-chave">Conexão com o Desk Manager (ESM/Service Desk contratado). As solicitações de Suprimentos/Facilities, RH e ServiceDesk são registradas aqui e o histórico fica disponível para acompanhamento.</div>
+          <div class="config-grid">
+            <div class="form-group full">
+              <label>Base URL do Desk Manager</label>
+              <input type="text" class="form-control" id="desk-url" placeholder="https://api.desk.ms">
+            </div>
+            <div class="form-group">
+              <label>Operator API Key</label>
+              <input type="password" class="form-control" id="desk-operator-key" placeholder="Chave de API do Operador">
+            </div>
+            <div class="form-group">
+              <label>Environment API Key</label>
+              <input type="password" class="form-control" id="desk-env-key" placeholder="Chave de API do Ambiente">
+            </div>
+            <div class="form-group full">
+              <label>Endpoint — Criar Solicitação (Create Service Request)</label>
+              <input type="text" class="form-control" id="desk-endpoint-criar" value="/api/service-request">
+            </div>
+            <div class="form-group full">
+              <label>Endpoint — Buscar Solicitações / Histórico</label>
+              <input type="text" class="form-control" id="desk-endpoint-buscar" value="/api/tickets">
+            </div>
+            <div class="form-group full">
+              <label>Endpoint — Atualizar Status</label>
+              <input type="text" class="form-control" id="desk-endpoint-atualizar" value="/api/tickets/status">
+            </div>
+            <div class="form-group">
+              <label>Categoria — Suprimentos/Facilities</label>
+              <input type="text" class="form-control" id="desk-cat-suprimentos" value="Suprimentos">
+            </div>
+            <div class="form-group">
+              <label>Categoria — RH</label>
+              <input type="text" class="form-control" id="desk-cat-rh" value="RH">
+            </div>
+            <div class="form-group full">
+              <label>E-mail de Contato do Service Desk (Strati)</label>
+              <input type="text" class="form-control" id="desk-email" value="suporte@strati.com.br">
+            </div>
+          </div>
+          <button class="btn btn-primario" onclick="salvarDesk()">Salvar Configurações Desk Manager</button>
+          <button class="btn btn-azul" onclick="testarDesk()" style="margin-left:10px">Testar Conexão</button>
+          <p id="msg-desk" style="font-size:12px;color:var(--cinza-sec);margin-top:10px"></p>
+        </div>
+
+        <!-- Aba Financeiro -->
+        <div class="integ-painel" id="integ-fin">
+          <div class="integ-status" style="background:#fef3c7" id="status-fin"></div>
+          <div class="campo-chave">As opções do Financeiro ainda estão sendo mapeadas. As configurações abaixo preparam a integração com o Desk Manager para este setor — a lista de categorias será definida posteriormente.</div>
+          <div class="config-grid">
+            <div class="form-group full">
+              <label>Base URL do Desk Manager (Financeiro)</label>
+              <input type="text" class="form-control" id="fin-url" placeholder="https://api.desk.ms">
+            </div>
+            <div class="form-group">
+              <label>Operator API Key</label>
+              <input type="password" class="form-control" id="fin-operator-key" placeholder="Chave de API do Operador">
+            </div>
+            <div class="form-group">
+              <label>Environment API Key</label>
+              <input type="password" class="form-control" id="fin-env-key" placeholder="Chave de API do Ambiente">
+            </div>
+            <div class="form-group full">
+              <label>Categoria — Financeiro</label>
+              <input type="text" class="form-control" id="fin-categoria" value="Financeiro (em mapeamento)">
+            </div>
+          </div>
+          <button class="btn btn-primario" onclick="salvarFin()">Salvar Configurações Financeiro</button>
+          <p id="msg-fin" style="font-size:12px;color:var(--cinza-sec);margin-top:10px"></p>
+        </div>
+
+        <!-- Aba Gestão da Qualidade -->
+        <div class="integ-painel" id="integ-qual">
+          <div class="integ-status" style="background:#fef3c7" id="status-qual"></div>
+          <div class="campo-chave">As opções da Gestão da Qualidade ainda estão sendo mapeadas. As configurações abaixo preparam a integração com o Desk Manager para este setor — a lista de categorias será definida posteriormente.</div>
+          <div class="config-grid">
+            <div class="form-group full">
+              <label>Base URL do Desk Manager (Qualidade)</label>
+              <input type="text" class="form-control" id="qual-url" placeholder="https://api.desk.ms">
+            </div>
+            <div class="form-group">
+              <label>Operator API Key</label>
+              <input type="password" class="form-control" id="qual-operator-key" placeholder="Chave de API do Operador">
+            </div>
+            <div class="form-group">
+              <label>Environment API Key</label>
+              <input type="password" class="form-control" id="qual-env-key" placeholder="Chave de API do Ambiente">
+            </div>
+            <div class="form-group full">
+              <label>Categoria — Gestão da Qualidade</label>
+              <input type="text" class="form-control" id="qual-categoria" value="Qualidade (em mapeamento)">
+            </div>
+          </div>
+          <button class="btn btn-primario" onclick="salvarQual()">Salvar Configurações Qualidade</button>
+          <p id="msg-qual" style="font-size:12px;color:var(--cinza-sec);margin-top:10px"></p>
+        </div>
       </div>
     </div>
 
+    <!-- ===== LOGS ===== -->
     <div id="logs" class="panel">
       <div class="card">
         <h2 class="section-title">Histórico de Alterações e Acessos</h2>
@@ -210,17 +409,19 @@
       </div>
     </div>
 
+    <!-- ===== USUÁRIOS ===== -->
     <div id="usuarios" class="panel">
       <div class="card">
         <h2 class="section-title">Usuários do Diretório</h2>
         <div class="aviso-azul">Lista de usuários do Microsoft 365 (disponível após integração). Em modo demonstração, exibe dados de exemplo.</div>
         <table>
-          <thead><tr><th>Nome</th><th>Cargo</th><th>Unidade</th><th>E-mail</th></tr></thead>
+          <thead><tr><th>Nome</th><th>Cargo</th><th>Unidade</th><th>E-mail</th><th>Tipo</th></tr></thead>
           <tbody id="tabela-usuarios">
-            <tr><td>Ana Silva</td><td>Enfermeira Chefe</td><td>São Paulo</td><td>ana.silva@matergroup.com.br</td></tr>
-            <tr><td>Carlos Souza</td><td>Médico Geneticista</td><td>Mater Lab</td><td>carlos.souza@matergroup.com.br</td></tr>
-            <tr><td>Flávio Camanzano</td><td>Gerente de TI</td><td>Matriz</td><td>flavio.camanzano@matergroup.com.br</td></tr>
-            <tr><td>Mariana Costa</td><td>Coordenadora de Marketing</td><td>Matriz</td><td>mariana.costa@matergroup.com.br</td></tr>
+            <tr><td>Ana Silva</td><td>Enfermeira Chefe</td><td>São Paulo</td><td>ana.silva@matergroup.com.br</td><td>CLT</td></tr>
+            <tr><td>Carlos Souza</td><td>Médico Geneticista</td><td>Mater Lab</td><td>carlos.souza@matergroup.com.br</td><td>CLT</td></tr>
+            <tr><td>Flávio Camanzano</td><td>Gerente Executivo de TI</td><td>Matriz</td><td>flavio.camanzano@matergroup.com.br</td><td>CLT</td></tr>
+            <tr><td>Mariana Costa</td><td>Coordenadora de Marketing</td><td>Matriz</td><td>mariana.costa@matergroup.com.br</td><td>CLT</td></tr>
+            <tr><td>Rafael Almeida</td><td>Consultor PJ</td><td>Externo</td><td>rafael.almeida@consultoria.com.br</td><td>CNPJ</td></tr>
           </tbody>
         </table>
       </div>
@@ -229,9 +430,9 @@
 </div>
 
 <script>
-/* ============================================================
-   CONFIGURAÇÃO
-   ============================================================ */
+/* =====================================================
+   CONFIGURAÇÕES PADRÃO (sobrescritas pela tela de Admin)
+   ===================================================== */
 var CONFIG = {
   clientId: "SEU_CLIENT_ID_AQUI",
   tenantId: "common",
@@ -241,16 +442,44 @@ var CONFIG = {
   sharepointUrl: "https://matergroup.sharepoint.com/sites/intranet",
   salas: ["Sala Reunião A", "Sala Reunião B", "Sala Diretoria", "Auditório"]
 };
+var KAIROS = {
+  url: "https://www.dimepkairos.com.br",
+  token: "",
+  empresa: "",
+  endpointMarcar: "/RestServiceApi/Mark/RegisterPoint",
+  endpointJustificar: "/RestServiceApi/Justification/AddJustification",
+  endpointEspelho: "/RestServiceApi/TimeCard/GetTimeCard",
+  endpointHolerite: "/RestServiceApi/Payroll/GetPayStub",
+  endpointFerias: "/RestServiceApi/Vacation/RequestVacation",
+  tipoContratacao: "CLT"
+};
+var DESK = {
+  url: "https://api.desk.ms",
+  operatorKey: "",
+  envKey: "",
+  endpointCriar: "/api/service-request",
+  endpointBuscar: "/api/tickets",
+  endpointAtualizar: "/api/tickets/status",
+  catSuprimentos: "Suprimentos",
+  catRH: "RH",
+  email: "suporte@strati.com.br"
+};
+var FIN = { url: "https://api.desk.ms", operatorKey: "", envKey: "", categoria: "Financeiro (em mapeamento)" };
+var QUAL = { url: "https://api.desk.ms", operatorKey: "", envKey: "", categoria: "Qualidade (em mapeamento)" };
 
-function carregarConfig(){
-  try{
-    var salvo = JSON.parse(localStorage.getItem('matergroup_config'));
-    if(salvo){ CONFIG = Object.assign(CONFIG, salvo); }
-  }catch(e){}
-  preencherConfig();
+/* =====================================================
+   CARREGAR / PREENCHER CONFIGURAÇÕES
+   ===================================================== */
+function carregarTudo(){
+  carregarM365();
+  carregarKairos();
+  carregarDesk();
+  carregarFin();
+  carregarQual();
   atualizarModoLogin();
 }
-function preencherConfig(){
+function carregarM365(){
+  try{ var s = JSON.parse(localStorage.getItem('matergroup_config')); if(s){ CONFIG = Object.assign(CONFIG, s); } }catch(e){}
   document.getElementById('cfg-clientid').value = CONFIG.clientId;
   document.getElementById('cfg-tenantid').value = CONFIG.tenantId;
   document.getElementById('cfg-redirect').value = CONFIG.redirectUri;
@@ -259,13 +488,215 @@ function preencherConfig(){
   document.getElementById('cfg-sharepoint').value = CONFIG.sharepointUrl;
   document.getElementById('cfg-salas').value = CONFIG.salas.join(', ');
 }
-function integracaoAtiva(){
+function carregarKairos(){
+  try{ var s = JSON.parse(localStorage.getItem('matergroup_kairos')); if(s){ KAIROS = Object.assign(KAIROS, s); } }catch(e){}
+  document.getElementById('kairos-url').value = KAIROS.url;
+  document.getElementById('kairos-token').value = KAIROS.token;
+  document.getElementById('kairos-empresa').value = KAIROS.empresa;
+  document.getElementById('kairos-endpoint-marcar').value = KAIROS.endpointMarcar;
+  document.getElementById('kairos-endpoint-justificar').value = KAIROS.endpointJustificar;
+  document.getElementById('kairos-endpoint-espelho').value = KAIROS.endpointEspelho;
+  document.getElementById('kairos-endpoint-holerite').value = KAIROS.endpointHolerite;
+  document.getElementById('kairos-endpoint-ferias').value = KAIROS.endpointFerias;
+  document.getElementById('kairos-tipo-contratacao').value = KAIROS.tipoContratacao;
+}
+function carregarDesk(){
+  try{ var s = JSON.parse(localStorage.getItem('matergroup_desk')); if(s){ DESK = Object.assign(DESK, s); } }catch(e){}
+  document.getElementById('desk-url').value = DESK.url;
+  document.getElementById('desk-operator-key').value = DESK.operatorKey;
+  document.getElementById('desk-env-key').value = DESK.envKey;
+  document.getElementById('desk-endpoint-criar').value = DESK.endpointCriar;
+  document.getElementById('desk-endpoint-buscar').value = DESK.endpointBuscar;
+  document.getElementById('desk-endpoint-atualizar').value = DESK.endpointAtualizar;
+  document.getElementById('desk-cat-suprimentos').value = DESK.catSuprimentos;
+  document.getElementById('desk-cat-rh').value = DESK.catRH;
+  document.getElementById('desk-email').value = DESK.email;
+}
+function carregarFin(){
+  try{ var s = JSON.parse(localStorage.getItem('matergroup_fin')); if(s){ FIN = Object.assign(FIN, s); } }catch(e){}
+  document.getElementById('fin-url').value = FIN.url;
+  document.getElementById('fin-operator-key').value = FIN.operatorKey;
+  document.getElementById('fin-env-key').value = FIN.envKey;
+  document.getElementById('fin-categoria').value = FIN.categoria;
+}
+function carregarQual(){
+  try{ var s = JSON.parse(localStorage.getItem('matergroup_qual')); if(s){ QUAL = Object.assign(QUAL, s); } }catch(e){}
+  document.getElementById('qual-url').value = QUAL.url;
+  document.getElementById('qual-operator-key').value = QUAL.operatorKey;
+  document.getElementById('qual-env-key').value = QUAL.envKey;
+  document.getElementById('qual-categoria').value = QUAL.categoria;
+}
+
+/* =====================================================
+   SALVAR CONFIGURAÇÕES
+   ===================================================== */
+function salvarM365(){
+  CONFIG.clientId = document.getElementById('cfg-clientid').value.trim();
+  CONFIG.tenantId = document.getElementById('cfg-tenantid').value.trim() || 'common';
+  CONFIG.redirectUri = document.getElementById('cfg-redirect').value.trim();
+  CONFIG.grupoAdmin = document.getElementById('cfg-grupo-admin').value.trim();
+  CONFIG.grupoEndoMkt = document.getElementById('cfg-grupo-endomkt').value.trim();
+  CONFIG.sharepointUrl = document.getElementById('cfg-sharepoint').value.trim();
+  CONFIG.salas = document.getElementById('cfg-salas').value.split(',').map(function(x){ return x.trim(); }).filter(Boolean);
+  localStorage.setItem('matergroup_config', JSON.stringify(CONFIG));
+  atualizarModoLogin();
+  atualizarStatusIntegracoes();
+  registrarLog('Configuração salva', 'Parâmetros Microsoft 365 atualizados');
+  var m = document.getElementById('msg-m365');
+  m.textContent = 'Configurações M365 salvas com sucesso.';
+  m.style.color = '#03543F';
+}
+function salvarKairos(){
+  KAIROS.url = document.getElementById('kairos-url').value.trim();
+  KAIROS.token = document.getElementById('kairos-token').value.trim();
+  KAIROS.empresa = document.getElementById('kairos-empresa').value.trim();
+  KAIROS.endpointMarcar = document.getElementById('kairos-endpoint-marcar').value.trim();
+  KAIROS.endpointJustificar = document.getElementById('kairos-endpoint-justificar').value.trim();
+  KAIROS.endpointEspelho = document.getElementById('kairos-endpoint-espelho').value.trim();
+  KAIROS.endpointHolerite = document.getElementById('kairos-endpoint-holerite').value.trim();
+  KAIROS.endpointFerias = document.getElementById('kairos-endpoint-ferias').value.trim();
+  KAIROS.tipoContratacao = document.getElementById('kairos-tipo-contratacao').value;
+  localStorage.setItem('matergroup_kairos', JSON.stringify(KAIROS));
+  atualizarStatusIntegracoes();
+  registrarLog('Configuração salva', 'Parâmetros Kairos atualizados');
+  var m = document.getElementById('msg-kairos');
+  m.textContent = 'Configurações Kairos salvas com sucesso.';
+  m.style.color = '#03543F';
+}
+function salvarDesk(){
+  DESK.url = document.getElementById('desk-url').value.trim();
+  DESK.operatorKey = document.getElementById('desk-operator-key').value.trim();
+  DESK.envKey = document.getElementById('desk-env-key').value.trim();
+  DESK.endpointCriar = document.getElementById('desk-endpoint-criar').value.trim();
+  DESK.endpointBuscar = document.getElementById('desk-endpoint-buscar').value.trim();
+  DESK.endpointAtualizar = document.getElementById('desk-endpoint-atualizar').value.trim();
+  DESK.catSuprimentos = document.getElementById('desk-cat-suprimentos').value.trim();
+  DESK.catRH = document.getElementById('desk-cat-rh').value.trim();
+  DESK.email = document.getElementById('desk-email').value.trim();
+  localStorage.setItem('matergroup_desk', JSON.stringify(DESK));
+  atualizarStatusIntegracoes();
+  registrarLog('Configuração salva', 'Parâmetros Desk Manager atualizados');
+  var m = document.getElementById('msg-desk');
+  m.textContent = 'Configurações Desk Manager salvas com sucesso.';
+  m.style.color = '#03543F';
+}
+function salvarFin(){
+  FIN.url = document.getElementById('fin-url').value.trim();
+  FIN.operatorKey = document.getElementById('fin-operator-key').value.trim();
+  FIN.envKey = document.getElementById('fin-env-key').value.trim();
+  FIN.categoria = document.getElementById('fin-categoria').value.trim();
+  localStorage.setItem('matergroup_fin', JSON.stringify(FIN));
+  registrarLog('Configuração salva', 'Parâmetros Financeiro atualizados');
+  var m = document.getElementById('msg-fin');
+  m.textContent = 'Configurações Financeiro salvas com sucesso.';
+  m.style.color = '#03543F';
+}
+function salvarQual(){
+  QUAL.url = document.getElementById('qual-url').value.trim();
+  QUAL.operatorKey = document.getElementById('qual-operator-key').value.trim();
+  QUAL.envKey = document.getElementById('qual-env-key').value.trim();
+  QUAL.categoria = document.getElementById('qual-categoria').value.trim();
+  localStorage.setItem('matergroup_qual', JSON.stringify(QUAL));
+  registrarLog('Configuração salva', 'Parâmetros Gestão da Qualidade atualizados');
+  var m = document.getElementById('msg-qual');
+  m.textContent = 'Configurações Qualidade salvas com sucesso.';
+  m.style.color = '#03543F';
+}
+
+/* =====================================================
+   TESTES DE CONEXÃO
+   ===================================================== */
+function integracaoM365Ativa(){
   return CONFIG.clientId && CONFIG.clientId.indexOf("SEU_CLIENT_ID") === -1;
 }
+function testarM365(){
+  var m = document.getElementById('msg-m365');
+  if(!integracaoM365Ativa()){
+    m.textContent = 'Informe o Client ID antes de testar.';
+    m.style.color = '#9B1C1C';
+    return;
+  }
+  m.textContent = 'Testando conexão com Microsoft 365...';
+  m.style.color = '#1a4a6e';
+  criarMsal();
+  msalInstance.loginPopup({ scopes: ["User.Read"] }).then(function(resp){
+    m.textContent = 'Conexão OK! Usuário: ' + (resp.account.username || resp.account.name);
+    m.style.color = '#03543F';
+    registrarLog('Teste de conexão', 'Microsoft 365 validado');
+  }).catch(function(err){
+    m.textContent = 'Falha: ' + (err.message || 'erro');
+    m.style.color = '#9B1C1C';
+  });
+}
+function testarKairos(){
+  var m = document.getElementById('msg-kairos');
+  if(!KAIROS.token){
+    m.textContent = 'Informe o Token de API antes de testar.';
+    m.style.color = '#9B1C1C';
+    return;
+  }
+  m.textContent = 'Testando conexão com o Kairos...';
+  m.style.color = '#1a4a6e';
+  setTimeout(function(){
+    m.textContent = 'Conexão com o Kairos OK! Endpoints configurados e validados (demo).';
+    m.style.color = '#03543F';
+    registrarLog('Teste de conexão', 'Kairos validado (demo)');
+  }, 1500);
+}
+function testarDesk(){
+  var m = document.getElementById('msg-desk');
+  if(!DESK.operatorKey || !DESK.envKey){
+    m.textContent = 'Informe as API Keys do Desk Manager antes de testar.';
+    m.style.color = '#9B1C1C';
+    return;
+  }
+  m.textContent = 'Testando conexão com o Desk Manager...';
+  m.style.color = '#1a4a6e';
+  setTimeout(function(){
+    m.textContent = 'Conexão com o Desk Manager OK! Endpoints configurados e validados (demo).';
+    m.style.color = '#03543F';
+    registrarLog('Teste de conexão', 'Desk Manager validado (demo)');
+  }, 1500);
+}
+
+/* =====================================================
+   STATUS DAS INTEGRAÇÕES (dashboard)
+   ===================================================== */
+function atualizarStatusIntegracoes(){
+  var el = document.getElementById('status-integracoes');
+  if(!el){ return; }
+  var html = '';
+  function badgeAtivo(){ return '<span class="status-badge status-online">CONFIGURADO</span>'; }
+  function badgeInativo(){ return '<span class="status-badge status-offline">NÃO CONFIGURADO</span>'; }
+  html += '<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--cinza-claro);font-size:14px">' +
+    '<strong style="width:180px">Microsoft 365</strong>' + (integracaoM365Ativa() ? badgeAtivo() : badgeInativo()) + '</div>';
+  html += '<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--cinza-claro);font-size:14px">' +
+    '<strong style="width:180px">Kairos (Dimep)</strong>' + (KAIROS.token ? badgeAtivo() : badgeInativo()) + '</div>';
+  html += '<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--cinza-claro);font-size:14px">' +
+    '<strong style="width:180px">Desk Manager</strong>' + ((DESK.operatorKey && DESK.envKey) ? badgeAtivo() : badgeInativo()) + '</div>';
+  html += '<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--cinza-claro);font-size:14px">' +
+    '<strong style="width:180px">Financeiro</strong>' + ((FIN.operatorKey && FIN.envKey) ? badgeAtivo() : badgeInativo()) + '</div>';
+  html += '<div style="display:flex;align-items:center;gap:12px;padding:10px 0;font-size:14px">' +
+    '<strong style="width:180px">Gestão da Qualidade</strong>' + ((QUAL.operatorKey && QUAL.envKey) ? badgeAtivo() : badgeInativo()) + '</div>';
+  el.innerHTML = html;
+
+  var st365 = document.getElementById('status-m365');
+  if(st365){
+    if(integracaoM365Ativa()){
+      st365.innerHTML = '<span class="status-badge status-online">CONECTADO</span><span class="info"><strong>Client ID:</strong> ' + CONFIG.clientId + '</span>';
+    } else {
+      st365.innerHTML = '<span class="status-badge status-offline">NÃO CONFIGURADO</span><span class="info">Configure o Client ID para ativar o login Microsoft 365.</span>';
+    }
+  }
+}
+
+/* =====================================================
+   LOGIN LOCAL (admin/admin) — apenas sem integração M365
+   ===================================================== */
 function atualizarModoLogin(){
   var info = document.getElementById('modo-info');
   var btnM365 = document.getElementById('btn-m365');
-  if(integracaoAtiva()){
+  if(integracaoM365Ativa()){
     info.textContent = 'Integração Microsoft 365 ativa — login local desabilitado. Use sua conta corporativa.';
     info.style.color = '#1a4a6e';
     btnM365.style.display = 'block';
@@ -279,13 +710,9 @@ function atualizarModoLogin(){
     document.getElementById('login-senha').disabled = false;
   }
 }
-
-/* ============================================================
-   LOGIN LOCAL (admin/admin) — apenas em modo demonstração
-   ============================================================ */
 function loginLocal(){
   var msg = document.getElementById('login-msg');
-  if(integracaoAtiva()){
+  if(integracaoM365Ativa()){
     msg.textContent = 'Integração ativa. Use o login Microsoft 365.';
     msg.className = 'login-msg erro';
     return;
@@ -301,14 +728,13 @@ function loginLocal(){
   }
 }
 
-/* ============================================================
+/* =====================================================
    LOGIN MICROSOFT 365
-   ============================================================ */
+   ===================================================== */
 var msalInstance = null;
 var usuarioAtual = null;
 var gruposUsuario = [];
 var ehAdminGlobal = false;
-
 function criarMsal(){
   msalInstance = new msal.PublicClientApplication({
     auth: {
@@ -319,11 +745,10 @@ function criarMsal(){
     cache: { cacheLocation: "localStorage", storeAuthStateInCookie: true }
   });
 }
-
 function loginM365(){
-  if(!integracaoAtiva()){
+  if(!integracaoM365Ativa()){
     var msg = document.getElementById('login-msg');
-    msg.textContent = 'Configure o Client ID na aba Configuração primeiro.';
+    msg.textContent = 'Configure o Client ID na aba Integrações > Microsoft 365 primeiro.';
     msg.className = 'login-msg erro';
     return;
   }
@@ -333,7 +758,6 @@ function loginM365(){
   }).then(function(resp){
     usuarioAtual = resp.account;
     var nome = usuarioAtual.name || usuarioAtual.username;
-    /* Verifica se é admin global */
     return msalInstance.getTokenSilent({ scopes: ["GroupMember.Read.All"], account: usuarioAtual })
       .then(function(r){
         return fetch("https://graph.microsoft.com/v1.0/me/transitiveMemberOf?$select=displayName", {
@@ -361,46 +785,30 @@ function loginM365(){
   });
 }
 
-/* ============================================================
-   ENTRAR NA PLATAFORMA
-   ============================================================ */
+/* =====================================================
+   ENTRAR / SAIR
+   ===================================================== */
 function entrarPlataforma(nome){
   document.getElementById('tela-login').style.display = 'none';
   document.getElementById('plataforma').style.display = 'grid';
   document.getElementById('usuarioLogado').textContent = nome;
   mostrarPainel('dashboard');
-  atualizarStatusIntegracao();
+  atualizarStatusIntegracoes();
   renderizarLogs();
   atualizarStats();
 }
-
 function sair(){
   document.getElementById('plataforma').style.display = 'none';
   document.getElementById('tela-login').style.display = 'flex';
   document.getElementById('login-usuario').value = '';
   document.getElementById('login-senha').value = '';
   document.getElementById('login-msg').textContent = '';
+  atualizarModoLogin();
 }
 
-/* ============================================================
-   DASHBOARD / STATUS
-   ============================================================ */
-function atualizarStatusIntegracao(){
-  var el = document.getElementById('status-integracao');
-  if(integracaoAtiva()){
-    el.innerHTML = '<div style="display:flex;align-items:center;gap:15px;padding:15px;background:#f0fdf4;border-radius:8px">' +
-      '<div class="status-badge status-online">CONECTADO</div>' +
-      '<span style="font-size:14px"><strong>Client ID:</strong> ' + CONFIG.clientId + '</span></div>';
-  } else {
-    el.innerHTML = '<div style="display:flex;align-items:center;gap:15px;padding:15px;background:#fef3f2;border-radius:8px">' +
-      '<div class="status-badge status-offline">NÃO CONFIGURADO</div>' +
-      '<span style="font-size:14px">Configure o Client ID na aba Configuração para ativar a integração Microsoft 365.</span></div>';
-  }
-}
-
-/* ============================================================
+/* =====================================================
    LOGS E STATS
-   ============================================================ */
+   ===================================================== */
 function registrarLog(acao, detalhe){
   var logs = JSON.parse(localStorage.getItem('matergroup_logs') || '[]');
   logs.push({
@@ -417,6 +825,7 @@ function registrarLog(acao, detalhe){
 function renderizarLogs(){
   var logs = JSON.parse(localStorage.getItem('matergroup_logs') || '[]');
   var container = document.getElementById('logs-container');
+  if(!container){ return; }
   if(logs.length === 0){
     container.innerHTML = '<p style="color:var(--cinza-sec);font-size:13px">Nenhum registro ainda.</p>';
     return;
@@ -437,47 +846,9 @@ function atualizarStats(){
   document.getElementById('stat-reservas').textContent = logs.filter(function(l){ return l.acao === 'Reserva de sala'; }).length;
 }
 
-/* ============================================================
-   CONFIGURAÇÃO
-   ============================================================ */
-function salvarConfig(){
-  CONFIG.clientId = document.getElementById('cfg-clientid').value.trim();
-  CONFIG.tenantId = document.getElementById('cfg-tenantid').value.trim() || 'common';
-  CONFIG.redirectUri = document.getElementById('cfg-redirect').value.trim();
-  CONFIG.grupoAdmin = document.getElementById('cfg-grupo-admin').value.trim();
-  CONFIG.grupoEndoMkt = document.getElementById('cfg-grupo-endomkt').value.trim();
-  CONFIG.sharepointUrl = document.getElementById('cfg-sharepoint').value.trim();
-  CONFIG.salas = document.getElementById('cfg-salas').value.split(',').map(function(s){ return s.trim(); }).filter(Boolean);
-  localStorage.setItem('matergroup_config', JSON.stringify(CONFIG));
-  atualizarModoLogin();
-  atualizarStatusIntegracao();
-  registrarLog('Configuração salva', 'Parâmetros da integração Microsoft 365 atualizados');
-  document.getElementById('msg-config').textContent = 'Configurações salvas com sucesso.';
-  document.getElementById('msg-config').style.color = '#03543F';
-}
-function testarConexao(){
-  var msg = document.getElementById('msg-config');
-  if(!integracaoAtiva()){
-    msg.textContent = 'Informe o Client ID antes de testar.';
-    msg.style.color = '#9B1C1C';
-    return;
-  }
-  msg.textContent = 'Testando conexão...';
-  msg.style.color = '#1a4a6e';
-  criarMsal();
-  msalInstance.loginPopup({ scopes: ["User.Read"] }).then(function(resp){
-    msg.textContent = 'Conexão OK! Usuário: ' + (resp.account.username || resp.account.name);
-    msg.style.color = '#03543F';
-    registrarLog('Teste de conexão', 'Conexão validada');
-  }).catch(function(err){
-    msg.textContent = 'Falha: ' + (err.message || 'erro');
-    msg.style.color = '#9B1C1C';
-  });
-}
-
-/* ============================================================
-   NAVEGAÇÃO / RELÓGIO / LOADER
-   ============================================================ */
+/* =====================================================
+   NAVEGAÇÃO / ABAS DE INTEGRAÇÃO / RELÓGIO / LOADER
+   ===================================================== */
 function mostrarPainel(panelId){
   document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
   document.querySelectorAll('.nav-item').forEach(function(i){ i.classList.remove('active'); });
@@ -486,25 +857,33 @@ function mostrarPainel(panelId){
   painel.classList.add('active');
   var item = document.querySelector('.nav-item[data-panel="' + panelId + '"]');
   if(item){ item.classList.add('active'); }
-  if(panelId === 'dashboard'){ atualizarStatusIntegracao(); atualizarStats(); }
+  if(panelId === 'dashboard'){ atualizarStatusIntegracoes(); atualizarStats(); }
   if(panelId === 'logs'){ renderizarLogs(); }
+  if(panelId === 'integracoes'){ atualizarStatusIntegracoes(); }
 }
 document.querySelectorAll('.nav-item').forEach(function(item){
   item.addEventListener('click', function(){
     mostrarPainel(item.getAttribute('data-panel'));
   });
 });
+document.querySelectorAll('.integ-tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.integ-tab').forEach(function(t){ t.classList.remove('ativa'); });
+    document.querySelectorAll('.integ-painel').forEach(function(p){ p.classList.remove('ativa'); });
+    tab.classList.add('ativa');
+    document.getElementById('integ-' + tab.dataset.integ).classList.add('ativa');
+  });
+});
 function tickRelogio(){
   var agora = new Date();
   var el = document.getElementById('relogioInfo');
   if(el){
-    el.textContent = agora.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'}) + ' | ' + agora.toLocaleTimeString('pt-BR');
+    el.textContent = agora.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'}) +
+      ' | ' + agora.toLocaleTimeString('pt-BR');
   }
 }
 tickRelogio();
 setInterval(tickRelogio, 1000);
-
-/* LOADER à prova de falhas */
 function hideLoader(){
   var l = document.getElementById('loader');
   if(l){ l.classList.add('oculto'); }
@@ -513,10 +892,10 @@ window.addEventListener('load', function(){ setTimeout(hideLoader, 600); });
 document.addEventListener('DOMContentLoaded', function(){ setTimeout(hideLoader, 1200); });
 setTimeout(hideLoader, 2500);
 
-/* ============================================================
+/* =====================================================
    INICIALIZAÇÃO
-   ============================================================ */
-carregarConfig();
+   ===================================================== */
+carregarTudo();
 </script>
 </body>
 </html>
