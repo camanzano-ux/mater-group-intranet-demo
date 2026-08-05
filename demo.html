@@ -5,14 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mater Group · Intranet Corporativa</title>
 <style>
-  /* ===== TEMA MATER PRIME (cores suaves) ===== */
   :root{
-    --mp-rosa:#C4227E;      --mp-rosa-hover:#A01B68;
-    --mp-rosa-suave:#F8E1EE;--mp-rosa-bg:#FDF2F8;
-    --mp-teal:#0D9488;      --mp-vinho:#7A1F3D;
-    --cinza-texto:#4A4A4A;  --cinza-sec:#8A8A8A;
-    --cinza-claro:#F7F7F9;  --fundo:#FDF8FB;
-    --branco:#ffffff;       --borda:#F0E0EA;
+    --mp-rosa:#C4227E; --mp-rosa-hover:#A01B68;
+    --mp-rosa-suave:#F8E1EE; --mp-rosa-bg:#FDF2F8;
+    --mp-teal:#0D9488; --mp-vinho:#7A1F3D;
+    --cinza-texto:#4A4A4A; --cinza-sec:#8A8A8A;
+    --cinza-claro:#F7F7F9; --fundo:#FDF8FB;
+    --branco:#ffffff; --borda:#F0E0EA;
     --shadow:0 4px 16px rgba(196,34,126,.08),0 2px 4px rgba(0,0,0,.04);
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -56,31 +55,55 @@
       transparent 0 30px, rgba(196,34,126,.25) 30px 32px, transparent 32px 60px);
     transform:skewY(-8deg);
   }
-  /* Óvulo 3D — travado à esquerda do relógio */
+  /* ===== ÓVULO 3D (deslocado 1cm à esquerda, na frente do relógio) ===== */
   .ovulo-3d{
     position:absolute;
-    right:255px;                 /* encostado à esquerda do relógio (right:22px) */
+    right:295px;                 /* deslocado ~40px (1cm) à esquerda de right:255px */
     top:50%;transform:translateY(-50%);
-    width:44px;height:44px;border-radius:50%;pointer-events:none;
-    background:radial-gradient(circle at 35% 30%, #fff, #F8C8DC 45%, #E89AC0 70%, #C4227E 100%);
-    box-shadow:inset -6px -8px 14px rgba(196,34,126,.35), 0 4px 12px rgba(196,34,126,.3);
-    z-index:8;
+    width:46px;height:46px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle at 35% 30%, #fff, #F8C8DC 40%, #E89AC0 65%, #C4227E 100%);
+    box-shadow:inset -6px -8px 14px rgba(196,34,126,.4), 0 4px 14px rgba(196,34,126,.35);
+    z-index:10;                  /* NA FRENTE do relógio */
   }
+  /* Halo ciano (zona pelúcida) */
+  .ovulo-3d::before{
+    content:"";position:absolute;inset:-7px;border-radius:50%;
+    background:radial-gradient(circle, rgba(13,148,136,.25), transparent 70%);
+    filter:blur(2px);
+  }
+  /* Textura rugosa (córtex) */
   .ovulo-3d::after{
-    content:"";position:absolute;top:8px;left:10px;width:10px;height:6px;border-radius:50%;
-    background:rgba(255,255,255,.8);filter:blur(1px);
+    content:"";position:absolute;inset:0;border-radius:50%;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,.6) 0 2px, transparent 3px),
+      radial-gradient(circle at 70% 60%, rgba(196,34,126,.4) 0 2px, transparent 3px),
+      radial-gradient(circle at 45% 75%, rgba(255,255,255,.5) 0 2px, transparent 3px),
+      radial-gradient(circle at 80% 25%, rgba(196,34,126,.35) 0 2px, transparent 3px);
+    background-size:12px 12px;
   }
-  /* Espermatozoides elegantes (mais lentos, somem no óvulo) */
-  .esperma{position:absolute;left:-90px;top:50%;pointer-events:none;z-index:7;opacity:0}
-  .esperma svg{width:70px;height:26px;overflow:visible}
-  .esperma .esp-corpo{animation:ondula 1.4s ease-in-out infinite;transform-origin:center}
-  @keyframes ondula{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+  /* ===== Espermatozoides (padrão da imagem: cabeça brilhante + cauda serpentina) ===== */
+  .esperma{position:absolute;left:-120px;top:50%;pointer-events:none;z-index:9;opacity:0}
+  .esperma svg{width:90px;height:30px;overflow:visible}
+  .esperma .cabeca{
+    fill:var(--mp-rosa);
+    filter:drop-shadow(0 0 6px rgba(196,34,126,.7));
+  }
+  .esperma .cauda{
+    stroke:var(--mp-rosa);stroke-width:2;fill:none;stroke-linecap:round;
+    opacity:.75;filter:drop-shadow(0 0 3px rgba(196,34,126,.5));
+  }
+  .esperma .cauda-extra{
+    stroke:var(--mp-rosa);stroke-width:1.2;fill:none;stroke-linecap:round;
+    opacity:.4;
+  }
+  .esperma .esp-corpo{animation:ondula 1.2s ease-in-out infinite;transform-origin:left center}
+  @keyframes ondula{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
   .esp1{animation:corre1 7s linear infinite}
   .esp2{animation:corre2 8.5s linear infinite;top:36%}
   .esp3{animation:corre3 6.5s linear infinite;top:64%}
-  @keyframes corre1{0%{left:-90px;opacity:0}8%{opacity:1}82%{left:calc(100% - 300px);opacity:1}100%{left:calc(100% - 300px);opacity:0}}
-  @keyframes corre2{0%{left:-90px;opacity:0}8%{opacity:1}82%{left:calc(100% - 300px);opacity:1}100%{left:calc(100% - 300px);opacity:0}}
-  @keyframes corre3{0%{left:-90px;opacity:0}8%{opacity:1}82%{left:calc(100% - 300px);opacity:1}100%{left:calc(100% - 300px);opacity:0}}
+  @keyframes corre1{0%{left:-120px;opacity:0}8%{opacity:1}82%{left:calc(100% - 340px);opacity:1}100%{left:calc(100% - 340px);opacity:0}}
+  @keyframes corre2{0%{left:-120px;opacity:0}8%{opacity:1}82%{left:calc(100% - 340px);opacity:1}100%{left:calc(100% - 340px);opacity:0}}
+  @keyframes corre3{0%{left:-120px;opacity:0}8%{opacity:1}82%{left:calc(100% - 340px);opacity:1}100%{left:calc(100% - 340px);opacity:0}}
   .boas-vindas{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;z-index:4}
   .boas-vindas .msg{
     position:absolute;font-size:32px;font-weight:800;letter-spacing:2px;color:var(--mp-rosa);
@@ -101,8 +124,8 @@
   .topo-info{
     position:absolute;right:22px;top:50%;transform:translateY(-50%);
     display:flex;align-items:center;gap:10px;font-size:13px;white-space:nowrap;
-    background:rgba(255,255,255,.9);border:1px solid var(--borda);border-radius:30px;
-    padding:8px 16px;color:var(--cinza-sec);box-shadow:var(--shadow);z-index:9;
+    background:rgba(255,255,255,.95);border:1px solid var(--borda);border-radius:30px;
+    padding:8px 16px;color:var(--cinza-sec);box-shadow:var(--shadow);z-index:11;
   }
   .topo-info .hora{font-weight:800;font-size:16px;color:var(--mp-rosa)}
   .faixa-avisos{
@@ -159,7 +182,6 @@
   .btn-acao.clt svg{color:#fff}
   .btn-acao.clt .badge-demo{background:#fff;color:#0D9488}
   .btn-acao.oculto{display:none}
-  /* ===== GRÁFICO DE ANEL (ampliado, 3D brilhante) ===== */
   .grafico-sidebar{
     margin-top:auto;padding-top:16px;border-top:1px solid var(--borda);
     display:flex;flex-direction:column;align-items:center;gap:10px;
@@ -181,7 +203,6 @@
   .conteudo{overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(196,34,126,.3) transparent;min-height:0}
   .conteudo::-webkit-scrollbar{width:8px}
   .conteudo::-webkit-scrollbar-thumb{background:rgba(196,34,126,.25);border-radius:8px}
-  /* ===== QUADRO CSC (destaque) ===== */
   .csc-quadro{
     background:linear-gradient(135deg,#ffffff,#FDF2F8);
     border:2px solid var(--mp-rosa);border-radius:18px;padding:28px;margin-bottom:18px;
@@ -335,29 +356,38 @@
 <header class="topo">
   <div class="dna-fundo"></div>
   <div class="dna-helix"></div>
-  <!-- Espermatozoides elegantes -->
+  <!-- Espermatozoides no padrão da imagem (cabeça brilhante + cauda serpentina) -->
   <div class="esperma esp1">
-    <svg viewBox="0 0 70 26">
-      <path class="esp-corpo" d="M2 13 C 22 2, 40 22, 58 10 L 68 6" stroke="#C4227E" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-      <ellipse cx="10" cy="13" rx="9" ry="5.5" fill="#C4227E" opacity=".9"/>
-      <ellipse cx="8" cy="11.5" rx="3" ry="1.8" fill="#fff" opacity=".7"/>
+    <svg viewBox="0 0 90 30">
+      <g class="esp-corpo">
+        <path class="cauda-extra" d="M14 15 C 30 6, 45 24, 60 14"/>
+        <path class="cauda" d="M12 15 C 28 8, 44 22, 62 12"/>
+        <ellipse class="cabeca" cx="10" cy="15" rx="9" ry="6"/>
+        <ellipse cx="7" cy="13" rx="3" ry="2" fill="#fff" opacity=".7"/>
+      </g>
     </svg>
   </div>
   <div class="esperma esp2">
-    <svg viewBox="0 0 70 26">
-      <path class="esp-corpo" d="M2 13 C 22 2, 40 22, 58 10 L 68 6" stroke="#6C3483" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-      <ellipse cx="10" cy="13" rx="9" ry="5.5" fill="#6C3483" opacity=".9"/>
-      <ellipse cx="8" cy="11.5" rx="3" ry="1.8" fill="#fff" opacity=".7"/>
+    <svg viewBox="0 0 90 30">
+      <g class="esp-corpo">
+        <path class="cauda-extra" d="M14 15 C 30 6, 45 24, 60 14"/>
+        <path class="cauda" d="M12 15 C 28 8, 44 22, 62 12"/>
+        <ellipse class="cabeca" cx="10" cy="15" rx="9" ry="6"/>
+        <ellipse cx="7" cy="13" rx="3" ry="2" fill="#fff" opacity=".7"/>
+      </g>
     </svg>
   </div>
   <div class="esperma esp3">
-    <svg viewBox="0 0 70 26">
-      <path class="esp-corpo" d="M2 13 C 22 2, 40 22, 58 10 L 68 6" stroke="#0D9488" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-      <ellipse cx="10" cy="13" rx="9" ry="5.5" fill="#0D9488" opacity=".9"/>
-      <ellipse cx="8" cy="11.5" rx="3" ry="1.8" fill="#fff" opacity=".7"/>
+    <svg viewBox="0 0 90 30">
+      <g class="esp-corpo">
+        <path class="cauda-extra" d="M14 15 C 30 6, 45 24, 60 14"/>
+        <path class="cauda" d="M12 15 C 28 8, 44 22, 62 12"/>
+        <ellipse class="cabeca" cx="10" cy="15" rx="9" ry="6"/>
+        <ellipse cx="7" cy="13" rx="3" ry="2" fill="#fff" opacity=".7"/>
+      </g>
     </svg>
   </div>
-  <!-- Óvulo 3D à esquerda do relógio -->
+  <!-- Óvulo 3D (deslocado 1cm à esquerda, na frente do relógio) -->
   <div class="ovulo-3d"></div>
 
   <div class="clima" id="clima-widget">
@@ -547,7 +577,7 @@
       </div>
     </div>
 
-    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v1.2 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
+    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v1.3 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
   </main>
 </div>
 
@@ -559,11 +589,9 @@
 </div>
 
 <script>
-/* ===== CONFIGURAÇÃO DO USUÁRIO ===== */
 var TIPO_CONTRATACAO = 'CLT';
 var EH_ADMIN_GLOBAL = true;
 
-/* ===== RELÓGIO ===== */
 function tickRelogio(){
   var agora = new Date();
   document.getElementById('relogioData').textContent =
@@ -574,7 +602,6 @@ function tickRelogio(){
 tickRelogio();
 setInterval(tickRelogio, 1000);
 
-/* ===== MENSAGENS DE BOAS-VINDAS (fade in/out) ===== */
 (function(){
   var msg1 = document.getElementById('msg1');
   var msg2 = document.getElementById('msg2');
@@ -593,7 +620,6 @@ setInterval(tickRelogio, 1000);
   }, 5000);
 })();
 
-/* ===== CLIMA (simulação) ===== */
 function atualizarClima(){
   var condicoes = [
     { icone:'☀️', temp:'28°C', umid:'Umidade: 45%', vento:'Vento: 12 km/h', desc:'Dia ensolarado' },
@@ -610,7 +636,6 @@ function atualizarClima(){
 }
 atualizarClima();
 
-/* ===== STAND BY — Metrô / CPTM / Trânsito ===== */
 var STANDBY = [
   { texto:'🚇 Metrô Linha 2-Verde: operação normal, sem lentidão', cor:'#008000' },
   { texto:'🚆 CPTM Linha 7-Rubi: lentidão por falha de sinalização entre Luz e Palmeiras-Barra Funda', cor:'#C4227E' },
@@ -645,7 +670,6 @@ var STANDBY = [
   setInterval(function(){ ir(atual + 1); }, 4000);
 })();
 
-/* ===== CONTROLE DE VISIBILIDADE POR TIPO DE CONTRATAÇÃO ===== */
 function aplicarTipoContratacao(){
   var btnBaterPonto = document.querySelector('.btn-acao[data-acao="bater-ponto"]');
   if(btnBaterPonto){
@@ -654,7 +678,6 @@ function aplicarTipoContratacao(){
   }
 }
 
-/* ===== TREINAMENTOS ===== */
 var TREINAMENTOS = [
   { nome:'Assisted-Hatching', url:'https://materprime.com.br/tratamentos/fertilizacao-in-vitro/assisted-hatching/', tag:'FIV' },
   { nome:'Análise genética do embrião', url:'https://materprime.com.br/tratamentos/fertilizacao-in-vitro/analise-genetica-do-embriao/', tag:'Genética' },
@@ -684,7 +707,6 @@ function montarTreinamentos(){
   }).join('');
 }
 
-/* ===== GRÁFICO DE ANEL (ampliado, 3D brilhante) ===== */
 var DADOS_EMPRESAS = [
   { nome:'Mater Prime', cor:'#C4227E', valor:120, logo:'logoMP.png' },
   { nome:'Mater Lab', cor:'#6C3483', valor:85, logo:'Logo-Mater-Lab_Horizontal.png' },
@@ -746,7 +768,6 @@ function desenharAnel(){
   }, 4000);
 }
 
-/* ===== QUADRO CSC ===== */
 var CSC = {
   ti: { titulo:'TI & Engenharia Clínica', botoes:[
     { nome:'ServiceDesk', acao:'servicedesk' },
@@ -885,7 +906,6 @@ function abrirFerias(){
   );
 }
 
-/* ===== TABS ===== */
 document.querySelectorAll('.tab').forEach(function(tab){
   tab.addEventListener('click', function(){
     document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('ativa'); });
@@ -895,7 +915,6 @@ document.querySelectorAll('.tab').forEach(function(tab){
   });
 });
 
-/* ===== REVEAL ===== */
 var obsReveal = new IntersectionObserver(function(entries){
   entries.forEach(function(e){
     if(e.isIntersecting){ e.target.classList.add('visivel'); obsReveal.unobserve(e.target); }
@@ -903,7 +922,6 @@ var obsReveal = new IntersectionObserver(function(entries){
 }, { threshold:.15 });
 document.querySelectorAll('.reveal').forEach(function(el){ obsReveal.observe(el); });
 
-/* ===== MODAL ===== */
 var modal = document.getElementById('modal');
 var modalConteudo = document.getElementById('modalConteudo');
 function abrirModal(html){ modalConteudo.innerHTML = html; modal.classList.add('aberto'); }
@@ -911,7 +929,6 @@ function fecharModal(){ modal.classList.remove('aberto'); }
 document.getElementById('modalFechar').addEventListener('click', fecharModal);
 modal.addEventListener('click', function(e){ if(e.target === modal){ fecharModal(); } });
 
-/* ===== BOTÕES DA SIDEBAR ===== */
 document.querySelectorAll('.btn-acao').forEach(function(btn){
   btn.addEventListener('click', function(){
     if(btn.dataset.acao === 'admin'){ window.location.href = 'plataforma-mater-group.html'; return; }
@@ -951,7 +968,6 @@ function marcarPonto(){
   msg.style.color = '#03543F';
 }
 
-/* ===== REDES SOCIAIS ===== */
 document.querySelectorAll('.btn-social').forEach(function(btn){
   btn.addEventListener('click', function(){
     var url = btn.dataset.rede;
@@ -963,19 +979,16 @@ document.querySelectorAll('.btn-social').forEach(function(btn){
   });
 });
 
-/* ===== LOADER (à prova de falhas) ===== */
 function hideLoader(){ var l = document.getElementById('loader'); if(l){ l.classList.add('oculto'); } }
 window.addEventListener('load', function(){ setTimeout(hideLoader, 600); });
 document.addEventListener('DOMContentLoaded', function(){ setTimeout(hideLoader, 1200); });
 setTimeout(hideLoader, 2500);
 
-/* ===== BOTÃO EXPLORAR ===== */
 document.getElementById('btnExplorar').addEventListener('click', function(){
   var alvo = document.querySelector('.treinamentos-titulo');
   if(alvo){ alvo.scrollIntoView({ behavior:'smooth', block:'center' }); }
 });
 
-/* ===== INICIALIZAÇÃO ===== */
 aplicarTipoContratacao();
 montarTreinamentos();
 desenharAnel();
