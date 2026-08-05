@@ -55,46 +55,32 @@
       transparent 0 30px, rgba(196,34,126,.25) 30px 32px, transparent 32px 60px);
     transform:skewY(-8deg);
   }
-  /* ===== ÓVULO 3D (deslocado 1cm à esquerda, na frente do relógio) ===== */
+  /* ===== ÓVULO 3D (estilo da imagem: borda recortada + núcleo roxo) ===== */
   .ovulo-3d{
     position:absolute;
-    right:295px;                 /* deslocado ~40px (1cm) à esquerda de right:255px */
+    right:295px;
     top:50%;transform:translateY(-50%);
-    width:46px;height:46px;border-radius:50%;pointer-events:none;
-    background:radial-gradient(circle at 35% 30%, #fff, #F8C8DC 40%, #E89AC0 65%, #C4227E 100%);
+    width:50px;height:50px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle at 35% 30%, #F8C8DC, #E89AC0 55%, #C4227E 100%);
     box-shadow:inset -6px -8px 14px rgba(196,34,126,.4), 0 4px 14px rgba(196,34,126,.35);
-    z-index:10;                  /* NA FRENTE do relógio */
+    z-index:10;
   }
-  /* Halo ciano (zona pelúcida) */
-  .ovulo-3d::before{
-    content:"";position:absolute;inset:-7px;border-radius:50%;
-    background:radial-gradient(circle, rgba(13,148,136,.25), transparent 70%);
-    filter:blur(2px);
-  }
-  /* Textura rugosa (córtex) */
+  /* Núcleo roxo profundo */
   .ovulo-3d::after{
-    content:"";position:absolute;inset:0;border-radius:50%;
-    background:
-      radial-gradient(circle at 20% 30%, rgba(255,255,255,.6) 0 2px, transparent 3px),
-      radial-gradient(circle at 70% 60%, rgba(196,34,126,.4) 0 2px, transparent 3px),
-      radial-gradient(circle at 45% 75%, rgba(255,255,255,.5) 0 2px, transparent 3px),
-      radial-gradient(circle at 80% 25%, rgba(196,34,126,.35) 0 2px, transparent 3px);
-    background-size:12px 12px;
+    content:"";position:absolute;width:14px;height:14px;border-radius:50%;
+    right:8px;bottom:8px;background:radial-gradient(circle at 40% 35%, #B06AB3, #6C3483 70%);
+    box-shadow:0 0 8px rgba(108,52,131,.6);
   }
-  /* ===== Espermatozoides (padrão da imagem: cabeça brilhante + cauda serpentina) ===== */
+  /* ===== Espermatozoides (cabeça NA DIREÇÃO do óvulo, à direita) ===== */
   .esperma{position:absolute;left:-120px;top:50%;pointer-events:none;z-index:9;opacity:0}
   .esperma svg{width:90px;height:30px;overflow:visible}
   .esperma .cabeca{
-    fill:var(--mp-rosa);
-    filter:drop-shadow(0 0 6px rgba(196,34,126,.7));
+    fill:#7EC8E3;
+    filter:drop-shadow(0 0 5px rgba(126,200,227,.6));
   }
   .esperma .cauda{
-    stroke:var(--mp-rosa);stroke-width:2;fill:none;stroke-linecap:round;
-    opacity:.75;filter:drop-shadow(0 0 3px rgba(196,34,126,.5));
-  }
-  .esperma .cauda-extra{
-    stroke:var(--mp-rosa);stroke-width:1.2;fill:none;stroke-linecap:round;
-    opacity:.4;
+    stroke:#7EC8E3;stroke-width:2;fill:none;stroke-linecap:round;
+    opacity:.8;filter:drop-shadow(0 0 3px rgba(126,200,227,.5));
   }
   .esperma .esp-corpo{animation:ondula 1.2s ease-in-out infinite;transform-origin:left center}
   @keyframes ondula{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
@@ -356,38 +342,35 @@
 <header class="topo">
   <div class="dna-fundo"></div>
   <div class="dna-helix"></div>
-  <!-- Espermatozoides no padrão da imagem (cabeça brilhante + cauda serpentina) -->
+  <!-- Espermatozoides com cabeça NA DIREÇÃO do óvulo (à direita) -->
   <div class="esperma esp1">
     <svg viewBox="0 0 90 30">
       <g class="esp-corpo">
-        <path class="cauda-extra" d="M14 15 C 30 6, 45 24, 60 14"/>
-        <path class="cauda" d="M12 15 C 28 8, 44 22, 62 12"/>
-        <ellipse class="cabeca" cx="10" cy="15" rx="9" ry="6"/>
-        <ellipse cx="7" cy="13" rx="3" ry="2" fill="#fff" opacity=".7"/>
+        <path class="cauda" d="M30 15 C 45 8, 58 22, 74 12"/>
+        <ellipse class="cabeca" cx="34" cy="15" rx="10" ry="6.5"/>
+        <ellipse cx="31" cy="13" rx="3" ry="2" fill="#fff" opacity=".6"/>
       </g>
     </svg>
   </div>
   <div class="esperma esp2">
     <svg viewBox="0 0 90 30">
       <g class="esp-corpo">
-        <path class="cauda-extra" d="M14 15 C 30 6, 45 24, 60 14"/>
-        <path class="cauda" d="M12 15 C 28 8, 44 22, 62 12"/>
-        <ellipse class="cabeca" cx="10" cy="15" rx="9" ry="6"/>
-        <ellipse cx="7" cy="13" rx="3" ry="2" fill="#fff" opacity=".7"/>
+        <path class="cauda" d="M30 15 C 45 8, 58 22, 74 12"/>
+        <ellipse class="cabeca" cx="34" cy="15" rx="10" ry="6.5"/>
+        <ellipse cx="31" cy="13" rx="3" ry="2" fill="#fff" opacity=".6"/>
       </g>
     </svg>
   </div>
   <div class="esperma esp3">
     <svg viewBox="0 0 90 30">
       <g class="esp-corpo">
-        <path class="cauda-extra" d="M14 15 C 30 6, 45 24, 60 14"/>
-        <path class="cauda" d="M12 15 C 28 8, 44 22, 62 12"/>
-        <ellipse class="cabeca" cx="10" cy="15" rx="9" ry="6"/>
-        <ellipse cx="7" cy="13" rx="3" ry="2" fill="#fff" opacity=".7"/>
+        <path class="cauda" d="M30 15 C 45 8, 58 22, 74 12"/>
+        <ellipse class="cabeca" cx="34" cy="15" rx="10" ry="6.5"/>
+        <ellipse cx="31" cy="13" rx="3" ry="2" fill="#fff" opacity=".6"/>
       </g>
     </svg>
   </div>
-  <!-- Óvulo 3D (deslocado 1cm à esquerda, na frente do relógio) -->
+  <!-- Óvulo 3D (estilo da imagem) -->
   <div class="ovulo-3d"></div>
 
   <div class="clima" id="clima-widget">
@@ -577,7 +560,7 @@
       </div>
     </div>
 
-    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v1.3 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
+    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v1.4 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
   </main>
 </div>
 
