@@ -4,38 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mater Group · Intranet Corporativa</title>
+<script src="https://alcdn.msauth.net/browser/2.38.2/js/msal-browser.min.js"></script>
 <style>
   :root{
     --vinho:#7A1F3D; --vinho-dark:#5C162E;
     --azul:#4A9BD4; --cinza-texto:#333333; --cinza-sec:#666666;
-    --cinza-claro:#F3F4F6; --fundo:#F9FAFB; --branco:#ffffff; --borda:#E5E7EB;
-    --shadow:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
+    --cinza-claro:#F3F4F6; --fundo:#F9FAFB; --branco:#fff; --borda:#E5E7EB;
+    --shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -1px rgba(0,0,0,.06);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:var(--fundo);color:var(--cinza-texto);overflow:hidden;height:100vh}
-  /* LOADER à prova de falhas */
-  #loader{position:fixed;inset:0;z-index:9999;background:var(--branco);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .5s ease,visibility .5s}
+  #loader{position:fixed;inset:0;z-index:9999;background:var(--branco);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .5s,visibility .5s}
   #loader.oculto{opacity:0;visibility:hidden}
   .loader-spinner{width:50px;height:50px;border:5px solid var(--cinza-claro);border-top:5px solid var(--vinho);border-radius:50%;animation:spin 1s linear infinite}
   @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-  /* LAYOUT */
   .app{display:grid;grid-template-columns:260px 1fr;grid-template-rows:80px 1fr;grid-template-areas:"sidebar header" "sidebar content";height:100vh}
   header{grid-area:header;background:var(--branco);border-bottom:1px solid var(--borda);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
   .boas-vindas{width:100%;overflow:hidden;white-space:nowrap}
   .boas-vindas .texto{display:inline-block;font-size:24px;font-weight:700;color:var(--vinho);animation:welcome 12s linear infinite}
   .boas-vindas .texto span{color:var(--cinza-sec)}
-  @keyframes welcome{
-    0%{transform:translateX(100%);opacity:1}
-    30%{transform:translateX(0);opacity:1}
-    40%{transform:translateX(0);opacity:1}
-    45%{opacity:.2;transform:scale(1.1)}
-    50%{opacity:1;transform:scale(1)}
-    55%{opacity:.2;transform:scale(1.1)}
-    60%{opacity:1;transform:scale(1)}
-    80%{transform:translateX(0);opacity:1}
-    100%{transform:translateX(-100%);opacity:0}
-  }
-  .topo-info{position:absolute;right:20px;font-size:12px;color:var(--cinza-sec)}
+  @keyframes welcome{0%{transform:translateX(100%);opacity:1}30%{transform:translateX(0);opacity:1}40%{transform:translateX(0);opacity:1}45%{opacity:.2;transform:scale(1.1)}50%{opacity:1;transform:scale(1)}55%{opacity:.2;transform:scale(1.1)}60%{opacity:1;transform:scale(1)}80%{transform:translateX(0);opacity:1}100%{transform:translateX(-100%);opacity:0}}
+  .topo-info{position:absolute;right:20px;font-size:12px;color:var(--cinza-sec);display:flex;align-items:center;gap:10px}
+  .topo-info .usuario{background:var(--cinza-claro);border:1px solid var(--borda);border-radius:20px;padding:6px 14px;font-weight:600;color:var(--vinho)}
   aside{grid-area:sidebar;background:var(--vinho);color:#fff;display:flex;flex-direction:column;padding:20px 0;z-index:10}
   .logo-area{padding:0 20px 30px;font-size:22px;font-weight:800;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:20px}
   .nav-menu{list-style:none;flex:1}
@@ -43,6 +33,7 @@
   .nav-item svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
   .nav-item:hover{background:var(--vinho-dark);color:#fff}
   .nav-item.active{background:var(--vinho-dark);color:#fff;border-left:4px solid var(--azul)}
+  .nav-item.oculto{display:none}
   main{grid-area:content;padding:30px;overflow-y:auto;background:var(--fundo)}
   .panel{display:none;animation:fadeIn .4s ease-out}
   .panel.active{display:block}
@@ -59,6 +50,8 @@
   .btn{padding:10px 20px;border-radius:6px;border:none;cursor:pointer;font-weight:600;transition:.2s}
   .btn-primary{background:var(--vinho);color:#fff}
   .btn-primary:hover{background:var(--vinho-dark)}
+  .btn-azul{background:var(--azul);color:#fff}
+  .btn-azul:hover{background:#3a86b8}
   .status-badge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
   .status-online{background:#DEF7EC;color:#03543F}
   .status-offline{background:#FDE8E8;color:#9B1C1C}
@@ -73,13 +66,25 @@
   .calendario-placeholder{background:#eee;height:400px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999;border:1px dashed var(--borda)}
   .grid-2{display:grid;grid-template-columns:1fr 300px;gap:20px}
   .aviso-azul{background:#f0f7fd;border:1px solid #cfe4f5;border-radius:8px;padding:12px 15px;font-size:13px;color:#1a4a6e;margin-bottom:15px}
+  .login-box{max-width:420px;margin:60px auto;text-align:center}
+  .login-box .logo{font-size:32px;font-weight:800;color:var(--vinho);margin-bottom:10px}
+  .login-box .logo span{color:var(--azul)}
+  .login-box p{color:var(--cinza-sec);margin-bottom:25px}
+  .log-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--cinza-claro);font-size:13px}
+  .log-item .tempo{color:var(--cinza-sec);white-space:nowrap;font-size:12px}
+  .log-item .acao{font-weight:600;color:var(--vinho)}
+  .log-item .detalhe{color:var(--cinza-sec)}
+  .badge-grupo{font-size:10px;background:var(--azul);color:#fff;border-radius:10px;padding:2px 8px;margin-left:8px;vertical-align:middle}
+  .config-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .config-grid .full{grid-column:1/-1}
+  .campo-chave{background:var(--cinza-claro);border:1px solid var(--borda);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--cinza-sec);margin-bottom:15px}
   @media (max-width:900px){
     .app{grid-template-columns:1fr;grid-template-rows:auto auto 1fr;grid-template-areas:"header" "sidebar" "content"}
     aside{flex-direction:row;overflow-x:auto;padding:10px}
     .nav-menu{display:flex}
     .nav-item{white-space:nowrap}
     .stats-grid{grid-template-columns:repeat(2,1fr)}
-    .grid-2{grid-template-columns:1fr}
+    .grid-2,.config-grid{grid-template-columns:1fr}
     .topo-info{display:none}
   }
 </style>
@@ -91,37 +96,37 @@
   <p style="margin-top:15px;font-weight:600;color:var(--vinho)">Carregando Intranet...</p>
 </div>
 
+<!-- TELA DE LOGIN -->
+<div id="tela-login" style="display:none;height:100vh;background:var(--fundo)">
+  <div class="login-box">
+    <div class="logo">MATER<span>GROUP</span></div>
+    <p>Acesse com sua conta corporativa Microsoft 365 para entrar na intranet.</p>
+    <button class="btn btn-primary" onclick="loginM365()" style="padding:14px 40px;font-size:15px">Entrar com Microsoft 365</button>
+  </div>
+</div>
+
+<!-- PLATAFORMA -->
+<div id="plataforma" style="display:none">
 <div class="app">
   <aside>
     <div class="logo-area">MATER GROUP</div>
     <ul class="nav-menu">
-      <li class="nav-item active" data-panel="dashboard">
-        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Dashboard
-      </li>
-      <li class="nav-item" data-panel="localizador">
-        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg> Localizador de Pessoas
-      </li>
-      <li class="nav-item" data-panel="reservas">
-        <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg> Reservas de Salas
-      </li>
-      <li class="nav-item" data-panel="arquivos">
-        <svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg> Arquivos Rede
-      </li>
-      <li class="nav-item" data-panel="treinamentos">
-        <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg> Treinamentos
-      </li>
-      <li class="nav-item" data-panel="endomarketing">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5z"/></svg> EndoMarketing
-      </li>
-      <li class="nav-item" data-panel="admin">
-        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg> Administração
-      </li>
+      <li class="nav-item active" data-panel="dashboard"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Dashboard</li>
+      <li class="nav-item" data-panel="localizador"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg> Localizador de Pessoas</li>
+      <li class="nav-item" data-panel="reservas"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg> Reservas de Salas</li>
+      <li class="nav-item" data-panel="arquivos"><svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg> Arquivos Rede</li>
+      <li class="nav-item" data-panel="treinamentos"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg> Treinamentos</li>
+      <li class="nav-item oculto" data-panel="endomarketing" data-grupo="EndoMKT_admin"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5z"/></svg> EndoMarketing <span class="badge-grupo">EndoMKT</span></li>
+      <li class="nav-item oculto" data-panel="admin" data-admin="true"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg> Administração <span class="badge-grupo">ADMIN</span></li>
     </ul>
   </aside>
 
   <header>
     <div class="boas-vindas"><div class="texto">Seja Bem-vindo à Intranet <span>Mater Group</span></div></div>
-    <div class="topo-info" id="relogioInfo"></div>
+    <div class="topo-info">
+      <span class="usuario" id="usuarioLogado"></span>
+      <span id="relogioInfo"></span>
+    </div>
   </header>
 
   <main id="main-content">
@@ -147,17 +152,14 @@
     <div id="localizador" class="panel">
       <div class="card">
         <h2 class="section-title">Localizador de Pessoas</h2>
-        <div class="aviso-azul">Integrado ao diretório Microsoft 365 (Graph API). Busca em tempo real por nome, cargo ou unidade.</div>
+        <div class="aviso-azul">Integrado ao diretório Microsoft 365. Busca em tempo real por nome, cargo ou unidade.</div>
         <div class="form-group">
-          <input type="text" class="form-control" id="busca-pessoa" placeholder="Buscar por nome, cargo ou unidade...">
+          <input type="text" class="form-control" id="busca-pessoa" placeholder="Buscar por nome, cargo ou unidade..." oninput="buscarPessoas(this.value)">
         </div>
         <table>
           <thead><tr><th>Nome</th><th>Cargo</th><th>Unidade</th><th>E-mail</th></tr></thead>
           <tbody id="tabela-pessoas">
-            <tr><td>Ana Silva</td><td>Enfermeira Chefe</td><td>São Paulo</td><td>ana.silva@matergroup.com.br</td></tr>
-            <tr><td>Carlos Souza</td><td>Médico Geneticista</td><td>Mater Lab</td><td>carlos.souza@matergroup.com.br</td></tr>
-            <tr><td>Flávio Camanzano</td><td>Gerente de TI</td><td>Matriz</td><td>flavio.camanzano@matergroup.com.br</td></tr>
-            <tr><td>Mariana Costa</td><td>Coordenadora de Marketing</td><td>Matriz</td><td>mariana.costa@matergroup.com.br</td></tr>
+            <tr><td colspan="4" style="text-align:center;color:var(--cinza-sec)">Carregando diretório...</td></tr>
           </tbody>
         </table>
       </div>
@@ -169,16 +171,11 @@
         <h2 class="section-title">Reserva de Salas (Outlook)</h2>
         <div class="aviso-azul">Integrado ao calendário Microsoft 365. As reservas criam eventos nas caixas de recurso das salas.</div>
         <div class="grid-2">
-          <div class="calendario-placeholder">[ Calendário Visual de Disponibilidade ]</div>
+          <div class="calendario-placeholder" id="calendario-salas">[ Calendário Visual de Disponibilidade ]</div>
           <div>
             <div class="form-group">
               <label>Selecionar Sala</label>
-              <select class="form-control" id="select-sala">
-                <option>Sala Reunião A — Disponível</option>
-                <option>Sala Reunião B — Ocupada</option>
-                <option>Sala Diretoria — Disponível</option>
-                <option>Auditório — Disponível</option>
-              </select>
+              <select class="form-control" id="select-sala"></select>
             </div>
             <div class="form-group"><label>Data</label><input type="date" class="form-control" id="data-reserva"></div>
             <div class="form-group"><label>Horário Início</label><input type="time" class="form-control" id="hora-inicio" value="09:00"></div>
@@ -194,9 +191,9 @@
     <div id="arquivos" class="panel">
       <div class="card">
         <h2 class="section-title">Arquivos de Rede (SharePoint)</h2>
-        <p style="margin-bottom:15px">Acesse os documentos compartilhados da sua área diretamente no SharePoint do Mater Group.</p>
+        <p style="margin-bottom:15px">Acesse os documentos compartilhados da sua área no SharePoint do Mater Group.</p>
         <div style="border:1px solid var(--borda);padding:40px;text-align:center;border-radius:8px;background:#f8f8f8">
-          <p style="color:var(--cinza-sec)">https://matergroup.sharepoint.com/sites/intranet</p>
+          <p style="color:var(--cinza-sec)" id="sharepoint-display">https://matergroup.sharepoint.com/sites/intranet</p>
           <br>
           <button class="btn btn-primary" onclick="abrirSharePoint()">Abrir SharePoint em Nova Aba</button>
         </div>
@@ -216,6 +213,7 @@
     <div id="endomarketing" class="panel">
       <div class="card">
         <h2 class="section-title">Painel de EndoMarketing</h2>
+        <div class="aviso-azul">Acesso restrito ao grupo <strong>EndoMKT_admin</strong>.</div>
         <div class="form-group">
           <label>Texto do Banner de Boas-Vindas</label>
           <input type="text" class="form-control" id="banner-texto" value="Seja Bem-vindo à Intranet Mater Group">
@@ -236,32 +234,61 @@
     <!-- ADMIN -->
     <div id="admin" class="panel">
       <div class="card">
-        <h2 class="section-title">Configurações de TI / Microsoft 365</h2>
-        <div style="display:flex;align-items:center;gap:15px;margin-bottom:25px;padding:15px;background:#f0fdf4;border-radius:8px">
-          <div class="status-badge status-online">CONECTADO</div>
-          <span style="font-size:14px"><strong>Usuário:</strong> flavio.camanzano@matergroup.com.br</span>
+        <h2 class="section-title">Dashboard Administrativo</h2>
+        <div class="aviso-azul">Acesso restrito a administradores globais do Microsoft 365.</div>
+        <div class="stats-grid">
+          <div class="stat-card"><span class="stat-value" id="stat-acessos">0</span><span class="stat-label">Acessos Hoje</span></div>
+          <div class="stat-card"><span class="stat-value" id="stat-usuarios">0</span><span class="stat-label">Usuários Ativos</span></div>
+          <div class="stat-card"><span class="stat-value" id="stat-reservas">0</span><span class="stat-label">Reservas</span></div>
+          <div class="stat-card"><span class="stat-value" id="stat-alteracoes">0</span><span class="stat-label">Alterações</span></div>
         </div>
-        <div class="form-group">
-          <label>Fonte de Dados (Localizador de Pessoas)</label>
-          <select class="form-control"><option>Microsoft Graph API (Microsoft Entra ID)</option></select>
-        </div>
-        <div class="form-group">
-          <label>Sincronização de Calendário (Reserva de Salas)</label>
-          <select class="form-control"><option>Outlook Resource Mailboxes</option></select>
-        </div>
-        <div class="form-group">
-          <label>URL do SharePoint (Arquivos de Rede)</label>
-          <input type="text" class="form-control" value="https://matergroup.sharepoint.com/sites/intranet">
-        </div>
-        <div class="form-group">
-          <label>Permissões de Acesso</label>
-          <select class="form-control"><option>Somente usuários autenticados (SSO)</option></select>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">Configuração da Integração Microsoft 365</h2>
+        <div class="campo-chave">Preencha os parâmetros abaixo e clique em "Salvar Configurações". Eles ficam salvos no navegador e são usados por toda a plataforma.</div>
+        <div class="config-grid">
+          <div class="form-group">
+            <label>Client ID (App Registration)</label>
+            <input type="text" class="form-control" id="cfg-clientid" placeholder="e.g. 12345678-1234-1234-1234-123456789012">
+          </div>
+          <div class="form-group">
+            <label>Tenant ID</label>
+            <input type="text" class="form-control" id="cfg-tenantid" placeholder="e.g. 87654321-4321-4321-4321-210987654321">
+          </div>
+          <div class="form-group full">
+            <label>Redirect URI</label>
+            <input type="text" class="form-control" id="cfg-redirect" placeholder="https://seu-usuario.github.io/seu-repo/plataforma-mater-group.html">
+          </div>
+          <div class="form-group">
+            <label>Grupo de Administradores</label>
+            <input type="text" class="form-control" id="cfg-grupo-admin" value="Global Admins">
+          </div>
+          <div class="form-group">
+            <label>Grupo de EndoMarketing</label>
+            <input type="text" class="form-control" id="cfg-grupo-endomkt" value="EndoMKT_admin">
+          </div>
+          <div class="form-group full">
+            <label>URL do SharePoint (Arquivos de Rede)</label>
+            <input type="text" class="form-control" id="cfg-sharepoint" value="https://matergroup.sharepoint.com/sites/intranet">
+          </div>
+          <div class="form-group full">
+            <label>Salas de Reunião (caixas de recurso — separadas por vírgula)</label>
+            <input type="text" class="form-control" id="cfg-salas" value="Sala Reunião A, Sala Reunião B, Sala Diretoria, Auditório">
+          </div>
         </div>
         <button class="btn btn-primary" onclick="salvarAdmin()">Salvar Configurações Globais</button>
+        <button class="btn btn-azul" onclick="testarConexao()" style="margin-left:10px">Testar Conexão</button>
         <p id="msg-admin" style="font-size:12px;color:var(--cinza-sec);margin-top:10px"></p>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">Histórico de Alterações (Logs)</h2>
+        <div id="logs-container"></div>
       </div>
     </div>
   </main>
+</div>
 </div>
 
 <!-- MODAL PONTO -->
@@ -277,28 +304,333 @@
 </div>
 
 <script>
-/* ===== LOADER à prova de falhas ===== */
-function hideLoader(){
-  var l = document.getElementById('loader');
-  if(l) l.classList.add('oculto');
-}
-window.addEventListener('load', function(){ setTimeout(hideLoader, 800); });
-document.addEventListener('DOMContentLoaded', function(){ setTimeout(hideLoader, 2000); });
-setTimeout(hideLoader, 4000);
+/* ============================================================
+   CONFIGURAÇÃO PADRÃO (sobrescrita pela tela de Administração)
+   ============================================================ */
+var CONFIG = {
+  clientId: "SEU_CLIENT_ID_AQUI",
+  tenantId: "common",
+  redirectUri: window.location.origin + window.location.pathname,
+  grupoAdmin: "Global Admins",
+  grupoEndoMkt: "EndoMKT_admin",
+  sharepointUrl: "https://matergroup.sharepoint.com/sites/intranet",
+  salas: ["Sala Reunião A", "Sala Reunião B", "Sala Diretoria", "Auditório"]
+};
 
-/* ===== NAVEGAÇÃO SPA ===== */
+/* Carrega configuração salva no navegador */
+function carregarConfig(){
+  try{
+    var salvo = JSON.parse(localStorage.getItem('matergroup_config'));
+    if(salvo) CONFIG = Object.assign(CONFIG, salvo);
+  }catch(e){}
+  preencherCamposConfig();
+}
+function preencherCamposConfig(){
+  document.getElementById('cfg-clientid').value = CONFIG.clientId;
+  document.getElementById('cfg-tenantid').value = CONFIG.tenantId;
+  document.getElementById('cfg-redirect').value = CONFIG.redirectUri;
+  document.getElementById('cfg-grupo-admin').value = CONFIG.grupoAdmin;
+  document.getElementById('cfg-grupo-endomkt').value = CONFIG.grupoEndoMkt;
+  document.getElementById('cfg-sharepoint').value = CONFIG.sharepointUrl;
+  document.getElementById('cfg-salas').value = CONFIG.salas.join(', ');
+  document.getElementById('sharepoint-display').textContent = CONFIG.sharepointUrl;
+  preencherSalas();
+}
+
+/* ============================================================
+   MSAL - AUTENTICAÇÃO MICROSOFT 365
+   ============================================================ */
+var msalInstance = null;
+var usuarioAtual = null;
+var gruposUsuario = [];
+var ehAdminGlobal = false;
+var ehEndoMkt = false;
+
+function criarMsal(){
+  msalInstance = new msal.PublicClientApplication({
+    auth: {
+      clientId: CONFIG.clientId,
+      authority: "https://login.microsoftonline.com/" + CONFIG.tenantId,
+      redirectUri: CONFIG.redirectUri
+    },
+    cache: { cacheLocation: "localStorage", storeAuthStateInCookie: true }
+  });
+}
+
+function loginM365(){
+  if(CONFIG.clientId.indexOf("SEU_CLIENT_ID") !== -1){
+    alert("Configure o Client ID na tela de Administração antes de entrar. Ou edite o arquivo e substitua 'SEU_CLIENT_ID_AQUI'.");
+    return;
+  }
+  criarMsal();
+  msalInstance.loginPopup({
+    scopes: ["User.Read", "GroupMember.Read.All", "Directory.Read.All", "Calendars.ReadWrite", "Sites.Read.All"]
+  }).then(function(resp){
+    usuarioAtual = resp.account;
+    document.getElementById('tela-login').style.display = 'none';
+    document.getElementById('plataforma').style.display = 'block';
+    document.getElementById('usuarioLogado').textContent = usuarioAtual.name || usuarioAtual.username;
+    carregarGrupos();
+    registrarAcesso();
+  }).catch(function(err){
+    console.error(err);
+    alert("Falha no login: " + (err.message || "erro desconhecido"));
+  });
+}
+
+function carregarGrupos(){
+  var token = msalInstance.getTokenSilent({
+    scopes: ["GroupMember.Read.All"],
+    account: usuarioAtual
+  }).then(function(resp){
+    var accessToken = resp.accessToken;
+    return fetch("https://graph.microsoft.com/v1.0/me/transitiveMemberOf?$select=displayName", {
+      headers: { "Authorization": "Bearer " + accessToken }
+    });
+  }).then(function(r){ return r.json(); })
+  .then(function(data){
+    gruposUsuario = (data.value || []).map(function(g){ return g.displayName; });
+    aplicarPermissoes();
+  }).catch(function(err){
+    console.error("Erro ao carregar grupos", err);
+    aplicarPermissoes(); /* aplica mesmo sem grupos, para não travar */
+  });
+}
+
+function aplicarPermissoes(){
+  /* Verifica se é admin global (membro do grupo configurado) */
+  ehAdminGlobal = gruposUsuario.indexOf(CONFIG.grupoAdmin) !== -1;
+  /* Verifica se é membro do grupo EndoMKT_admin */
+  ehEndoMkt = gruposUsuario.indexOf(CONFIG.grupoEndoMkt) !== -1;
+
+  var adminItem = document.querySelector('.nav-item[data-panel="admin"]');
+  var endoItem = document.querySelector('.nav-item[data-panel="endomarketing"]');
+
+  if(ehAdminGlobal){ adminItem.classList.remove('oculto'); }
+  if(ehEndoMkt){ endoItem.classList.remove('oculto'); }
+
+  /* Se não é admin, garante que não fique no painel admin */
+  if(!ehAdminGlobal && document.getElementById('admin').classList.contains('active')){
+    mostrarPainel('dashboard');
+  }
+}
+
+/* ============================================================
+   LOGS E DASHBOARD ADMIN
+   ============================================================ */
+function registrarAcesso(){
+  var logs = JSON.parse(localStorage.getItem('matergroup_logs') || '[]');
+  logs.push({
+    tipo: 'acesso',
+    usuario: usuarioAtual ? (usuarioAtual.username || usuarioAtual.name) : 'anônimo',
+    acao: 'Acesso à intranet',
+    detalhe: 'Login realizado via Microsoft 365',
+    tempo: new Date().toLocaleString('pt-BR')
+  });
+  localStorage.setItem('matergroup_logs', JSON.stringify(logs));
+}
+
+function registrarLog(acao, detalhe){
+  var logs = JSON.parse(localStorage.getItem('matergroup_logs') || '[]');
+  logs.push({
+    tipo: 'alteracao',
+    usuario: usuarioAtual ? (usuarioAtual.username || usuarioAtual.name) : 'anônimo',
+    acao: acao,
+    detalhe: detalhe,
+    tempo: new Date().toLocaleString('pt-BR')
+  });
+  localStorage.setItem('matergroup_logs', JSON.stringify(logs));
+  renderizarLogs();
+  atualizarStatsAdmin();
+}
+
+function renderizarLogs(){
+  var logs = JSON.parse(localStorage.getItem('matergroup_logs') || '[]');
+  var container = document.getElementById('logs-container');
+  if(logs.length === 0){
+    container.innerHTML = '<p style="color:var(--cinza-sec);font-size:13px">Nenhum registro ainda.</p>';
+    return;
+  }
+  var html = logs.slice().reverse().map(function(l){
+    return '<div class="log-item">' +
+      '<span class="tempo">' + l.tempo + '</span>' +
+      '<span class="acao">' + l.acao + '</span>' +
+      '<span class="detalhe">' + l.detalhe + ' — ' + l.usuario + '</span>' +
+      '</div>';
+  }).join('');
+  container.innerHTML = html;
+}
+
+function atualizarStatsAdmin(){
+  var logs = JSON.parse(localStorage.getItem('matergroup_logs') || '[]');
+  var hoje = new Date().toLocaleDateString('pt-BR');
+  var acessosHoje = logs.filter(function(l){ return l.tipo === 'acesso' && l.tempo.indexOf(hoje) !== -1; }).length;
+  var alteracoes = logs.filter(function(l){ return l.tipo === 'alteracao'; }).length;
+  document.getElementById('stat-acessos').textContent = acessosHoje;
+  document.getElementById('stat-alteracoes').textContent = alteracoes;
+  document.getElementById('stat-usuarios').textContent = new Set(logs.map(function(l){ return l.usuario; })).size;
+  document.getElementById('stat-reservas').textContent = logs.filter(function(l){ return l.acao === 'Reserva de sala'; }).length;
+}
+
+/* ============================================================
+   ADMIN - SALVAR CONFIGURAÇÕES
+   ============================================================ */
+function salvarAdmin(){
+  CONFIG.clientId = document.getElementById('cfg-clientid').value.trim();
+  CONFIG.tenantId = document.getElementById('cfg-tenantid').value.trim() || 'common';
+  CONFIG.redirectUri = document.getElementById('cfg-redirect').value.trim();
+  CONFIG.grupoAdmin = document.getElementById('cfg-grupo-admin').value.trim();
+  CONFIG.grupoEndoMkt = document.getElementById('cfg-grupo-endomkt').value.trim();
+  CONFIG.sharepointUrl = document.getElementById('cfg-sharepoint').value.trim();
+  CONFIG.salas = document.getElementById('cfg-salas').value.split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+
+  localStorage.setItem('matergroup_config', JSON.stringify(CONFIG));
+  document.getElementById('sharepoint-display').textContent = CONFIG.sharepointUrl;
+  preencherSalas();
+  registrarLog('Configuração salva', 'Parâmetros da integração Microsoft 365 atualizados');
+  document.getElementById('msg-admin').textContent = 'Configurações salvas com sucesso.';
+  document.getElementById('msg-admin').style.color = '#03543F';
+}
+
+function testarConexao(){
+  var msg = document.getElementById('msg-admin');
+  if(CONFIG.clientId.indexOf("SEU_CLIENT_ID") !== -1){
+    msg.textContent = 'Informe o Client ID antes de testar.';
+    msg.style.color = '#9B1C1C';
+    return;
+  }
+  msg.textContent = 'Testando conexão com Microsoft 365...';
+  msg.style.color = '#1a4a6e';
+  criarMsal();
+  msalInstance.loginPopup({ scopes: ["User.Read"] }).then(function(resp){
+    msg.textContent = 'Conexão OK! Usuário: ' + (resp.account.username || resp.account.name);
+    msg.style.color = '#03543F';
+    registrarLog('Teste de conexão', 'Conexão com Microsoft 365 validada');
+  }).catch(function(err){
+    msg.textContent = 'Falha na conexão: ' + (err.message || 'erro');
+    msg.style.color = '#9B1C1C';
+  });
+}
+
+/* ============================================================
+   LOCALIZADOR - GRAPH API
+   ============================================================ */
+function buscarPessoas(termo){
+  var token = msalInstance.getTokenSilent({ scopes: ["Directory.Read.All"], account: usuarioAtual })
+    .then(function(resp){
+      var url = "https://graph.microsoft.com/v1.0/users?$select=displayName,jobTitle,officeLocation,mail&$top=20";
+      if(termo){
+        url = "https://graph.microsoft.com/v1.0/users?$filter=startswith(displayName,'" + termo + "')&$select=displayName,jobTitle,officeLocation,mail&$top=20";
+      }
+      return fetch(url, { headers: { "Authorization": "Bearer " + resp.accessToken } });
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var tbody = document.getElementById('tabela-pessoas');
+      var users = data.value || [];
+      if(users.length === 0){
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--cinza-sec)">Nenhum usuário encontrado.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = users.map(function(u){
+        return '<tr><td>' + (u.displayName || '-') + '</td><td>' + (u.jobTitle || '-') + '</td><td>' + (u.officeLocation || '-') + '</td><td>' + (u.mail || '-') + '</td></tr>';
+      }).join('');
+    })
+    .catch(function(err){
+      console.error(err);
+      document.getElementById('tabela-pessoas').innerHTML = '<tr><td colspan="4" style="text-align:center;color:#9B1C1C">Erro ao consultar diretório: ' + (err.message || 'sem permissão') + '</td></tr>';
+    });
+}
+
+/* ============================================================
+   RESERVA DE SALAS - GRAPH API
+   ============================================================ */
+function preencherSalas(){
+  var select = document.getElementById('select-sala');
+  select.innerHTML = CONFIG.salas.map(function(s){ return '<option>' + s + '</option>'; }).join('');
+}
+
+function reservarSala(){
+  var sala = document.getElementById('select-sala').value;
+  var data = document.getElementById('data-reserva').value;
+  var ini = document.getElementById('hora-inicio').value;
+  var fim = document.getElementById('hora-fim').value;
+  var msg = document.getElementById('msg-reserva');
+
+  if(!data){ msg.textContent = 'Selecione uma data.'; msg.style.color = '#9B1C1C'; return; }
+  if(!ini || !fim){ msg.textContent = 'Selecione os horários.'; msg.style.color = '#9B1C1C'; return; }
+
+  var start = data + 'T' + ini + ':00';
+  var end = data + 'T' + fim + ':00';
+
+  /* Cria evento no calendário Outlook via Graph API */
+  msalInstance.getTokenSilent({ scopes: ["Calendars.ReadWrite"], account: usuarioAtual })
+    .then(function(resp){
+      return fetch("https://graph.microsoft.com/v1.0/me/events", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + resp.accessToken,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          subject: "Reserva: " + sala,
+          start: { dateTime: start, timeZone: "America/Sao_Paulo" },
+          end: { dateTime: end, timeZone: "America/Sao_Paulo" },
+          location: { displayName: sala }
+        })
+      });
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(evt){
+      msg.textContent = 'Reserva criada no Outlook! "' + sala + '" em ' + data + ' (' + ini + ' às ' + fim + ')';
+      msg.style.color = '#03543F';
+      registrarLog('Reserva de sala', sala + ' em ' + data + ' (' + ini + '-' + fim + ')');
+    })
+    .catch(function(err){
+      msg.textContent = 'Erro ao reservar: ' + (err.message || 'sem permissão de calendário');
+      msg.style.color = '#9B1C1C';
+    });
+}
+
+/* ============================================================
+   ARQUIVOS / SHAREPOINT
+   ============================================================ */
+function abrirSharePoint(){
+  window.open(CONFIG.sharepointUrl, '_blank', 'noopener');
+  registrarLog('Acesso a arquivos', 'Abrir SharePoint: ' + CONFIG.sharepointUrl);
+}
+
+/* ============================================================
+   ENDOMARKETING
+   ============================================================ */
+function publicarEndomarketing(){
+  var banner = document.getElementById('banner-texto').value;
+  var msg = document.getElementById('msg-endomarketing');
+  msg.textContent = 'Alterações publicadas. Banner atualizado: "' + banner + '"';
+  msg.style.color = '#03543F';
+  registrarLog('EndoMarketing', 'Banner atualizado para: ' + banner);
+}
+
+/* ============================================================
+   NAVEGAÇÃO / RELÓGIO / STATS / MODAL / LOADER
+   ============================================================ */
+function mostrarPainel(panelId){
+  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(i){ i.classList.remove('active'); });
+  document.getElementById(panelId).classList.add('active');
+  var item = document.querySelector('.nav-item[data-panel="' + panelId + '"]');
+  if(item) item.classList.add('active');
+  if(panelId === 'dashboard') animateStats();
+  if(panelId === 'admin'){ renderizarLogs(); atualizarStatsAdmin(); }
+  if(panelId === 'localizador') buscarPessoas('');
+}
+
 document.querySelectorAll('.nav-item').forEach(function(item){
   item.addEventListener('click', function(){
-    var panelId = item.getAttribute('data-panel');
-    document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
-    document.querySelectorAll('.nav-item').forEach(function(i){ i.classList.remove('active'); });
-    document.getElementById(panelId).classList.add('active');
-    item.classList.add('active');
-    if(panelId === 'dashboard') animateStats();
+    mostrarPainel(item.getAttribute('data-panel'));
   });
 });
 
-/* ===== RELÓGIO ===== */
 function tickRelogio(){
   var agora = new Date();
   document.getElementById('relogioInfo').textContent =
@@ -307,7 +639,6 @@ function tickRelogio(){
 }
 tickRelogio(); setInterval(tickRelogio, 1000);
 
-/* ===== STATS ===== */
 function animateStats(){
   animateValue('count-marcas', 4, 1000);
   animateValue('count-unidades', 3, 1000);
@@ -326,7 +657,6 @@ function animateValue(id, end, duration){
   }, 30);
 }
 
-/* ===== MODAL PONTO ===== */
 function openPontoModal(){
   document.getElementById('modalPonto').style.display = 'flex';
   var img = document.getElementById('img-ponto-demo');
@@ -339,40 +669,19 @@ function openPontoModal(){
 }
 function closePontoModal(){ document.getElementById('modalPonto').style.display = 'none'; }
 
-/* ===== RESERVA DE SALAS ===== */
-function reservarSala(){
-  var sala = document.getElementById('select-sala').value;
-  var data = document.getElementById('data-reserva').value;
-  var ini = document.getElementById('hora-inicio').value;
-  var fim = document.getElementById('hora-fim').value;
-  var msg = document.getElementById('msg-reserva');
-  if(!data){ msg.textContent = 'Selecione uma data.'; return; }
-  if(!ini || !fim){ msg.textContent = 'Selecione os horários.'; return; }
-  msg.textContent = 'Reserva de "' + sala + '" em ' + data + ' (' + ini + ' às ' + fim + ') enviada ao calendário Outlook.';
-  msg.style.color = '#03543F';
+/* LOADER à prova de falhas */
+function hideLoader(){
+  var l = document.getElementById('loader');
+  if(l) l.classList.add('oculto');
 }
+window.addEventListener('load', function(){ setTimeout(hideLoader, 800); });
+document.addEventListener('DOMContentLoaded', function(){ setTimeout(hideLoader, 2000); });
+setTimeout(hideLoader, 4000);
 
-/* ===== ARQUIVOS / SHAREPOINT ===== */
-function abrirSharePoint(){
-  window.open('https://matergroup.sharepoint.com/sites/intranet', '_blank', 'noopener');
-}
-
-/* ===== ENDOMARKETING ===== */
-function publicarEndomarketing(){
-  var banner = document.getElementById('banner-texto').value;
-  var msg = document.getElementById('msg-endomarketing');
-  msg.textContent = 'Alterações publicadas. Banner atualizado: "' + banner + '"';
-  msg.style.color = '#03543F';
-}
-
-/* ===== ADMIN ===== */
-function salvarAdmin(){
-  var msg = document.getElementById('msg-admin');
-  msg.textContent = 'Configurações do Microsoft 365 salvas com sucesso.';
-  msg.style.color = '#03543F';
-}
-
-/* ===== INICIAL ===== */
+/* ============================================================
+   INICIALIZAÇÃO
+   ============================================================ */
+carregarConfig();
 animateStats();
 </script>
 </body>
