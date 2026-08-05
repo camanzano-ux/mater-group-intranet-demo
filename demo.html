@@ -5,17 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mater Group · Intranet Corporativa</title>
 <style>
+  /* ===== TEMA MATER PRIME (cores suaves) ===== */
   :root{
-    --vinho:#7A1F3D; --vinho-2:#5C162E;
-    --azul:#4A9BD4; --cinza:#6B7280; --cinza-claro:#F3F4F6;
-    --texto:#1F2937; --branco:#ffffff; --borda:#E5E7EB;
+    --mp-rosa:#C4227E;      /* magenta principal Mater Prime */
+    --mp-rosa-suave:#F8E1EE;/* rosa claro suave */
+    --mp-rosa-bg:#FDF2F8;   /* fundo rosado suave */
+    --mp-rosa-hover:#A01B68;
+    --mp-lavanda:#E8E0F5;   /* lavanda suave */
+    --mp-teal:#0D9488;      /* teal (TheraSeq) */
+    --mp-vinho:#7A1F3D;     /* vinho (Mater Group) */
+    --cinza-texto:#4A4A4A;
+    --cinza-sec:#8A8A8A;
+    --cinza-claro:#F7F7F9;
+    --fundo:#FDF8FB;        /* fundo geral rosado suave */
+    --branco:#ffffff;
+    --borda:#F0E0EA;
+    --shadow:0 4px 16px rgba(196,34,126,.08),0 2px 4px rgba(0,0,0,.04);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
     font-family:'Segoe UI',system-ui,Arial,sans-serif;
-    color:var(--texto);
-    background:linear-gradient(135deg,#F9FAFB 0%,#F3F4F6 100%);
+    color:var(--cinza-texto);
+    background:linear-gradient(135deg,#FDF8FB 0%,#FBF0F6 100%);
     min-height:100vh; overflow-x:hidden;
   }
   #loader{
@@ -24,48 +36,104 @@
     background:#ffffff; transition:opacity .5s ease; visibility:visible;
   }
   #loader.oculto{opacity:0;pointer-events:none;visibility:hidden}
-  .loader-logo{font-size:40px;font-weight:800;letter-spacing:4px;color:var(--vinho);animation:pulso 1.6s ease-in-out infinite}
-  .loader-logo span{color:var(--azul)}
-  .loader-bar{width:220px;height:4px;border-radius:4px;background:var(--cinza-claro);overflow:hidden}
-  .loader-bar span{display:block;height:100%;width:40%;border-radius:4px;background:linear-gradient(90deg,var(--vinho),var(--azul));animation:carrega 1.2s ease-in-out infinite}
+  .loader-logo{font-size:40px;font-weight:800;letter-spacing:4px;color:var(--mp-rosa);animation:pulso 1.6s ease-in-out infinite}
+  .loader-logo span{color:var(--mp-teal)}
+  .loader-bar{width:220px;height:4px;border-radius:4px;background:var(--mp-rosa-suave);overflow:hidden}
+  .loader-bar span{display:block;height:100%;width:40%;border-radius:4px;background:linear-gradient(90deg,var(--mp-rosa),var(--mp-teal));animation:carrega 1.2s ease-in-out infinite}
   @keyframes carrega{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
   @keyframes pulso{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:.85}}
-  /* ===== BARRA SUPERIOR ===== */
+  /* ===== BARRA SUPERIOR (com óvulo, espermatozoides e DNA) ===== */
   .topo{
     position:relative; z-index:5; display:flex; align-items:center; justify-content:center;
-    height:92px; padding:0 22px;
-    background:#ffffff; border-bottom:1px solid var(--borda);
-    box-shadow:0 1px 3px rgba(0,0,0,.04); overflow:hidden;
+    height:100px; padding:0 22px;
+    background:linear-gradient(90deg,#FDF2F8 0%,#F8E1EE 50%,#FDF2F8 100%);
+    border-bottom:1px solid var(--borda);
+    box-shadow:0 2px 12px rgba(196,34,126,.08); overflow:hidden;
   }
-  .boas-vindas{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+  /* Fita de DNA ao fundo */
+  .dna-fundo{
+    position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background:
+      repeating-linear-gradient(90deg,
+        transparent 0 18px,
+        rgba(196,34,126,.10) 18px 20px,
+        transparent 20px 38px,
+        rgba(13,148,136,.10) 38px 40px);
+    mask-image:linear-gradient(90deg,transparent,#000 20%,#000 80%,transparent);
+  }
+  .dna-helix{
+    position:absolute;inset:0;pointer-events:none;opacity:.35;
+    background:repeating-linear-gradient(90deg,
+      transparent 0 30px,
+      rgba(196,34,126,.25) 30px 32px,
+      transparent 32px 60px);
+    transform:skewY(-8deg);
+  }
+  /* Óvulo 3D à direita */
+  .ovulo-3d{
+    position:absolute;right:200px;top:50%;transform:translateY(-50%);
+    width:46px;height:46px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle at 35% 30%, #fff, #F8C8DC 45%, #E89AC0 70%, #C4227E 100%);
+    box-shadow:inset -6px -8px 14px rgba(196,34,126,.35), 0 4px 12px rgba(196,34,126,.3);
+    z-index:3;
+  }
+  .ovulo-3d::after{
+    content:"";position:absolute;top:8px;left:10px;width:10px;height:6px;border-radius:50%;
+    background:rgba(255,255,255,.8);filter:blur(1px);
+  }
+  /* Espermatozoides correndo da esquerda para a direita */
+  .esperma{position:absolute;left:-60px;top:50%;pointer-events:none;z-index:2}
+  .esperma .cabeca{
+    width:12px;height:12px;border-radius:50%;background:var(--mp-rosa);
+    box-shadow:0 0 8px rgba(196,34,126,.5);
+  }
+  .esperma .cauda{
+    position:absolute;top:5px;right:10px;width:34px;height:2px;border-radius:2px;
+    background:linear-gradient(90deg,transparent,var(--mp-rosa));
+  }
+  .esperma .cauda::after{
+    content:"";position:absolute;top:-3px;right:0;width:8px;height:8px;border-radius:50%;
+    border:1.5px solid var(--mp-rosa);border-left-color:transparent;border-bottom-color:transparent;
+    animation:flagela .3s linear infinite;
+  }
+  @keyframes flagela{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+  .esp1{animation:corre1 3.5s linear infinite}
+  .esp2{animation:corre2 4.2s linear infinite;top:38%}
+  .esp3{animation:corre3 3s linear infinite;top:62%}
+  @keyframes corre1{0%{left:-60px;top:50%}100%{left:calc(100% - 220px);top:50%}}
+  @keyframes corre2{0%{left:-60px;top:38%}100%{left:calc(100% - 220px);top:38%}}
+  @keyframes corre3{0%{left:-60px;top:62%}100%{left:calc(100% - 220px);top:62%}}
+  .boas-vindas{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;z-index:4}
   .boas-vindas .msg{
-    position:absolute;font-size:34px;font-weight:800;letter-spacing:2px;color:var(--vinho);
-    opacity:0;transition:opacity 1.2s ease;
+    position:absolute;font-size:32px;font-weight:800;letter-spacing:2px;color:var(--mp-rosa);
+    opacity:0;transition:opacity 1.2s ease;text-shadow:0 2px 8px rgba(196,34,126,.15);
   }
-  .boas-vindas .msg span{color:#666666}
+  .boas-vindas .msg span{color:var(--mp-teal)}
   .boas-vindas .msg.ativa{opacity:1}
   .clima{
     position:absolute;left:22px;top:50%;transform:translateY(-50%);
     display:flex;align-items:center;gap:14px;padding:8px 16px;
-    background:var(--cinza-claro);border:1px solid var(--borda);border-radius:30px;
+    background:rgba(255,255,255,.85);border:1px solid var(--borda);border-radius:30px;
+    box-shadow:var(--shadow);z-index:4;
   }
   .clima .icone{font-size:30px;line-height:1}
-  .clima .dados{display:flex;flex-direction:column;font-size:11px;color:var(--cinza)}
-  .clima .dados .temp{font-size:16px;font-weight:800;color:var(--texto)}
-  .clima .descricao{font-size:11px;color:var(--vinho);font-weight:600}
+  .clima .dados{display:flex;flex-direction:column;font-size:11px;color:var(--cinza-sec)}
+  .clima .dados .temp{font-size:16px;font-weight:800;color:var(--cinza-texto)}
+  .clima .descricao{font-size:11px;color:var(--mp-rosa);font-weight:600}
   .topo-info{
     position:absolute;right:22px;top:50%;transform:translateY(-50%);
     display:flex;align-items:center;gap:10px;font-size:13px;white-space:nowrap;
-    background:var(--cinza-claro);border:1px solid var(--borda);border-radius:30px;padding:8px 16px;color:var(--cinza);
+    background:rgba(255,255,255,.9);border:1px solid var(--borda);border-radius:30px;
+    padding:8px 16px;color:var(--cinza-sec);box-shadow:var(--shadow);z-index:4;
   }
-  .topo-info .hora{font-weight:700;font-size:15px;color:var(--texto)}
+  .topo-info .hora{font-weight:800;font-size:16px;color:var(--mp-rosa)}
   .faixa-avisos{
     position:relative; z-index:2; display:grid; grid-template-columns:minmax(260px,38%) 1fr;
     gap:14px; padding:12px 22px; background:#ffffff; border-bottom:1px solid var(--borda);
   }
   .aviso-emergencia{
     display:flex; align-items:center; gap:12px; overflow:hidden; border-radius:10px;
-    background:linear-gradient(90deg,#DC2626,#B91C1C); padding:10px 14px;
+    background:linear-gradient(90deg,#E11D48,#BE123C); padding:10px 14px;
   }
   .aviso-emergencia .pulso{
     width:12px;height:12px;border-radius:50%;background:#fff;flex-shrink:0;
@@ -78,54 +146,53 @@
   }
   .aviso-emergencia:hover .emergencia-texto span{animation-play-state:paused}
   @keyframes rolaTexto{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
-  .standby{position:relative;height:54px;border-radius:10px;overflow:hidden;background:var(--cinza-claro);border:1px solid var(--borda)}
+  .standby{position:relative;height:54px;border-radius:10px;overflow:hidden;background:var(--mp-rosa-bg);border:1px solid var(--borda)}
   .slide-st{position:absolute;inset:0;display:flex;align-items:center;padding:0 16px;
-    opacity:0;transition:opacity .9s ease;font-size:13px;font-weight:600;color:var(--texto)}
+    opacity:0;transition:opacity .9s ease;font-size:13px;font-weight:600;color:var(--cinza-texto)}
   .slide-st.ativa{opacity:1}
   .slide-st .dot{width:8px;height:8px;border-radius:50%;margin-right:10px;flex-shrink:0;box-shadow:0 0 8px currentColor}
   .pontos-st{position:absolute;bottom:6px;right:10px;display:flex;gap:5px}
-  .pontos-st span{width:7px;height:7px;border-radius:50%;background:rgba(0,0,0,.2);cursor:pointer}
-  .pontos-st span.ativa{background:var(--vinho)}
-  .corpo{position:relative;z-index:2;display:grid;grid-template-columns:300px 1fr;gap:18px;
-    padding:18px 22px;height:calc(100vh - 92px - 80px);min-height:0}
+  .pontos-st span{width:7px;height:7px;border-radius:50%;background:rgba(0,0,0,.15);cursor:pointer}
+  .pontos-st span.ativa{background:var(--mp-rosa)}
+  .corpo{position:relative;z-index:2;display:grid;grid-template-columns:310px 1fr;gap:18px;
+    padding:18px 22px;height:calc(100vh - 100px - 80px);min-height:0}
   .sidebar{
     background:#ffffff;border:1px solid var(--borda);border-radius:16px;
     padding:18px 14px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;
-    box-shadow:0 1px 3px rgba(0,0,0,.04);position:relative;
+    box-shadow:var(--shadow);position:relative;
   }
-  .sidebar .titulo{font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--vinho);font-weight:700;padding:0 6px}
+  .sidebar .titulo{font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--mp-rosa);font-weight:700;padding:0 6px}
   .btn-acao{
     display:flex;align-items:center;gap:12px;width:100%;border:1px solid var(--borda);cursor:pointer;
-    background:#ffffff;color:var(--texto);
+    background:#ffffff;color:var(--cinza-texto);
     padding:14px 14px;border-radius:12px;font-size:14px;font-weight:600;font-family:inherit;
     text-align:left;transition:all .18s ease;position:relative;overflow:hidden;
   }
-  .btn-acao:hover{border-color:var(--vinho);color:var(--vinho);transform:translateX(4px);box-shadow:0 4px 14px rgba(122,31,61,.08)}
-  .btn-acao svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;color:var(--vinho)}
-  .btn-acao .badge-demo{margin-left:auto;font-size:9px;background:var(--vinho);color:#fff;border-radius:10px;padding:2px 8px;letter-spacing:1px}
+  .btn-acao:hover{border-color:var(--mp-rosa);color:var(--mp-rosa);transform:translateX(4px);box-shadow:0 4px 14px rgba(196,34,126,.12)}
+  .btn-acao svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;color:var(--mp-rosa)}
+  .btn-acao .badge-demo{margin-left:auto;font-size:9px;background:var(--mp-rosa);color:#fff;border-radius:10px;padding:2px 8px;letter-spacing:1px}
   .btn-acao.embreve{opacity:.8}
-  .btn-acao.embreve .badge-demo{background:var(--cinza)}
-  .btn-acao.admin{background:linear-gradient(135deg,#7A1F3D,#5C162E);color:#fff;border-color:var(--vinho)}
+  .btn-acao.embreve .badge-demo{background:var(--cinza-sec)}
+  .btn-acao.admin{background:linear-gradient(135deg,#C4227E,#A01B68);color:#fff;border-color:var(--mp-rosa)}
   .btn-acao.admin svg{color:#fff}
-  .btn-acao.admin .badge-demo{background:#fff;color:var(--vinho)}
-  .btn-acao.admin:hover{transform:translateX(4px);box-shadow:0 6px 18px rgba(122,31,61,.3)}
+  .btn-acao.admin .badge-demo{background:#fff;color:var(--mp-rosa)}
+  .btn-acao.admin:hover{transform:translateX(4px);box-shadow:0 6px 18px rgba(196,34,126,.3)}
   .btn-acao.clt{background:linear-gradient(135deg,#0D9488,#0F766E);color:#fff;border-color:#0D9488}
   .btn-acao.clt svg{color:#fff}
   .btn-acao.clt .badge-demo{background:#fff;color:#0D9488}
   .btn-acao.oculto{display:none}
-  /* ===== GRÁFICO DE ANEL (novo, 3D brilhante) ===== */
+  /* ===== GRÁFICO DE ANEL (ampliado, 3D brilhante) ===== */
   .grafico-sidebar{
     margin-top:auto;padding-top:16px;border-top:1px solid var(--borda);
     display:flex;flex-direction:column;align-items:center;gap:10px;
   }
-  .grafico-sidebar .rotulo{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--cinza);font-weight:700}
-  .anel-wrapper{position:relative;width:170px;height:170px;flex-shrink:0}
-  .anel-wrapper svg{width:100%;height:100%;transform:rotate(-90deg);filter:drop-shadow(0 4px 10px rgba(0,0,0,.2))}
+  .grafico-sidebar .rotulo{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--cinza-sec);font-weight:700}
+  .anel-wrapper{position:relative;width:200px;height:200px;flex-shrink:0}
+  .anel-wrapper svg{width:100%;height:100%;transform:rotate(-90deg);filter:drop-shadow(0 6px 14px rgba(196,34,126,.25))}
   .anel-wrapper .fatia{cursor:pointer;transition:transform .3s ease,opacity .3s ease;transform-origin:50% 50%}
-  .anel-wrapper .fatia:hover{transform:scale(1.08);opacity:.9}
-  .anel-wrapper .fatia .brilho{fill:rgba(255,255,255,.25)}
+  .anel-wrapper .fatia:hover{transform:scale(1.08);opacity:.9;filter:brightness(1.15)}
   .anel-logo{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
-  .anel-logo img{width:58px;height:58px;object-fit:contain;animation:logoFade 4s ease-in-out infinite}
+  .anel-logo img{width:70px;height:70px;object-fit:contain;animation:logoFade 4s ease-in-out infinite}
   @keyframes logoFade{0%{opacity:0;transform:scale(.6)}15%{opacity:1;transform:scale(1)}85%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.6)}}
   .anel-tooltip{
     position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
@@ -133,136 +200,133 @@
     font-size:13px;font-weight:700;pointer-events:none;opacity:0;transition:opacity .2s;white-space:nowrap;z-index:10;
   }
   .anel-tooltip.visivel{opacity:1}
-  .conteudo{overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.2) transparent;min-height:0}
+  .conteudo{overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(196,34,126,.3) transparent;min-height:0}
   .conteudo::-webkit-scrollbar{width:8px}
-  .conteudo::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:8px}
-  /* ===== QUADRO CSC (fixo, topo do conteúdo) ===== */
+  .conteudo::-webkit-scrollbar-thumb{background:rgba(196,34,126,.25);border-radius:8px}
+  /* ===== QUADRO CSC (destaque) ===== */
   .csc-quadro{
-    background:linear-gradient(135deg,#ffffff,#F9FAFB);
-    border:1px solid var(--borda);border-radius:18px;padding:28px;margin-bottom:18px;
-    box-shadow:0 4px 16px rgba(0,0,0,.05);
+    background:linear-gradient(135deg,#ffffff,#FDF2F8);
+    border:2px solid var(--mp-rosa);border-radius:18px;padding:28px;margin-bottom:18px;
+    box-shadow:0 8px 30px rgba(196,34,126,.15);
   }
-  .csc-titulo{font-size:22px;font-weight:800;color:var(--vinho);display:flex;align-items:center;gap:10px;margin-bottom:6px}
-  .csc-titulo::before{content:"";width:6px;height:26px;background:var(--azul);border-radius:3px}
-  .csc-sub{font-size:13px;color:var(--cinza);margin-bottom:18px}
+  .csc-titulo{font-size:22px;font-weight:800;color:var(--mp-rosa);display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .csc-titulo::before{content:"";width:6px;height:26px;background:var(--mp-rosa);border-radius:3px}
+  .csc-sub{font-size:13px;color:var(--cinza-sec);margin-bottom:18px}
   .csc-botoes{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
   .csc-btn{
-    display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 12px;
-    background:#fff;border:1px solid var(--borda);border-radius:14px;cursor:pointer;
-    font-family:inherit;font-size:13px;font-weight:700;color:var(--texto);
-    transition:all .2s ease;position:relative;
+    display:flex;flex-direction:column;align-items:center;gap:10px;padding:20px 12px;
+    background:linear-gradient(135deg,#C4227E,#A01B68);border:none;border-radius:14px;cursor:pointer;
+    font-family:inherit;font-size:13px;font-weight:700;color:#fff;
+    transition:all .2s ease;position:relative;box-shadow:0 6px 18px rgba(196,34,126,.3);
   }
-  .csc-btn:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(122,31,61,.12);border-color:var(--vinho);color:var(--vinho)}
-  .csc-btn svg{width:30px;height:30px;stroke:var(--vinho);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-  .csc-btn .seta{position:absolute;top:10px;right:10px;font-size:12px;color:var(--azul);opacity:0;transition:opacity .2s}
-  .csc-btn:hover .seta{opacity:1}
+  .csc-btn:hover{transform:translateY(-5px);box-shadow:0 12px 28px rgba(196,34,126,.4)}
+  .csc-btn svg{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .csc-btn .seta{position:absolute;top:10px;right:10px;font-size:14px;color:#fff;opacity:.7}
   .csc-sub-botoes{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:18px;padding-top:18px;border-top:1px solid var(--borda)}
   .csc-sub-btn{
-    display:flex;align-items:center;gap:10px;padding:14px;background:var(--cinza-claro);
-    border:1px solid var(--borda);border-radius:10px;cursor:pointer;font-family:inherit;
-    font-size:13px;font-weight:600;color:var(--texto);transition:all .2s;
+    display:flex;align-items:center;gap:10px;padding:14px;background:#fff;
+    border:1.5px solid var(--mp-rosa);border-radius:10px;cursor:pointer;font-family:inherit;
+    font-size:13px;font-weight:600;color:var(--mp-rosa);transition:all .2s;
   }
-  .csc-sub-btn:hover{background:#fff;border-color:var(--vinho);color:var(--vinho);transform:translateX(3px)}
-  .csc-sub-btn svg{width:18px;height:18px;stroke:var(--vinho);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-  /* ===== HERO (movido para baixo) ===== */
+  .csc-sub-btn:hover{background:var(--mp-rosa);color:#fff;transform:translateX(3px);box-shadow:0 4px 12px rgba(196,34,126,.25)}
+  .csc-sub-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
   .hero{
     position:relative;border-radius:18px;overflow:hidden;padding:44px 40px;
-    background:linear-gradient(120deg,#ffffff,#F9FAFB);
+    background:linear-gradient(120deg,#ffffff,#FDF2F8);
     border:1px solid var(--borda);min-height:260px;display:flex;flex-direction:column;justify-content:center;gap:14px;margin-bottom:18px;
   }
-  .hero h1{font-size:38px;font-weight:800;letter-spacing:2px;color:var(--texto)}
-  .hero h1 span{color:var(--vinho)}
-  .hero p{font-size:16px;max-width:560px;line-height:1.6;color:var(--cinza)}
+  .hero h1{font-size:38px;font-weight:800;letter-spacing:2px;color:var(--cinza-texto)}
+  .hero h1 span{color:var(--mp-rosa)}
+  .hero p{font-size:16px;max-width:560px;line-height:1.6;color:var(--cinza-sec)}
   .hero .cta{display:flex;gap:12px;margin-top:8px}
   .btn{
     display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;text-decoration:none;
     font-family:inherit;font-weight:700;font-size:14px;border-radius:30px;padding:12px 22px;
     transition:all .18s ease;
   }
-  .btn-primario{background:var(--vinho);color:#fff}
-  .btn-primario:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(122,31,61,.25)}
-  .btn-contorno{background:transparent;color:var(--texto);border:1.5px solid var(--borda)}
-  .btn-contorno:hover{transform:translateY(-2px);background:var(--cinza-claro)}
-  .treinamentos-titulo{font-size:20px;font-weight:800;color:var(--vinho);margin:18px 0 14px;display:flex;align-items:center;gap:10px}
-  .treinamentos-titulo::before{content:"";width:6px;height:24px;background:var(--azul);border-radius:3px}
+  .btn-primario{background:linear-gradient(135deg,#C4227E,#A01B68);color:#fff;box-shadow:0 6px 18px rgba(196,34,126,.3)}
+  .btn-primario:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(196,34,126,.4)}
+  .btn-contorno{background:transparent;color:var(--mp-rosa);border:1.5px solid var(--mp-rosa)}
+  .btn-contorno:hover{transform:translateY(-2px);background:var(--mp-rosa-bg)}
+  .treinamentos-titulo{font-size:20px;font-weight:800;color:var(--mp-rosa);margin:18px 0 14px;display:flex;align-items:center;gap:10px}
+  .treinamentos-titulo::before{content:"";width:6px;height:24px;background:var(--mp-teal);border-radius:3px}
   .grid-treinamentos{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
   .card-treino{
     background:#ffffff;border:1px solid var(--borda);border-radius:14px;overflow:hidden;
-    display:flex;flex-direction:column;text-decoration:none;color:var(--texto);
+    display:flex;flex-direction:column;text-decoration:none;color:var(--cinza-texto);
     transition:transform .22s ease,box-shadow .22s ease;position:relative;
   }
-  .card-treino:hover{transform:translateY(-6px);box-shadow:0 16px 34px rgba(0,0,0,.1)}
-  .card-treino .faixa{height:6px;width:100%;background:linear-gradient(90deg,var(--vinho),var(--azul))}
+  .card-treino:hover{transform:translateY(-6px);box-shadow:0 16px 34px rgba(196,34,126,.12)}
+  .card-treino .faixa{height:6px;width:100%;background:linear-gradient(90deg,var(--mp-rosa),var(--mp-teal))}
   .card-treino .corpo{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
-  .card-treino .tag{align-self:flex-start;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;background:var(--vinho);border-radius:12px;padding:3px 10px}
+  .card-treino .tag{align-self:flex-start;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;background:var(--mp-rosa);border-radius:12px;padding:3px 10px}
   .card-treino h3{font-size:15px;line-height:1.3}
-  .card-treino .link{font-size:12.5px;font-weight:700;color:var(--azul);display:inline-flex;align-items:center;gap:6px;margin-top:auto}
+  .card-treino .link{font-size:12.5px;font-weight:700;color:var(--mp-teal);display:inline-flex;align-items:center;gap:6px;margin-top:auto}
   .card-treino:hover .link{text-decoration:underline}
   .tabs{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
   .tab{
-    border:1px solid var(--borda);background:#fff;color:var(--texto);cursor:pointer;
+    border:1px solid var(--borda);background:#fff;color:var(--cinza-texto);cursor:pointer;
     font-family:inherit;font-size:13px;font-weight:700;padding:10px 18px;border-radius:30px;
     transition:all .2s ease;
   }
-  .tab:hover{border-color:var(--vinho)}
-  .tab.ativa{background:var(--vinho);color:#fff;border-color:var(--vinho)}
+  .tab:hover{border-color:var(--mp-rosa);color:var(--mp-rosa)}
+  .tab.ativa{background:var(--mp-rosa);color:#fff;border-color:var(--mp-rosa)}
   .painel{display:none}
   .painel.ativa{display:block;animation:aparece .4s ease}
   @keyframes aparece{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
   .grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
   .card{
-    background:#ffffff;color:var(--texto);border-radius:14px;overflow:hidden;
+    background:#ffffff;color:var(--cinza-texto);border-radius:14px;overflow:hidden;
     display:flex;flex-direction:column;border:1px solid var(--borda);
     transition:transform .22s ease,box-shadow .22s ease;position:relative;
   }
-  .card:hover{transform:translateY(-6px);box-shadow:0 16px 34px rgba(0,0,0,.08)}
+  .card:hover{transform:translateY(-6px);box-shadow:0 16px 34px rgba(196,34,126,.1)}
   .card .faixa-cor{height:6px;width:100%}
   .card .corpo{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
   .card .tag{align-self:flex-start;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;border-radius:12px;padding:3px 10px}
   .card h3{font-size:15px;line-height:1.35}
-  .card p{font-size:12.5px;color:var(--cinza);line-height:1.55;flex:1}
-  .card .link{font-size:12.5px;font-weight:700;color:var(--vinho);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+  .card p{font-size:12.5px;color:var(--cinza-sec);line-height:1.55;flex:1}
+  .card .link{font-size:12.5px;font-weight:700;color:var(--mp-rosa);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
   .card .link:hover{text-decoration:underline}
-  .card .data{font-size:11px;color:#9CA3AF}
-  .card-placeholder{border:1.5px dashed var(--borda);background:#fff;color:var(--cinza);display:flex;align-items:center;justify-content:center;min-height:120px;border-radius:14px;font-size:13px;text-align:center;padding:16px}
+  .card .data{font-size:11px;color:#B0A0A8}
+  .card-placeholder{border:1.5px dashed var(--borda);background:#fff;color:var(--cinza-sec);display:flex;align-items:center;justify-content:center;min-height:120px;border-radius:14px;font-size:13px;text-align:center;padding:16px}
   .rodape-info{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px;padding-top:18px;border-top:1px solid var(--borda)}
-  .rodape-info h3{font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--vinho);margin-bottom:10px}
-  .rodape-info p{font-size:12.5px;line-height:1.7;color:var(--cinza)}
+  .rodape-info h3{font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--mp-rosa);margin-bottom:10px}
+  .rodape-info p{font-size:12.5px;line-height:1.7;color:var(--cinza-sec)}
   .social{display:flex;gap:10px;flex-wrap:wrap}
   .btn-social{
     display:inline-flex;align-items:center;gap:8px;border:1px solid var(--borda);background:#fff;
-    color:var(--texto);cursor:pointer;font-family:inherit;font-size:12.5px;font-weight:700;padding:9px 16px;border-radius:30px;
+    color:var(--cinza-texto);cursor:pointer;font-family:inherit;font-size:12.5px;font-weight:700;padding:9px 16px;border-radius:30px;
     transition:all .2s ease;
   }
-  .btn-social:hover{border-color:var(--vinho);color:var(--vinho);transform:translateY(-2px)}
-  .rodape-final{margin:22px 0 6px;text-align:center;font-size:11.5px;color:#9CA3AF}
+  .btn-social:hover{border-color:var(--mp-rosa);color:var(--mp-rosa);transform:translateY(-2px)}
+  .rodape-final{margin:22px 0 6px;text-align:center;font-size:11.5px;color:#B0A0A8}
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
   .reveal.visivel{opacity:1;transform:none}
   #modal{
     position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
-    background:rgba(17,24,39,.5);backdrop-filter:blur(4px);
+    background:rgba(196,34,126,.25);backdrop-filter:blur(4px);
     opacity:0;pointer-events:none;transition:opacity .25s ease;
   }
   #modal.aberto{opacity:1;pointer-events:auto}
   .modal-box{
-    background:#fff;color:var(--texto);border-radius:18px;width:min(760px,92vw);max-height:88vh;
+    background:#fff;color:var(--cinza-texto);border-radius:18px;width:min(760px,92vw);max-height:88vh;
     overflow:auto;position:relative;padding:26px;transform:scale(.94);transition:transform .25s ease;
-    box-shadow:0 24px 60px rgba(0,0,0,.18);
+    box-shadow:0 24px 60px rgba(196,34,126,.25);
   }
   #modal.aberto .modal-box{transform:scale(1)}
   .modal-fechar{
-    position:absolute;top:12px;right:14px;border:none;background:var(--cinza-claro);color:var(--texto);
+    position:absolute;top:12px;right:14px;border:none;background:var(--mp-rosa-bg);color:var(--cinza-texto);
     width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:15px;font-weight:700;
   }
-  .modal-fechar:hover{background:var(--vinho);color:#fff}
-  .modal-titulo{font-size:19px;font-weight:800;color:var(--vinho);padding-right:36px}
-  .modal-aviso{font-size:12px;color:var(--cinza);margin-top:10px;line-height:1.5}
+  .modal-fechar:hover{background:var(--mp-rosa);color:#fff}
+  .modal-titulo{font-size:19px;font-weight:800;color:var(--mp-rosa);padding-right:36px}
+  .modal-aviso{font-size:12px;color:var(--cinza-sec);margin-top:10px;line-height:1.5}
   .modal-emoji{font-size:44px}
   .modal-imagem{width:100%;border:1px solid var(--borda);border-radius:12px;margin-top:14px;display:block}
-  /* ===== HISTÓRICO DE SOLICITAÇÕES ===== */
   .historico{width:100%;border-collapse:collapse;margin-top:14px}
-  .historico th{text-align:left;padding:10px;border-bottom:2px solid var(--cinza-claro);color:var(--cinza);font-size:12px}
-  .historico td{padding:10px;border-bottom:1px solid var(--cinza-claro);font-size:13px}
+  .historico th{text-align:left;padding:10px;border-bottom:2px solid var(--mp-rosa-bg);color:var(--cinza-sec);font-size:12px}
+  .historico td{padding:10px;border-bottom:1px solid var(--mp-rosa-bg);font-size:13px}
   .status-badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
   .status-aberto{background:#FEF3C7;color:#92400E}
   .status-em-andamento{background:#DBEAFE;color:#1E40AF}
@@ -279,6 +343,7 @@
     .hero h1{font-size:28px}
     .boas-vindas .msg{font-size:22px}
     .csc-botoes{grid-template-columns:repeat(2,1fr)}
+    .ovulo-3d,.esperma{display:none}
   }
 </style>
 </head>
@@ -290,6 +355,16 @@
 </div>
 
 <header class="topo">
+  <!-- Fita de DNA ao fundo -->
+  <div class="dna-fundo"></div>
+  <div class="dna-helix"></div>
+  <!-- Espermatozoides correndo -->
+  <div class="esperma esp1"><div class="cabeca"></div><div class="cauda"></div></div>
+  <div class="esperma esp2"><div class="cabeca"></div><div class="cauda"></div></div>
+  <div class="esperma esp3"><div class="cabeca"></div><div class="cauda"></div></div>
+  <!-- Óvulo 3D à direita -->
+  <div class="ovulo-3d"></div>
+
   <div class="clima" id="clima-widget">
     <span class="icone" id="clima-icone">☀️</span>
     <div class="dados">
@@ -348,7 +423,7 @@
     <div class="grafico-sidebar">
       <div class="rotulo">Colaboradores por empresa</div>
       <div class="anel-wrapper">
-        <svg viewBox="0 0 170 170" id="svg-anel"></svg>
+        <svg viewBox="0 0 200 200" id="svg-anel"></svg>
         <div class="anel-logo" id="anel-logo">
           <img id="logo-anel-img" src="" alt="logo">
         </div>
@@ -358,7 +433,6 @@
   </aside>
 
   <main class="conteudo">
-    <!-- QUADRO CSC (fixo, topo) -->
     <section class="csc-quadro reveal" id="csc-quadro">
       <div class="csc-titulo">Solicitações CSC - Mater Group</div>
       <div class="csc-sub">Central de Serviços Compartilhados — selecione a área para abrir uma solicitação.</div>
@@ -387,7 +461,6 @@
       <div class="csc-sub-botoes" id="csc-sub-botoes"></div>
     </section>
 
-    <!-- HERO (movido para baixo) -->
     <section class="hero reveal">
       <h1>MATER <span>GROUP</span></h1>
       <p>Mater Prime · Mater Lab · TheraSeq · Lüna — empresas de medicina reprodutiva e saúde, unidas pelo mesmo acolhimento e excelência técnica.</p>
@@ -479,7 +552,7 @@
       </div>
     </div>
 
-    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v1.0 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
+    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v1.1 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
   </main>
 </div>
 
@@ -493,7 +566,7 @@
 <script>
 /* ===== CONFIGURAÇÃO DO USUÁRIO ===== */
 var TIPO_CONTRATACAO = 'CLT';
-var EH_ADMIN_GLOBAL = true; // em produção vem do M365
+var EH_ADMIN_GLOBAL = true;
 
 /* ===== RELÓGIO ===== */
 function tickRelogio(){
@@ -545,7 +618,7 @@ atualizarClima();
 /* ===== STAND BY ===== */
 var STANDBY = [
   { texto:'Corpo clínico Mater Lab — medicina reprodutiva', cor:'#6C3483' },
-  { texto:'Mater Prime — unidades São Paulo, Sorocaba e Nordeste', cor:'#7A1F3D' },
+  { texto:'Mater Prime — unidades São Paulo, Sorocaba e Nordeste', cor:'#C4227E' },
   { texto:'TheraSeq — análise genética (NGS + IA)', cor:'#0D9488' },
   { texto:'Lüna — health tech do grupo', cor:'#A32684' }
 ];
@@ -614,9 +687,9 @@ function montarTreinamentos(){
   }).join('');
 }
 
-/* ===== GRÁFICO DE ANEL (3D brilhante, sem tabela) ===== */
+/* ===== GRÁFICO DE ANEL (ampliado, 3D brilhante) ===== */
 var DADOS_EMPRESAS = [
-  { nome:'Mater Prime', cor:'#7A1F3D', valor:120, logo:'logoMP.png' },
+  { nome:'Mater Prime', cor:'#C4227E', valor:120, logo:'logoMP.png' },
   { nome:'Mater Lab', cor:'#6C3483', valor:85, logo:'Logo-Mater-Lab_Horizontal.png' },
   { nome:'TheraSeq', cor:'#0D9488', valor:40, logo:'LogoTheraSeq.png' },
   { nome:'Lüna', cor:'#A32684', valor:25, logo:'luna.png' }
@@ -626,7 +699,7 @@ var tooltip = document.getElementById('anel-tooltip');
 function desenharAnel(){
   var svg = document.getElementById('svg-anel');
   var total = DADOS_EMPRESAS.reduce(function(s, d){ return s + d.valor; }, 0);
-  var cx = 85, cy = 85, raio = 68, espessura = 30; // anel mais grosso
+  var cx = 100, cy = 100, raio = 82, espessura = 34; // anel maior e mais grosso
   var anguloInicio = 0;
   var htmlSvg = '';
   DADOS_EMPRESAS.forEach(function(d, i){
@@ -646,14 +719,12 @@ function desenharAnel(){
                ' A' + raioExt + ',' + raioExt + ' 0 ' + grande + ' 1 ' + x2e + ',' + y2e +
                ' L' + x1i + ',' + y1i +
                ' A' + raioInt + ',' + raioInt + ' 0 ' + grande + ' 0 ' + x2i + ',' + y2i + ' Z';
-    /* Efeito 3D brilhante: gradiente + brilho no topo */
     htmlSvg += '<path class="fatia" d="' + path + '" fill="' + d.cor + '" data-nome="' + d.nome + '" data-valor="' + d.valor + '" data-porc="' + Math.round(fracao*100) + '">' +
                '<title>' + d.nome + ': ' + d.valor + '</title></path>';
     anguloInicio = anguloFim;
   });
   svg.innerHTML = htmlSvg;
 
-  /* Hover: mostra tooltip com número dentro do anel */
   svg.querySelectorAll('.fatia').forEach(function(fatia){
     fatia.addEventListener('mouseenter', function(){
       fatia.style.transform = 'scale(1.08)';
@@ -668,7 +739,6 @@ function desenharAnel(){
     });
   });
 
-  /* Animação das logos dentro do anel */
   var logos = DADOS_EMPRESAS.map(function(d){ return d.logo; });
   var img = document.getElementById('logo-anel-img');
   var idx = 0;
@@ -681,50 +751,36 @@ function desenharAnel(){
 
 /* ===== QUADRO CSC ===== */
 var CSC = {
-  ti: {
-    titulo:'TI & Engenharia Clínica',
-    botoes:[
-      { nome:'ServiceDesk', acao:'servicedesk' },
-      { nome:'Eng. de Climatização', acao:'climatizacao' },
-      { nome:'Eng. Elétrica', acao:'eletrica' }
-    ]
-  },
-  suprimentos: {
-    titulo:'Suprimentos/Facilities',
-    botoes:[
-      { nome:'Solicitação de Compras', acao:'compras' },
-      { nome:'Manutenção Predial', acao:'manutencao' },
-      { nome:'Equipe de limpeza', acao:'limpeza' },
-      { nome:'Dispensário', acao:'dispensario' }
-    ]
-  },
-  rh: {
-    titulo:'RH',
-    botoes:[
-      { nome:'Justificar ocorrência de ponto', acao:'justificar' },
-      { nome:'Espelho de Ponto', acao:'espelho' },
-      { nome:'Holerites', acao:'holerite' },
-      { nome:'Solicitação de Férias', acao:'ferias' }
-    ]
-  },
+  ti: { titulo:'TI & Engenharia Clínica', botoes:[
+    { nome:'ServiceDesk', acao:'servicedesk' },
+    { nome:'Eng. de Climatização', acao:'climatizacao' },
+    { nome:'Eng. Elétrica', acao:'eletrica' }
+  ]},
+  suprimentos: { titulo:'Suprimentos/Facilities', botoes:[
+    { nome:'Solicitação de Compras', acao:'compras' },
+    { nome:'Manutenção Predial', acao:'manutencao' },
+    { nome:'Equipe de limpeza', acao:'limpeza' },
+    { nome:'Dispensário', acao:'dispensario' }
+  ]},
+  rh: { titulo:'RH', botoes:[
+    { nome:'Justificar ocorrência de ponto', acao:'justificar' },
+    { nome:'Espelho de Ponto', acao:'espelho' },
+    { nome:'Holerites', acao:'holerite' },
+    { nome:'Solicitação de Férias', acao:'ferias' }
+  ]},
   financeiro: { titulo:'Financeiro', botoes:[] },
   qualidade: { titulo:'Gestão da Qualidade', botoes:[] }
 };
-
 var cscAtivo = null;
 document.querySelectorAll('.csc-btn').forEach(function(btn){
   btn.addEventListener('click', function(){
     var chave = btn.dataset.csc;
     var secao = CSC[chave];
     var container = document.getElementById('csc-sub-botoes');
-    if(cscAtivo === chave){
-      container.innerHTML = '';
-      cscAtivo = null;
-      return;
-    }
+    if(cscAtivo === chave){ container.innerHTML = ''; cscAtivo = null; return; }
     cscAtivo = chave;
     if(secao.botoes.length === 0){
-      container.innerHTML = '<div style="grid-column:1/-1;padding:20px;text-align:center;color:var(--cinza);font-size:13px">' +
+      container.innerHTML = '<div style="grid-column:1/-1;padding:20px;text-align:center;color:var(--cinza-sec);font-size:13px">' +
         'As opções de <strong>' + secao.titulo + '</strong> ainda estão sendo mapeadas. As configurações de integração com o Desk Manager estão disponíveis na tela de Administração.</div>';
       return;
     }
@@ -733,16 +789,12 @@ document.querySelectorAll('.csc-btn').forEach(function(btn){
         '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>' +
         b.nome + '</button>';
     }).join('');
-    /* Re-aplica listeners nos sub-botões */
     document.querySelectorAll('.csc-sub-btn').forEach(function(sb){
-      sb.addEventListener('click', function(){
-        abrirAcaoCSC(sb.dataset.acao);
-      });
+      sb.addEventListener('click', function(){ abrirAcaoCSC(sb.dataset.acao); });
     });
   });
 });
 
-/* ===== AÇÕES CSC ===== */
 function abrirAcaoCSC(acao){
   if(acao === 'servicedesk'){ abrirServiceDesk(); }
   else if(acao === 'justificar'){ abrirJustificar(); }
@@ -752,95 +804,86 @@ function abrirAcaoCSC(acao){
   else {
     abrirModal(
       '<div class="modal-titulo">' + acao + '</div>' +
-      '<p style="font-size:13px;color:#6B7280;margin-top:8px">Esta solicitação será registrada no Desk Manager via integração.</p>' +
+      '<p style="font-size:13px;color:#8A8A8A;margin-top:8px">Esta solicitação será registrada no Desk Manager via integração.</p>' +
       '<div class="form-group" style="margin-top:14px"><label>Descrição da solicitação</label><textarea rows="4" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px" placeholder="Descreva sua solicitação..."></textarea></div>' +
       '<button class="btn btn-primario" onclick="registrarSolicitacaoDeskManager(\'' + acao + '\')">Enviar Solicitação</button>' +
-      '<p id="msg-desk" style="font-size:12px;color:var(--cinza);margin-top:10px"></p>' +
+      '<p id="msg-desk" style="font-size:12px;color:var(--cinza-sec);margin-top:10px"></p>' +
       '<p class="modal-aviso">Demonstração. A integração real com o Desk Manager será ativada após configurar a conexão na tela de Administração.</p>'
     );
   }
 }
-
 function registrarSolicitacaoDeskManager(acao){
   var msg = document.getElementById('msg-desk');
   msg.textContent = 'Solicitação "' + acao + '" registrada no Desk Manager com sucesso (protocolo DM-2026-0001).';
   msg.style.color = '#03543F';
 }
-
 function abrirServiceDesk(){
   abrirModal(
     '<div class="modal-titulo">Service Desk Mater Group</div>' +
-    '<p style="font-size:15px;color:var(--texto);margin-top:10px;font-weight:600">Bem-vindo ao Service Desk Mater Group</p>' +
-    '<p style="font-size:13px;color:#6B7280;margin-top:6px;line-height:1.6">Estamos aqui para ajudar você. Escolha a melhor forma de atendimento:</p>' +
+    '<p style="font-size:15px;color:var(--cinza-texto);margin-top:10px;font-weight:600">Bem-vindo ao Service Desk Mater Group</p>' +
+    '<p style="font-size:13px;color:#8A8A8A;margin-top:6px;line-height:1.6">Estamos aqui para ajudar você. Escolha a melhor forma de atendimento:</p>' +
     '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px">' +
-    '<div style="background:var(--cinza-claro);border:1px solid var(--borda);border-radius:12px;padding:18px;text-align:center">' +
-    '<div style="font-size:13px;font-weight:700;color:var(--texto);margin-bottom:8px">Precisa de atendimento imediato?</div>' +
-    '<p style="font-size:12px;color:var(--cinza);margin-bottom:12px">Fale agora com um especialista via Teams da Strati.</p>' +
-    '<a class="btn btn-primario" href="https://teams.microsoft.com/l/chat/0/0?users=suporte@strati.com.br" target="_blank" rel="noopener" style="text-decoration:none;display:inline-flex">' +
-    '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>' +
-    'Strati — Atendimento Imediato</a></div>' +
-    '<div style="background:var(--cinza-claro);border:1px solid var(--borda);border-radius:12px;padding:18px;text-align:center">' +
-    '<div style="font-size:13px;font-weight:700;color:var(--texto);margin-bottom:8px">Não precisa de atendimento imediato?</div>' +
-    '<p style="font-size:12px;color:var(--cinza);margin-bottom:12px">Registre sua solicitação e aguarde o atendimento pelo sistema de chamados.</p>' +
+    '<div style="background:var(--mp-rosa-bg);border:1px solid var(--borda);border-radius:12px;padding:18px;text-align:center">' +
+    '<div style="font-size:13px;font-weight:700;color:var(--cinza-texto);margin-bottom:8px">Precisa de atendimento imediato?</div>' +
+    '<p style="font-size:12px;color:var(--cinza-sec);margin-bottom:12px">Fale agora com um especialista via Teams da Strati.</p>' +
+    '<a class="btn btn-primario" href="https://teams.microsoft.com/l/chat/0/0?users=suporte@strati.com.br" target="_blank" rel="noopener" style="text-decoration:none;display:inline-flex">Strati — Atendimento Imediato</a></div>' +
+    '<div style="background:var(--mp-rosa-bg);border:1px solid var(--borda);border-radius:12px;padding:18px;text-align:center">' +
+    '<div style="font-size:13px;font-weight:700;color:var(--cinza-texto);margin-bottom:8px">Não precisa de atendimento imediato?</div>' +
+    '<p style="font-size:12px;color:var(--cinza-sec);margin-bottom:12px">Registre sua solicitação e aguarde o atendimento pelo sistema de chamados.</p>' +
     '<button class="btn btn-contorno" onclick="abrirSistemaChamados()">Sistema de Chamados</button>' +
-    '<p style="font-size:11px;color:var(--cinza);margin-top:10px">Ou envie por e-mail: <strong>suporte@strati.com.br</strong></p>' +
+    '<p style="font-size:11px;color:var(--cinza-sec);margin-top:10px">Ou envie por e-mail: <strong>suporte@strati.com.br</strong></p>' +
     '</div></div>' +
     '<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--borda)">' +
-    '<div style="font-size:14px;font-weight:700;color:var(--vinho);margin-bottom:8px">Seu histórico de solicitações</div>' +
+    '<div style="font-size:14px;font-weight:700;color:var(--mp-rosa);margin-bottom:8px">Seu histórico de solicitações</div>' +
     '<table class="historico"><thead><tr><th>Protocolo</th><th>Assunto</th><th>Status</th><th>Data</th></tr></thead><tbody>' +
     '<tr><td>DM-2026-0001</td><td>Troca de senha</td><td><span class="status-badge status-concluido">Concluído</span></td><td>02/08/2026</td></tr>' +
     '<tr><td>DM-2026-0007</td><td>Manutenção notebook</td><td><span class="status-badge status-em-andamento">Em andamento</span></td><td>04/08/2026</td></tr>' +
     '</tbody></table></div>'
   );
 }
-function abrirSistemaChamados(){
-  /* Em produção, abre o sistema de chamados do Desk Manager */
-  var msg = document.getElementById('msg-desk');
-  if(msg){ msg.textContent = 'Abrindo sistema de chamados do Desk Manager...'; }
-}
-
+function abrirSistemaChamados(){ var msg = document.getElementById('msg-desk'); if(msg){ msg.textContent = 'Abrindo sistema de chamados do Desk Manager...'; } }
 function abrirJustificar(){
   abrirModal(
     '<div class="modal-titulo">Justificar ocorrência de ponto</div>' +
-    '<p style="font-size:13px;color:#6B7280;margin-top:8px">Envie uma justificativa de ponto para o sistema Kairos.</p>' +
+    '<p style="font-size:13px;color:#8A8A8A;margin-top:8px">Envie uma justificativa de ponto para o sistema Kairos.</p>' +
     '<div class="form-group" style="margin-top:14px"><label>Data da ocorrência</label><input type="date" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px"></div>' +
     '<div class="form-group"><label>Motivo</label><textarea rows="3" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px" placeholder="Descreva o motivo..."></textarea></div>' +
     '<button class="btn btn-primario" onclick="this.parentNode.querySelector(\'p\').textContent=\'Justificativa enviada ao Kairos com sucesso.\';this.parentNode.querySelector(\'p\').style.color=\'#03543F\'">Enviar Justificativa</button>' +
-    '<p style="font-size:12px;color:var(--cinza);margin-top:10px"></p>' +
+    '<p style="font-size:12px;color:var(--cinza-sec);margin-top:10px"></p>' +
     '<p class="modal-aviso">Demonstração. A integração real com o Kairos será ativada após configurar a conexão.</p>'
   );
 }
 function abrirEspelho(){
   abrirModal(
     '<div class="modal-titulo">Espelho de Ponto</div>' +
-    '<p style="font-size:13px;color:#6B7280;margin-top:8px">Consulte o espelho de ponto mensal no sistema Kairos.</p>' +
-    '<div style="text-align:center;padding:30px;background:var(--cinza-claro);border-radius:12px;margin-top:14px">' +
-    '<div style="font-size:14px;color:var(--cinza)">Espelho de ponto — Julho/2026</div>' +
-    '<div style="font-size:24px;font-weight:800;color:var(--vinho);margin-top:10px">176h 30min</div>' +
-    '<div style="font-size:13px;color:var(--cinza);margin-top:4px">22 dias trabalhados · 2 faltas · 1 justificada</div></div>' +
+    '<p style="font-size:13px;color:#8A8A8A;margin-top:8px">Consulte o espelho de ponto mensal no sistema Kairos.</p>' +
+    '<div style="text-align:center;padding:30px;background:var(--mp-rosa-bg);border-radius:12px;margin-top:14px">' +
+    '<div style="font-size:14px;color:var(--cinza-sec)">Espelho de ponto — Julho/2026</div>' +
+    '<div style="font-size:24px;font-weight:800;color:var(--mp-rosa);margin-top:10px">176h 30min</div>' +
+    '<div style="font-size:13px;color:var(--cinza-sec);margin-top:4px">22 dias trabalhados · 2 faltas · 1 justificada</div></div>' +
     '<p class="modal-aviso">Demonstração. A integração real com o Kairos será ativada após configurar a conexão.</p>'
   );
 }
 function abrirHolerite(){
   abrirModal(
     '<div class="modal-titulo">Holerite</div>' +
-    '<p style="font-size:13px;color:#6B7280;margin-top:8px">Consulte seu holerite mensal.</p>' +
-    '<div style="text-align:center;padding:30px;background:var(--cinza-claro);border-radius:12px;margin-top:14px">' +
-    '<div style="font-size:14px;color:var(--cinza)">Holerite — Julho/2026</div>' +
-    '<div style="font-size:26px;font-weight:800;color:var(--vinho);margin-top:10px">R$ 8.450,00</div>' +
-    '<div style="font-size:13px;color:var(--cinza);margin-top:4px">Salário bruto · INSS · IRRF</div></div>' +
+    '<p style="font-size:13px;color:#8A8A8A;margin-top:8px">Consulte seu holerite mensal.</p>' +
+    '<div style="text-align:center;padding:30px;background:var(--mp-rosa-bg);border-radius:12px;margin-top:14px">' +
+    '<div style="font-size:14px;color:var(--cinza-sec)">Holerite — Julho/2026</div>' +
+    '<div style="font-size:26px;font-weight:800;color:var(--mp-rosa);margin-top:10px">R$ 8.450,00</div>' +
+    '<div style="font-size:13px;color:var(--cinza-sec);margin-top:4px">Salário bruto · INSS · IRRF</div></div>' +
     '<p class="modal-aviso">Demonstração. A integração real com o Kairos será ativada após configurar a conexão.</p>'
   );
 }
 function abrirFerias(){
   abrirModal(
     '<div class="modal-titulo">Solicitação de Férias</div>' +
-    '<p style="font-size:13px;color:#6B7280;margin-top:8px">Solicite suas férias. A solicitação será registrada no Desk Manager.</p>' +
+    '<p style="font-size:13px;color:#8A8A8A;margin-top:8px">Solicite suas férias. A solicitação será registrada no Desk Manager.</p>' +
     '<div class="form-group" style="margin-top:14px"><label>Data de início</label><input type="date" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px"></div>' +
     '<div class="form-group"><label>Data de retorno</label><input type="date" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px"></div>' +
     '<div class="form-group"><label>Dias de férias</label><input type="number" value="30" style="width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px"></div>' +
     '<button class="btn btn-primario" onclick="this.parentNode.querySelector(\'p\').textContent=\'Solicitação de férias registrada no Desk Manager (protocolo DM-2026-0012).\';this.parentNode.querySelector(\'p\').style.color=\'#03543F\'">Enviar Solicitação</button>' +
-    '<p style="font-size:12px;color:var(--cinza);margin-top:10px"></p>' +
+    '<p style="font-size:12px;color:var(--cinza-sec);margin-top:10px"></p>' +
     '<p class="modal-aviso">Demonstração. A integração real com o Desk Manager será ativada após configurar a conexão.</p>'
   );
 }
@@ -878,27 +921,26 @@ document.querySelectorAll('.btn-acao').forEach(function(btn){
     if(btn.dataset.acao === 'bater-ponto'){ abrirBaterPonto(); return; }
     if(btn.dataset.acao === 'treinamentos'){
       var lista = TREINAMENTOS_TODOS.map(function(t){
-        return '<a href="' + t.url + '" target="_blank" rel="noopener" style="display:block;padding:12px 14px;border:1px solid var(--borda);border-radius:10px;margin-bottom:8px;text-decoration:none;color:var(--texto);font-size:14px;font-weight:600">' +
-          t.nome + ' <span style="float:right;color:var(--azul)">→</span></a>';
+        return '<a href="' + t.url + '" target="_blank" rel="noopener" style="display:block;padding:12px 14px;border:1px solid var(--borda);border-radius:10px;margin-bottom:8px;text-decoration:none;color:var(--cinza-texto);font-size:14px;font-weight:600">' +
+          t.nome + ' <span style="float:right;color:var(--mp-teal)">→</span></a>';
       }).join('');
       abrirModal('<div class="modal-titulo">Treinamentos Mater Prime</div>' +
-        '<p style="font-size:13px;color:#6B7280;margin-top:8px;margin-bottom:14px">Todos os treinamentos disponíveis.</p>' + lista);
+        '<p style="font-size:13px;color:#8A8A8A;margin-top:8px;margin-bottom:14px">Todos os treinamentos disponíveis.</p>' + lista);
       return;
     }
     abrirModal('<div class="modal-emoji">🚧</div><div class="modal-titulo">Em breve</div>' +
-      '<p style="font-size:13px;color:#6B7280;margin-top:8px">Este botão ainda não possui direcionamento definido.</p>');
+      '<p style="font-size:13px;color:#8A8A8A;margin-top:8px">Este botão ainda não possui direcionamento definido.</p>');
   });
 });
-
 function abrirBaterPonto(){
   abrirModal(
     '<div class="modal-titulo">Bater Ponto</div>' +
-    '<p style="font-size:13px;color:#6B7280;margin-top:8px">Integração com o sistema Kairos (Dimep).</p>' +
-    '<div style="text-align:center;padding:30px;background:var(--cinza-claro);border-radius:12px;margin-top:14px">' +
-    '<div style="font-size:40px;font-weight:800;color:var(--vinho)" id="hora-ponto">--:--:--</div>' +
-    '<div style="font-size:13px;color:var(--cinza);margin-top:6px" id="data-ponto"></div>' +
+    '<p style="font-size:13px;color:#8A8A8A;margin-top:8px">Integração com o sistema Kairos (Dimep).</p>' +
+    '<div style="text-align:center;padding:30px;background:var(--mp-rosa-bg);border-radius:12px;margin-top:14px">' +
+    '<div style="font-size:40px;font-weight:800;color:var(--mp-rosa)" id="hora-ponto">--:--:--</div>' +
+    '<div style="font-size:13px;color:var(--cinza-sec);margin-top:6px" id="data-ponto"></div>' +
     '<button class="btn btn-primario" style="margin-top:18px" onclick="marcarPonto()">Marcar Ponto Agora</button>' +
-    '<p id="msg-ponto" style="font-size:12px;color:var(--cinza);margin-top:10px"></p></div>' +
+    '<p id="msg-ponto" style="font-size:12px;color:var(--cinza-sec);margin-top:10px"></p></div>' +
     '<p class="modal-aviso">Demonstração. A integração real com o Kairos será ativada após configurar a conexão.</p>'
   );
   var hora = document.getElementById('hora-ponto');
@@ -917,10 +959,10 @@ document.querySelectorAll('.btn-social').forEach(function(btn){
   btn.addEventListener('click', function(){
     var url = btn.dataset.rede;
     abrirModal('<div class="modal-titulo">Rede social</div>' +
-      '<p style="font-size:13px;color:#6B7280;margin-top:8px">Exibida dentro da intranet.</p>' +
+      '<p style="font-size:13px;color:#8A8A8A;margin-top:8px">Exibida dentro da intranet.</p>' +
       '<iframe src="' + url + '" title="Rede social" style="width:100%;height:440px;border:1px solid var(--borda);border-radius:12px;margin-top:14px;background:#fff"></iframe>' +
       '<p class="modal-aviso">Instagram, LinkedIn e Facebook costumam bloquear exibição em iframe.</p>' +
-      '<a class="modal-link" href="' + url + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;font-weight:700;color:var(--azul);text-decoration:none">Abrir em nova aba ↗</a>');
+      '<a class="modal-link" href="' + url + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;font-weight:700;color:var(--mp-teal);text-decoration:none">Abrir em nova aba ↗</a>');
   });
 });
 
