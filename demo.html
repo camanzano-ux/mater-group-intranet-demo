@@ -18,11 +18,10 @@
     background:linear-gradient(135deg,#F9FAFB 0%,#F3F4F6 100%);
     min-height:100vh; overflow-x:hidden;
   }
-  /* ============ LOADER (à prova de falhas) ============ */
   #loader{
     position:fixed; inset:0; z-index:9999; display:flex; flex-direction:column;
     align-items:center; justify-content:center; gap:22px;
-    background:#ffffff; transition:opacity .5s ease;
+    background:#ffffff; transition:opacity .5s ease; visibility:visible;
   }
   #loader.oculto{opacity:0;pointer-events:none;visibility:hidden}
   .loader-logo{font-size:40px;font-weight:800;letter-spacing:4px;color:var(--vinho);animation:pulso 1.6s ease-in-out infinite}
@@ -31,7 +30,6 @@
   .loader-bar span{display:block;height:100%;width:40%;border-radius:4px;background:linear-gradient(90deg,var(--vinho),var(--azul));animation:carrega 1.2s ease-in-out infinite}
   @keyframes carrega{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
   @keyframes pulso{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:.85}}
-  /* ============ TOPO / BOAS-VINDAS ============ */
   .topo{
     position:relative; z-index:2; display:flex; align-items:center; justify-content:center;
     height:92px; padding:0 22px;
@@ -62,7 +60,6 @@
     background:var(--cinza-claro); border:1px solid var(--borda); border-radius:30px; padding:8px 16px; color:var(--cinza);
   }
   .topo-info .hora{font-weight:700;font-size:15px;color:var(--texto)}
-  /* ============ FAIXA DE AVISOS ============ */
   .faixa-avisos{
     position:relative; z-index:2; display:grid; grid-template-columns:minmax(260px,38%) 1fr;
     gap:14px; padding:12px 22px; background:#ffffff; border-bottom:1px solid var(--borda);
@@ -90,7 +87,6 @@
   .pontos-st{position:absolute;bottom:6px;right:10px;display:flex;gap:5px}
   .pontos-st span{width:7px;height:7px;border-radius:50%;background:rgba(0,0,0,.2);cursor:pointer}
   .pontos-st span.ativa{background:var(--vinho)}
-  /* ============ CORPO ============ */
   .corpo{position:relative;z-index:2;display:grid;grid-template-columns:280px 1fr;gap:18px;
     padding:18px 22px;height:calc(100vh - 92px - 80px);min-height:0}
   .sidebar{
@@ -110,7 +106,6 @@
   .btn-acao .badge-demo{margin-left:auto;font-size:9px;background:var(--vinho);color:#fff;border-radius:10px;padding:2px 8px;letter-spacing:1px}
   .btn-acao.embreve{opacity:.8}
   .btn-acao.embreve .badge-demo{background:var(--cinza)}
-  /* ============ CONTEÚDO ============ */
   .conteudo{overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.2) transparent;min-height:0}
   .conteudo::-webkit-scrollbar{width:8px}
   .conteudo::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:8px}
@@ -119,15 +114,10 @@
     background:linear-gradient(120deg,#ffffff,#F9FAFB);
     border:1px solid var(--borda);min-height:280px;display:flex;flex-direction:column;justify-content:center;gap:14px;
   }
-  .hero::before{
-    content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(122,31,61,.05),transparent 45%);
-    animation:brilho 7s ease-in-out infinite alternate;
-  }
-  @keyframes brilho{from{transform:translateX(-20%)}to{transform:translateX(20%)}}
-  .hero h1{font-size:38px;font-weight:800;letter-spacing:2px;position:relative;z-index:1;color:var(--texto)}
+  .hero h1{font-size:38px;font-weight:800;letter-spacing:2px;color:var(--texto)}
   .hero h1 span{color:var(--vinho)}
-  .hero p{font-size:16px;max-width:560px;line-height:1.6;color:var(--cinza);position:relative;z-index:1}
-  .hero .cta{display:flex;gap:12px;margin-top:8px;position:relative;z-index:1}
+  .hero p{font-size:16px;max-width:560px;line-height:1.6;color:var(--cinza)}
+  .hero .cta{display:flex;gap:12px;margin-top:8px}
   .btn{
     display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;text-decoration:none;
     font-family:inherit;font-weight:700;font-size:14px;border-radius:30px;padding:12px 22px;
@@ -137,12 +127,6 @@
   .btn-primario:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(122,31,61,.25)}
   .btn-contorno{background:transparent;color:var(--texto);border:1.5px solid var(--borda)}
   .btn-contorno:hover{transform:translateY(-2px);background:var(--cinza-claro)}
-  .ondas{position:absolute;left:0;right:0;bottom:0;z-index:0;pointer-events:none}
-  .ondas svg{display:block;width:100%;height:70px}
-  .onda1{fill:rgba(122,31,61,.05);animation:onda 12s ease-in-out infinite alternate}
-  .onda2{fill:rgba(74,155,212,.05);animation:onda 9s ease-in-out infinite alternate-reverse}
-  @keyframes onda{from{transform:translateX(-2.5%)}to{transform:translateX(2.5%)}}
-  /* stats */
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}
   .stat{
     background:#ffffff;border:1px solid var(--borda);border-radius:14px;
@@ -152,7 +136,6 @@
   .stat:hover{transform:translateY(-4px)}
   .stat .numero{font-size:32px;font-weight:800;color:var(--vinho)}
   .stat .rotulo{font-size:12px;color:var(--cinza);margin-top:4px;letter-spacing:.4px}
-  /* tabs */
   .tabs{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
   .tab{
     border:1px solid var(--borda);background:#fff;color:var(--texto);cursor:pointer;
@@ -182,7 +165,6 @@
   .card .data{font-size:11px;color:#9CA3AF}
   .card-placeholder{border:1.5px dashed var(--borda);background:#fff;color:var(--cinza);
     display:flex;align-items:center;justify-content:center;min-height:120px;border-radius:14px;font-size:13px;text-align:center;padding:16px}
-  /* rodapé info */
   .rodape-info{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px;padding-top:18px;border-top:1px solid var(--borda)}
   .rodape-info h3{font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--vinho);margin-bottom:10px}
   .rodape-info p{font-size:12.5px;line-height:1.7;color:var(--cinza)}
@@ -195,10 +177,8 @@
   .btn-social:hover{border-color:var(--vinho);color:var(--vinho);transform:translateY(-2px)}
   .btn-social svg{width:16px;height:16px;fill:currentColor}
   .rodape-final{margin:22px 0 6px;text-align:center;font-size:11.5px;color:#9CA3AF}
-  /* reveal */
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
   .reveal.visivel{opacity:1;transform:none}
-  /* ============ MODAL ============ */
   #modal{
     position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
     background:rgba(17,24,39,.5);backdrop-filter:blur(4px);
@@ -216,11 +196,10 @@
     width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:15px;font-weight:700;
   }
   .modal-fechar:hover{background:var(--vinho);color:#fff}
-  .modal-box .modal-titulo{font-size:19px;font-weight:800;color:var(--vinho);padding-right:36px}
-  .modal-box .modal-aviso{font-size:12px;color:var(--cinza);margin-top:10px;line-height:1.5}
-  .modal-box .modal-emoji{font-size:44px}
-  .modal-box .modal-imagem{width:100%;border:1px solid var(--borda);border-radius:12px;margin-top:14px;display:block}
-  /* ============ RESPONSIVO ============ */
+  .modal-titulo{font-size:19px;font-weight:800;color:var(--vinho);padding-right:36px}
+  .modal-aviso{font-size:12px;color:var(--cinza);margin-top:10px;line-height:1.5}
+  .modal-emoji{font-size:44px}
+  .modal-imagem{width:100%;border:1px solid var(--borda);border-radius:12px;margin-top:14px;display:block}
   @media (max-width:900px){
     .corpo{grid-template-columns:1fr;height:auto}
     .sidebar{flex-direction:row;overflow-x:auto;align-items:stretch}
@@ -250,7 +229,7 @@
 <div class="faixa-avisos">
   <div class="aviso-emergencia">
     <span class="pulso"></span>
-    <div class="emergencia-texto"><span>⚠ DEMONSTRAÇÃO — Área de emergência. Em produção, este aviso aparece apenas quando ativado pela equipe de comunicação.</span></div>
+    <div class="emergencia-texto"><span>DEMONSTRAÇÃO — Área de emergência. Em produção, este aviso aparece apenas quando ativado pela equipe de comunicação.</span></div>
   </div>
   <div class="standby">
     <div id="slidesStandby"></div>
@@ -291,17 +270,13 @@
         <a class="btn btn-primario" href="https://materprime.com.br/" target="_blank" rel="noopener">Visitar Mater Prime</a>
         <button class="btn btn-contorno" id="btnExplorar">Explorar a demonstração ↓</button>
       </div>
-      <div class="ondas">
-        <svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path class="onda1" d="M0,64 C360,110 720,10 1080,60 S1440,70 1440,70 L1440,120 L0,120 Z"/></svg>
-        <svg viewBox="0 0 1440 120" preserveAspectRatio="none" style="position:absolute;bottom:0;left:0;right:0"><path class="onda2" d="M0,80 C360,30 720,100 1080,50 S1440,80 1440,80 L1440,120 L0,120 Z"/></svg>
-      </div>
     </section>
 
     <section class="stats reveal">
-      <div class="stat"><div class="numero" data-count="4" data-prefixo="">0</div><div class="rotulo">Marcas no grupo</div></div>
-      <div class="stat"><div class="numero" data-count="3" data-prefixo="">0</div><div class="rotulo">Unidades Mater Prime</div></div>
-      <div class="stat"><div class="numero" data-count="15" data-prefixo="R$ " data-sufixo=" mi">0</div><div class="rotulo">Investidos no Mater Lab</div></div>
-      <div class="stat"><div class="numero" data-count="2000" data-prefixo="" data-sufixo=" m²">0</div><div class="rotulo">Estrutura do Mater Lab</div></div>
+      <div class="stat"><div class="numero" data-count="4">0</div><div class="rotulo">Marcas no grupo</div></div>
+      <div class="stat"><div class="numero" data-count="3">0</div><div class="rotulo">Unidades Mater Prime</div></div>
+      <div class="stat"><div class="numero" data-count="15">0</div><div class="rotulo">Investidos no Mater Lab (mi)</div></div>
+      <div class="stat"><div class="numero" data-count="2000">0</div><div class="rotulo">Estrutura do Mater Lab (m²)</div></div>
     </section>
 
     <div class="tabs reveal">
@@ -375,27 +350,15 @@
       <div>
         <h3>Redes sociais</h3>
         <div class="social">
-          <button class="btn-social" data-rede="https://www.instagram.com/materprime/">
-            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
-            Instagram
-          </button>
-          <button class="btn-social" data-rede="https://www.linkedin.com/company/mater-lab/">
-            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V9h4v1.5A6 6 0 0 1 16 8z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            LinkedIn
-          </button>
-          <button class="btn-social" data-rede="https://www.facebook.com/materlaboratorio">
-            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-            Facebook
-          </button>
-          <button class="btn-social" data-rede="https://www.youtube.com/channel/UCnl2Rxxfd-0B1oHdr1T0Xfw">
-            <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
-            YouTube
-          </button>
+          <button class="btn-social" data-rede="https://www.instagram.com/materprime/">Instagram</button>
+          <button class="btn-social" data-rede="https://www.linkedin.com/company/mater-lab/">LinkedIn</button>
+          <button class="btn-social" data-rede="https://www.facebook.com/materlaboratorio">Facebook</button>
+          <button class="btn-social" data-rede="https://www.youtube.com/channel/UCnl2Rxxfd-0B1oHdr1T0Xfw">YouTube</button>
         </div>
       </div>
     </div>
 
-    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v0.3 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
+    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v0.4 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
   </main>
 </div>
 
@@ -407,7 +370,7 @@
 </div>
 
 <script>
-/* ================= RELÓGIO ================= */
+/* ===== RELÓGIO ===== */
 function tickRelogio(){
   var agora = new Date();
   document.getElementById('relogioData').textContent =
@@ -415,23 +378,25 @@ function tickRelogio(){
   document.getElementById('relogioHora').textContent =
     agora.toLocaleTimeString('pt-BR');
 }
-tickRelogio(); setInterval(tickRelogio, 1000);
+tickRelogio();
+setInterval(tickRelogio, 1000);
 
-/* ================= STAND BY ================= */
+/* ===== STAND BY ===== */
 var STANDBY = [
-  { texto:'Corpo clínico Mater Lab — medicina reprodutiva',   cor:'#6C3483' },
+  { texto:'Corpo clínico Mater Lab — medicina reprodutiva', cor:'#6C3483' },
   { texto:'Mater Prime — unidades São Paulo, Sorocaba e Nordeste', cor:'#7A1F3D' },
-  { texto:'TheraSeq — análise genética (NGS + IA)',           cor:'#0D9488' },
-  { texto:'Lüna — health tech do grupo',                      cor:'#A32684' }
+  { texto:'TheraSeq — análise genética (NGS + IA)', cor:'#0D9488' },
+  { texto:'Lüna — health tech do grupo', cor:'#A32684' }
 ];
 (function(){
   var slidesBox = document.getElementById('slidesStandby');
   var pontosBox = document.getElementById('pontosStandby');
-  var htmlS = '', htmlP = '';
-  STANDBY.forEach(function(s,i){
-    htmlS += '<div class="slide-st'+(i===0?' ativa':'')+'">'+
-             '<span class="dot" style="background:'+s.cor+';color:'+s.cor+'"></span>'+s.texto+'</div>';
-    htmlP += '<span class="'+(i===0?'ativa':'')+'" data-i="'+i+'"></span>';
+  var htmlS = '';
+  var htmlP = '';
+  STANDBY.forEach(function(s, i){
+    htmlS += '<div class="slide-st' + (i === 0 ? ' ativa' : '') + '">' +
+             '<span class="dot" style="background:' + s.cor + ';color:' + s.cor + '"></span>' + s.texto + '</div>';
+    htmlP += '<span class="' + (i === 0 ? 'ativa' : '') + '" data-i="' + i + '"></span>';
   });
   slidesBox.innerHTML = htmlS;
   pontosBox.innerHTML = htmlP;
@@ -445,31 +410,37 @@ var STANDBY = [
     slides[atual].classList.add('ativa');
     pontos[atual].classList.add('ativa');
   }
-  pontos.forEach(function(p){ p.addEventListener('click', function(){ ir(+p.dataset.i); }); });
+  pontos.forEach(function(p){
+    p.addEventListener('click', function(){ ir(+p.dataset.i); });
+  });
   setInterval(function(){ ir(atual + 1); }, 4000);
 })();
 
-/* ================= CONTADORES ================= */
+/* ===== CONTADORES ===== */
 function animaContador(el){
   var alvo = +el.dataset.count;
-  var prefixo = el.dataset.prefixo || '';
-  var sufixo = el.dataset.sufixo || '';
-  var dur = 1400; var inicio = performance.now();
+  var dur = 1400;
+  var inicio = performance.now();
   function passo(agora){
     var t = Math.min((agora - inicio) / dur, 1);
     var ease = 1 - Math.pow(1 - t, 3);
     var val = Math.round(alvo * ease);
-    el.textContent = prefixo + val.toLocaleString('pt-BR') + sufixo;
-    if(t < 1) requestAnimationFrame(passo);
+    el.textContent = val.toLocaleString('pt-BR');
+    if(t < 1){ requestAnimationFrame(passo); }
   }
   requestAnimationFrame(passo);
 }
 var obsContador = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){ if(e.isIntersecting){ animaContador(e.target); obsContador.unobserve(e.target); } });
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      animaContador(e.target);
+      obsContador.unobserve(e.target);
+    }
+  });
 }, { threshold:.5 });
 document.querySelectorAll('.numero').forEach(function(n){ obsContador.observe(n); });
 
-/* ================= TABS ================= */
+/* ===== TABS ===== */
 document.querySelectorAll('.tab').forEach(function(tab){
   tab.addEventListener('click', function(){
     document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('ativa'); });
@@ -479,36 +450,47 @@ document.querySelectorAll('.tab').forEach(function(tab){
   });
 });
 
-/* ================= REVEAL ================= */
+/* ===== REVEAL ===== */
 var obsReveal = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visivel'); obsReveal.unobserve(e.target); } });
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      e.target.classList.add('visivel');
+      obsReveal.unobserve(e.target);
+    }
+  });
 }, { threshold:.15 });
 document.querySelectorAll('.reveal').forEach(function(el){ obsReveal.observe(el); });
 
-/* ================= MODAL ================= */
+/* ===== MODAL ===== */
 var modal = document.getElementById('modal');
 var modalConteudo = document.getElementById('modalConteudo');
-function abrirModal(html){ modalConteudo.innerHTML = html; modal.classList.add('aberto'); }
+function abrirModal(html){
+  modalConteudo.innerHTML = html;
+  modal.classList.add('aberto');
+}
 function fecharModal(){ modal.classList.remove('aberto'); }
 document.getElementById('modalFechar').addEventListener('click', fecharModal);
-modal.addEventListener('click', function(e){ if(e.target === modal) fecharModal(); });
+modal.addEventListener('click', function(e){ if(e.target === modal){ fecharModal(); } });
 
-/* Botões da sidebar */
-/* Botões da sidebar */
+/* ===== BOTÕES DA SIDEBAR ===== */
 document.querySelectorAll('.btn-acao').forEach(function(btn){
   btn.addEventListener('click', function(){
     if(btn.dataset.acao === 'ponto'){
       abrirModal(
-        '<div class="modal-titulo">🕒 Ponto eletrônico</div>' +
+        '<div class="modal-titulo">Ponto eletrônico</div>' +
         '<p style="font-size:13px;color:#6B7280;margin-top:8px">Demonstração — tela do sistema Dimep Kairos (acesso real disponível apenas no domínio corporativo).</p>' +
         '<img class="modal-imagem" id="imgPonto" src="ponto-eletronico-demo.png" alt="Tela de login do ponto eletrônico Kairos">' +
         '<p class="modal-aviso">Imagem ilustrativa exibida apenas para demonstração. Em produção, o acesso é feito pela rede interna.</p>'
       );
-      /* Fallback limpo: se a imagem não carregar, mostra aviso */
       var img = document.getElementById('imgPonto');
-      img.addEventListener('error', function(){
-        this.outerHTML = '<div style="padding:40px;text-align:center;color:#6B7280;border:1px dashed #E5E7EB;border-radius:12px;margin-top:14px">Imagem não encontrada — verifique se o arquivo <b>ponto-eletronico-demo.png</b> está na mesma pasta do demo.html</div>';
-      });
+      if(img){
+        img.addEventListener('error', function(){
+          var aviso = document.createElement('div');
+          aviso.style.cssText = 'padding:40px;text-align:center;color:#6B7280;border:1px dashed #E5E7EB;border-radius:12px;margin-top:14px';
+          aviso.innerHTML = 'Imagem não encontrada — verifique se o arquivo <b>ponto-eletronico-demo.png</b> está na mesma pasta do demo.html';
+          img.parentNode.replaceChild(aviso, img);
+        });
+      }
     } else {
       abrirModal(
         '<div class="modal-emoji">🚧</div>' +
@@ -518,7 +500,8 @@ document.querySelectorAll('.btn-acao').forEach(function(btn){
     }
   });
 });
-/* Botões de redes sociais */
+
+/* ===== REDES SOCIAIS ===== */
 document.querySelectorAll('.btn-social').forEach(function(btn){
   btn.addEventListener('click', function(){
     var url = btn.dataset.rede;
@@ -532,19 +515,19 @@ document.querySelectorAll('.btn-social').forEach(function(btn){
   });
 });
 
-/* ================= LOADER (à prova de falhas) ================= */
-(function(){
-  var loader = document.getElementById('loader');
-  function some(){ loader.classList.add('oculto'); }
-  /* remove em qualquer um destes eventos — nunca trava */
-  window.addEventListener('load', function(){ setTimeout(some, 600); });
-  setTimeout(some, 2500);          /* segurança: some mesmo sem load */
-  document.addEventListener('DOMContentLoaded', function(){ setTimeout(some, 1200); });
-})();
+/* ===== LOADER (à prova de falhas) ===== */
+function hideLoader(){
+  var l = document.getElementById('loader');
+  if(l){ l.classList.add('oculto'); }
+}
+window.addEventListener('load', function(){ setTimeout(hideLoader, 600); });
+document.addEventListener('DOMContentLoaded', function(){ setTimeout(hideLoader, 1200); });
+setTimeout(hideLoader, 2500);
 
-/* ================= BOTÃO EXPLORAR ================= */
+/* ===== BOTÃO EXPLORAR ===== */
 document.getElementById('btnExplorar').addEventListener('click', function(){
-  document.querySelector('.stats').scrollIntoView({ behavior:'smooth', block:'center' });
+  var alvo = document.querySelector('.stats');
+  if(alvo){ alvo.scrollIntoView({ behavior:'smooth', block:'center' }); }
 });
 </script>
 </body>

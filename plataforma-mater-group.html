@@ -23,7 +23,17 @@
   .boas-vindas{width:100%;overflow:hidden;white-space:nowrap}
   .boas-vindas .texto{display:inline-block;font-size:24px;font-weight:700;color:var(--vinho);animation:welcome 12s linear infinite}
   .boas-vindas .texto span{color:var(--cinza-sec)}
-  @keyframes welcome{0%{transform:translateX(100%);opacity:1}30%{transform:translateX(0);opacity:1}40%{transform:translateX(0);opacity:1}45%{opacity:.2;transform:scale(1.1)}50%{opacity:1;transform:scale(1)}55%{opacity:.2;transform:scale(1.1)}60%{opacity:1;transform:scale(1)}80%{transform:translateX(0);opacity:1}100%{transform:translateX(-100%);opacity:0}}
+  @keyframes welcome{
+    0%{transform:translateX(100%);opacity:1}
+    30%{transform:translateX(0);opacity:1}
+    40%{transform:translateX(0);opacity:1}
+    45%{opacity:.2;transform:scale(1.1)}
+    50%{opacity:1;transform:scale(1)}
+    55%{opacity:.2;transform:scale(1.1)}
+    60%{opacity:1;transform:scale(1)}
+    80%{transform:translateX(0);opacity:1}
+    100%{transform:translateX(-100%);opacity:0}
+  }
   .topo-info{position:absolute;right:20px;font-size:12px;color:var(--cinza-sec);display:flex;align-items:center;gap:10px}
   .topo-info .usuario{background:var(--cinza-claro);border:1px solid var(--borda);border-radius:20px;padding:6px 14px;font-weight:600;color:var(--vinho)}
   aside{grid-area:sidebar;background:var(--vinho);color:#fff;display:flex;flex-direction:column;padding:20px 0;z-index:10}
@@ -96,7 +106,6 @@
   <p style="margin-top:15px;font-weight:600;color:var(--vinho)">Carregando Intranet...</p>
 </div>
 
-<!-- TELA DE LOGIN -->
 <div id="tela-login" style="display:none;height:100vh;background:var(--fundo)">
   <div class="login-box">
     <div class="logo">MATER<span>GROUP</span></div>
@@ -105,7 +114,6 @@
   </div>
 </div>
 
-<!-- PLATAFORMA -->
 <div id="plataforma" style="display:none">
 <div class="app">
   <aside>
@@ -122,7 +130,7 @@
   </aside>
 
   <header>
-    <div class="boas-vindas"><div class="texto">Seja Bem-vindo à Intranet <span>Mater Group</span></div></div>
+    <div class="boas-vindas"><div class="texto">Seja Bem-vindo à Intranet&nbsp;<span>Mater Group</span></div></div>
     <div class="topo-info">
       <span class="usuario" id="usuarioLogado"></span>
       <span id="relogioInfo"></span>
@@ -130,7 +138,6 @@
   </header>
 
   <main id="main-content">
-    <!-- DASHBOARD -->
     <div id="dashboard" class="panel active">
       <div class="stats-grid">
         <div class="stat-card"><span class="stat-value" id="count-marcas">0</span><span class="stat-label">Marcas</span></div>
@@ -148,7 +155,6 @@
       </div>
     </div>
 
-    <!-- LOCALIZADOR -->
     <div id="localizador" class="panel">
       <div class="card">
         <h2 class="section-title">Localizador de Pessoas</h2>
@@ -165,7 +171,6 @@
       </div>
     </div>
 
-    <!-- RESERVAS -->
     <div id="reservas" class="panel">
       <div class="card">
         <h2 class="section-title">Reserva de Salas (Outlook)</h2>
@@ -187,7 +192,6 @@
       </div>
     </div>
 
-    <!-- ARQUIVOS -->
     <div id="arquivos" class="panel">
       <div class="card">
         <h2 class="section-title">Arquivos de Rede (SharePoint)</h2>
@@ -200,7 +204,6 @@
       </div>
     </div>
 
-    <!-- TREINAMENTOS -->
     <div id="treinamentos" class="panel">
       <div class="card" style="text-align:center;padding:60px">
         <h2 style="color:var(--vinho)">Portal de Treinamentos</h2>
@@ -209,7 +212,6 @@
       </div>
     </div>
 
-    <!-- ENDOMARKETING -->
     <div id="endomarketing" class="panel">
       <div class="card">
         <h2 class="section-title">Painel de EndoMarketing</h2>
@@ -231,7 +233,6 @@
       </div>
     </div>
 
-    <!-- ADMIN -->
     <div id="admin" class="panel">
       <div class="card">
         <h2 class="section-title">Dashboard Administrativo</h2>
@@ -291,7 +292,6 @@
 </div>
 </div>
 
-<!-- MODAL PONTO -->
 <div class="modal-overlay" id="modalPonto">
   <div class="modal-content">
     <span class="close-modal" onclick="closePontoModal()">&times;</span>
@@ -317,11 +317,10 @@ var CONFIG = {
   salas: ["Sala Reunião A", "Sala Reunião B", "Sala Diretoria", "Auditório"]
 };
 
-/* Carrega configuração salva no navegador */
 function carregarConfig(){
   try{
     var salvo = JSON.parse(localStorage.getItem('matergroup_config'));
-    if(salvo) CONFIG = Object.assign(CONFIG, salvo);
+    if(salvo){ CONFIG = Object.assign(CONFIG, salvo); }
   }catch(e){}
   preencherCamposConfig();
 }
@@ -338,7 +337,7 @@ function preencherCamposConfig(){
 }
 
 /* ============================================================
-   MSAL - AUTENTICAÇÃO MICROSOFT 365
+   MSAL — AUTENTICAÇÃO MICROSOFT 365
    ============================================================ */
 var msalInstance = null;
 var usuarioAtual = null;
@@ -379,13 +378,12 @@ function loginM365(){
 }
 
 function carregarGrupos(){
-  var token = msalInstance.getTokenSilent({
+  msalInstance.getTokenSilent({
     scopes: ["GroupMember.Read.All"],
     account: usuarioAtual
   }).then(function(resp){
-    var accessToken = resp.accessToken;
     return fetch("https://graph.microsoft.com/v1.0/me/transitiveMemberOf?$select=displayName", {
-      headers: { "Authorization": "Bearer " + accessToken }
+      headers: { "Authorization": "Bearer " + resp.accessToken }
     });
   }).then(function(r){ return r.json(); })
   .then(function(data){
@@ -393,23 +391,20 @@ function carregarGrupos(){
     aplicarPermissoes();
   }).catch(function(err){
     console.error("Erro ao carregar grupos", err);
-    aplicarPermissoes(); /* aplica mesmo sem grupos, para não travar */
+    aplicarPermissoes();
   });
 }
 
 function aplicarPermissoes(){
-  /* Verifica se é admin global (membro do grupo configurado) */
   ehAdminGlobal = gruposUsuario.indexOf(CONFIG.grupoAdmin) !== -1;
-  /* Verifica se é membro do grupo EndoMKT_admin */
   ehEndoMkt = gruposUsuario.indexOf(CONFIG.grupoEndoMkt) !== -1;
 
   var adminItem = document.querySelector('.nav-item[data-panel="admin"]');
   var endoItem = document.querySelector('.nav-item[data-panel="endomarketing"]');
 
-  if(ehAdminGlobal){ adminItem.classList.remove('oculto'); }
-  if(ehEndoMkt){ endoItem.classList.remove('oculto'); }
+  if(adminItem && ehAdminGlobal){ adminItem.classList.remove('oculto'); }
+  if(endoItem && ehEndoMkt){ endoItem.classList.remove('oculto'); }
 
-  /* Se não é admin, garante que não fique no painel admin */
   if(!ehAdminGlobal && document.getElementById('admin').classList.contains('active')){
     mostrarPainel('dashboard');
   }
@@ -473,7 +468,7 @@ function atualizarStatsAdmin(){
 }
 
 /* ============================================================
-   ADMIN - SALVAR CONFIGURAÇÕES
+   ADMIN — SALVAR CONFIGURAÇÕES E TESTAR
    ============================================================ */
 function salvarAdmin(){
   CONFIG.clientId = document.getElementById('cfg-clientid').value.trim();
@@ -513,13 +508,14 @@ function testarConexao(){
 }
 
 /* ============================================================
-   LOCALIZADOR - GRAPH API
+   LOCALIZADOR — GRAPH API
    ============================================================ */
 function buscarPessoas(termo){
-  var token = msalInstance.getTokenSilent({ scopes: ["Directory.Read.All"], account: usuarioAtual })
+  if(!msalInstance || !usuarioAtual){ return; }
+  msalInstance.getTokenSilent({ scopes: ["Directory.Read.All"], account: usuarioAtual })
     .then(function(resp){
       var url = "https://graph.microsoft.com/v1.0/users?$select=displayName,jobTitle,officeLocation,mail&$top=20";
-      if(termo){
+      if(termo && termo.length > 0){
         url = "https://graph.microsoft.com/v1.0/users?$filter=startswith(displayName,'" + termo + "')&$select=displayName,jobTitle,officeLocation,mail&$top=20";
       }
       return fetch(url, { headers: { "Authorization": "Bearer " + resp.accessToken } });
@@ -543,7 +539,7 @@ function buscarPessoas(termo){
 }
 
 /* ============================================================
-   RESERVA DE SALAS - GRAPH API
+   RESERVA DE SALAS — GRAPH API
    ============================================================ */
 function preencherSalas(){
   var select = document.getElementById('select-sala');
@@ -559,11 +555,15 @@ function reservarSala(){
 
   if(!data){ msg.textContent = 'Selecione uma data.'; msg.style.color = '#9B1C1C'; return; }
   if(!ini || !fim){ msg.textContent = 'Selecione os horários.'; msg.style.color = '#9B1C1C'; return; }
+  if(!msalInstance || !usuarioAtual){
+    msg.textContent = 'Faça login com Microsoft 365 para reservar.';
+    msg.style.color = '#9B1C1C';
+    return;
+  }
 
   var start = data + 'T' + ini + ':00';
   var end = data + 'T' + fim + ':00';
 
-  /* Cria evento no calendário Outlook via Graph API */
   msalInstance.getTokenSilent({ scopes: ["Calendars.ReadWrite"], account: usuarioAtual })
     .then(function(resp){
       return fetch("https://graph.microsoft.com/v1.0/me/events", {
@@ -617,12 +617,14 @@ function publicarEndomarketing(){
 function mostrarPainel(panelId){
   document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
   document.querySelectorAll('.nav-item').forEach(function(i){ i.classList.remove('active'); });
-  document.getElementById(panelId).classList.add('active');
+  var painel = document.getElementById(panelId);
+  if(!painel){ return; }
+  painel.classList.add('active');
   var item = document.querySelector('.nav-item[data-panel="' + panelId + '"]');
-  if(item) item.classList.add('active');
-  if(panelId === 'dashboard') animateStats();
+  if(item){ item.classList.add('active'); }
+  if(panelId === 'dashboard'){ animateStats(); }
   if(panelId === 'admin'){ renderizarLogs(); atualizarStatsAdmin(); }
-  if(panelId === 'localizador') buscarPessoas('');
+  if(panelId === 'localizador'){ buscarPessoas(''); }
 }
 
 document.querySelectorAll('.nav-item').forEach(function(item){
@@ -633,11 +635,14 @@ document.querySelectorAll('.nav-item').forEach(function(item){
 
 function tickRelogio(){
   var agora = new Date();
-  document.getElementById('relogioInfo').textContent =
-    agora.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'}) +
-    ' | ' + agora.toLocaleTimeString('pt-BR');
+  var el = document.getElementById('relogioInfo');
+  if(el){
+    el.textContent = agora.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'}) +
+      ' | ' + agora.toLocaleTimeString('pt-BR');
+  }
 }
-tickRelogio(); setInterval(tickRelogio, 1000);
+tickRelogio();
+setInterval(tickRelogio, 1000);
 
 function animateStats(){
   animateValue('count-marcas', 4, 1000);
@@ -647,32 +652,37 @@ function animateStats(){
 }
 function animateValue(id, end, duration){
   var obj = document.getElementById(id);
-  var start = 0, range = end - start, startTime = new Date().getTime();
+  if(!obj){ return; }
+  var start = 0;
+  var range = end - start;
+  var startTime = new Date().getTime();
   var timer = setInterval(function(){
     var now = new Date().getTime();
     var t = Math.min((now - startTime) / duration, 1);
     var val = Math.round(start + (range * (1 - Math.pow(1 - t, 3))));
     obj.innerHTML = val;
-    if(t >= 1) clearInterval(timer);
+    if(t >= 1){ clearInterval(timer); }
   }, 30);
 }
 
 function openPontoModal(){
   document.getElementById('modalPonto').style.display = 'flex';
   var img = document.getElementById('img-ponto-demo');
-  img.onerror = function(){
-    document.getElementById('ponto-img-container').innerHTML =
-      '<div style="text-align:center;padding:20px;color:#666;font-size:13px">' +
-      '<strong>Aviso:</strong> Imagem "ponto-eletronico-demo.png" não encontrada.<br>' +
-      'Certifique-se de que o arquivo está na mesma pasta do HTML.</div>';
-  };
+  if(img){
+    img.onerror = function(){
+      document.getElementById('ponto-img-container').innerHTML =
+        '<div style="text-align:center;padding:20px;color:#666;font-size:13px">' +
+        '<strong>Aviso:</strong> Imagem "ponto-eletronico-demo.png" não encontrada.<br>' +
+        'Certifique-se de que o arquivo está na mesma pasta do HTML.</div>';
+    };
+  }
 }
 function closePontoModal(){ document.getElementById('modalPonto').style.display = 'none'; }
 
 /* LOADER à prova de falhas */
 function hideLoader(){
   var l = document.getElementById('loader');
-  if(l) l.classList.add('oculto');
+  if(l){ l.classList.add('oculto'); }
 }
 window.addEventListener('load', function(){ setTimeout(hideLoader, 800); });
 document.addEventListener('DOMContentLoaded', function(){ setTimeout(hideLoader, 2000); });
