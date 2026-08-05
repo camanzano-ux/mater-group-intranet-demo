@@ -131,15 +131,26 @@
   .btn-primario:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(122,31,61,.25)}
   .btn-contorno{background:transparent;color:var(--texto);border:1.5px solid var(--borda)}
   .btn-contorno:hover{transform:translateY(-2px);background:var(--cinza-claro)}
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}
-  .stat{
-    background:#ffffff;border:1px solid var(--borda);border-radius:14px;
-    padding:20px 16px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.04);
-    transition:transform .2s ease;
+  /* ===== SEÇÃO DE TREINAMENTOS (substitui as estatísticas) ===== */
+  .treinamentos-titulo{
+    font-size:20px;font-weight:800;color:var(--vinho);margin:18px 0 14px;
+    display:flex;align-items:center;gap:10px;
   }
-  .stat:hover{transform:translateY(-4px)}
-  .stat .numero{font-size:32px;font-weight:800;color:var(--vinho)}
-  .stat .rotulo{font-size:12px;color:var(--cinza);margin-top:4px;letter-spacing:.4px}
+  .treinamentos-titulo::before{content:"";width:6px;height:24px;background:var(--azul);border-radius:3px}
+  .grid-treinamentos{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+  .card-treino{
+    background:#ffffff;border:1px solid var(--borda);border-radius:14px;overflow:hidden;
+    display:flex;flex-direction:column;text-decoration:none;color:var(--texto);
+    transition:transform .22s ease,box-shadow .22s ease;position:relative;
+  }
+  .card-treino:hover{transform:translateY(-6px);box-shadow:0 16px 34px rgba(0,0,0,.1)}
+  .card-treino .faixa{height:6px;width:100%;background:linear-gradient(90deg,var(--vinho),var(--azul))}
+  .card-treino .corpo{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .card-treino .tag{align-self:flex-start;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;
+    color:#fff;background:var(--vinho);border-radius:12px;padding:3px 10px}
+  .card-treino h3{font-size:15px;line-height:1.3}
+  .card-treino .link{font-size:12.5px;font-weight:700;color:var(--azul);display:inline-flex;align-items:center;gap:6px;margin-top:auto}
+  .card-treino:hover .link{text-decoration:underline}
   .tabs{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
   .tab{
     border:1px solid var(--borda);background:#fff;color:var(--texto);cursor:pointer;
@@ -169,6 +180,30 @@
   .card .data{font-size:11px;color:#9CA3AF}
   .card-placeholder{border:1.5px dashed var(--borda);background:#fff;color:var(--cinza);
     display:flex;align-items:center;justify-content:center;min-height:120px;border-radius:14px;font-size:13px;text-align:center;padding:16px}
+  /* ===== GRÁFICO PIZZA ===== */
+  .grafico-section{background:#ffffff;border:1px solid var(--borda);border-radius:16px;padding:25px;margin-top:22px}
+  .grafico-section h3{font-size:18px;font-weight:800;color:var(--vinho);margin-bottom:6px}
+  .grafico-section .sub{font-size:12px;color:var(--cinza);margin-bottom:18px}
+  .grafico-wrapper{display:flex;align-items:center;gap:30px;flex-wrap:wrap}
+  .grafico-pizza{position:relative;width:260px;height:260px;flex-shrink:0}
+  .grafico-pizza svg{width:100%;height:100%;transform:rotate(-90deg)}
+  .grafico-pizza .fatia{
+    cursor:pointer;transition:transform .3s ease,opacity .3s ease;
+    transform-origin:50% 50%;
+  }
+  .grafico-pizza .fatia:hover{transform:scale(1.06);opacity:.85}
+  .grafico-pizza .centro{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    pointer-events:none;
+  }
+  .grafico-pizza .centro .total{font-size:32px;font-weight:800;color:var(--vinho)}
+  .grafico-pizza .centro .rotulo{font-size:12px;color:var(--cinza)}
+  .legenda{display:flex;flex-direction:column;gap:10px;flex:1;min-width:200px}
+  .legenda-item{display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;padding:8px 10px;border-radius:8px;transition:background .2s}
+  .legenda-item:hover{background:var(--cinza-claro)}
+  .legenda-item .cor{width:14px;height:14px;border-radius:4px;flex-shrink:0}
+  .legenda-item .nome{font-weight:600}
+  .legenda-item .valor{margin-left:auto;font-weight:700;color:var(--vinho)}
   .rodape-info{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px;padding-top:18px;border-top:1px solid var(--borda)}
   .rodape-info h3{font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--vinho);margin-bottom:10px}
   .rodape-info p{font-size:12.5px;line-height:1.7;color:var(--cinza)}
@@ -179,7 +214,6 @@
     transition:all .2s ease;
   }
   .btn-social:hover{border-color:var(--vinho);color:var(--vinho);transform:translateY(-2px)}
-  .btn-social svg{width:16px;height:16px;fill:currentColor}
   .rodape-final{margin:22px 0 6px;text-align:center;font-size:11.5px;color:#9CA3AF}
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
   .reveal.visivel{opacity:1;transform:none}
@@ -210,11 +244,12 @@
     .sidebar .titulo{display:none}
     .btn-acao{min-width:200px}
     .faixa-avisos{grid-template-columns:1fr}
-    .stats{grid-template-columns:repeat(2,1fr)}
+    .grid-treinamentos{grid-template-columns:repeat(2,1fr)}
     .rodape-info{grid-template-columns:1fr}
     .topo-info{display:none}
     .hero h1{font-size:28px}
     .boas-vindas{font-size:22px}
+    .grafico-wrapper{justify-content:center}
   }
 </style>
 </head>
@@ -260,11 +295,10 @@
       <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
       Arquivos Rede <span class="badge-demo">BREVE</span>
     </button>
-    <button class="btn-acao embreve" data-acao="embreve">
+    <button class="btn-acao" data-acao="treinamentos">
       <svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>
-      Treinamentos <span class="badge-demo">BREVE</span>
+      Treinamentos <span class="badge-demo">VER</span>
     </button>
-    <!-- Botão Administração: leva à plataforma de administração -->
     <button class="btn-acao admin" data-acao="admin">
       <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
       Administração <span class="badge-demo">ADMIN</span>
@@ -281,12 +315,11 @@
       </div>
     </section>
 
-    <section class="stats reveal">
-      <div class="stat"><div class="numero" data-count="4">0</div><div class="rotulo">Marcas no grupo</div></div>
-      <div class="stat"><div class="numero" data-count="3">0</div><div class="rotulo">Unidades Mater Prime</div></div>
-      <div class="stat"><div class="numero" data-count="15">0</div><div class="rotulo">Investidos no Mater Lab (mi)</div></div>
-      <div class="stat"><div class="numero" data-count="2000">0</div><div class="rotulo">Estrutura do Mater Lab (m²)</div></div>
-    </section>
+    <!-- ===== SEÇÃO DE TREINAMENTOS (substitui as estatísticas) ===== -->
+    <div class="treinamentos-titulo reveal">Fique por dentro de nossos treinamentos</div>
+    <div class="grid-treinamentos reveal" id="grid-treinamentos">
+      <!-- os 4 treinamentos são gerados via JS -->
+    </div>
 
     <div class="tabs reveal">
       <button class="tab ativa" data-tab="noticias">Notícias</button>
@@ -345,6 +378,22 @@
       </div>
     </div>
 
+    <!-- ===== GRÁFICO PIZZA (área marcada em vermelho) ===== -->
+    <div class="grafico-section reveal" id="grafico-section">
+      <h3>Colaboradores por Empresa</h3>
+      <p class="sub" id="grafico-sub">Modo demonstração — números fictícios. Após a integração, exibe a quantidade de e-mails por domínio de cada empresa.</p>
+      <div class="grafico-wrapper">
+        <div class="grafico-pizza">
+          <svg viewBox="0 0 260 260" id="svg-pizza"></svg>
+          <div class="centro">
+            <span class="total" id="pizza-total">0</span>
+            <span class="rotulo">colaboradores</span>
+          </div>
+        </div>
+        <div class="legenda" id="legenda-pizza"></div>
+      </div>
+    </div>
+
     <div class="rodape-info reveal">
       <div>
         <h3>Infos gerais</h3>
@@ -367,7 +416,7 @@
       </div>
     </div>
 
-    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v0.5 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
+    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v0.6 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
   </main>
 </div>
 
@@ -425,29 +474,109 @@ var STANDBY = [
   setInterval(function(){ ir(atual + 1); }, 4000);
 })();
 
-/* ===== CONTADORES ===== */
-function animaContador(el){
-  var alvo = +el.dataset.count;
-  var dur = 1400;
-  var inicio = performance.now();
-  function passo(agora){
-    var t = Math.min((agora - inicio) / dur, 1);
-    var ease = 1 - Math.pow(1 - t, 3);
-    var val = Math.round(alvo * ease);
-    el.textContent = val.toLocaleString('pt-BR');
-    if(t < 1){ requestAnimationFrame(passo); }
-  }
-  requestAnimationFrame(passo);
+/* ===== TREINAMENTOS ===== */
+var TREINAMENTOS = [
+  { nome:'Assisted-Hatching', url:'https://materprime.com.br/tratamentos/fertilizacao-in-vitro/assisted-hatching/', tag:'FIV' },
+  { nome:'Análise genética do embrião', url:'https://materprime.com.br/tratamentos/fertilizacao-in-vitro/analise-genetica-do-embriao/', tag:'Genética' },
+  { nome:'Coito programado', url:'https://materprime.com.br/tratamentos/namoro-programado/', tag:'Tratamento' },
+  { nome:'Inseminação artificial', url:'https://materprime.com.br/tratamentos/inseminacao-artificial/', tag:'Tratamento' }
+];
+var TREINAMENTOS_TODOS = [
+  { nome:'Assisted-Hatching', url:'https://materprime.com.br/tratamentos/fertilizacao-in-vitro/assisted-hatching/' },
+  { nome:'Análise genética do embrião', url:'https://materprime.com.br/tratamentos/fertilizacao-in-vitro/analise-genetica-do-embriao/' },
+  { nome:'Coito programado', url:'https://materprime.com.br/tratamentos/namoro-programado/' },
+  { nome:'Inseminação artificial', url:'https://materprime.com.br/tratamentos/inseminacao-artificial/' },
+  { nome:'Programa Acesso', url:'https://materprime.com.br/programa-acesso/' },
+  { nome:'Preservação da fertilidade', url:'https://materprime.com.br/tratamentos/preservacao-da-fertilidade/' },
+  { nome:'Útero de substituição', url:'https://materprime.com.br/tratamentos/utero-de-substituicao/' },
+  { nome:'FIV (Fertilização in Vitro)', url:'https://materprime.com.br/tratamentos/fertilizacao-in-vitro/' },
+  { nome:'Doação de sêmen', url:'https://materprime.com.br/tratamentos/doacao-de-semen/' },
+  { nome:'Congelamento de óvulos', url:'https://materprime.com.br/tratamentos/congelamento-de-ovulos/' },
+  { nome:'Mini FIV', url:'https://materprime.com.br/tratamentos/mini-fiv/' }
+];
+
+function montarTreinamentos(){
+  var grid = document.getElementById('grid-treinamentos');
+  grid.innerHTML = TREINAMENTOS.map(function(t){
+    return '<a class="card-treino" href="' + t.url + '" target="_blank" rel="noopener">' +
+      '<div class="faixa"></div>' +
+      '<div class="corpo">' +
+      '<span class="tag">' + t.tag + '</span>' +
+      '<h3>' + t.nome + '</h3>' +
+      '<span class="link">Saiba mais →</span>' +
+      '</div></a>';
+  }).join('');
 }
-var obsContador = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){
-    if(e.isIntersecting){
-      animaContador(e.target);
-      obsContador.unobserve(e.target);
-    }
+
+/* ===== GRÁFICO PIZZA ===== */
+/* Modo demonstração: números fictícios por empresa.
+   Após integração M365, substituir por contagem de e-mails por domínio. */
+var DADOS_EMPRESAS = [
+  { nome:'Mater Prime', cor:'#7A1F3D', valor:120 },
+  { nome:'Mater Lab', cor:'#6C3483', valor:85 },
+  { nome:'TheraSeq', cor:'#0D9488', valor:40 },
+  { nome:'Lüna', cor:'#A32684', valor:25 }
+];
+
+function desenharPizza(){
+  var svg = document.getElementById('svg-pizza');
+  var legenda = document.getElementById('legenda-pizza');
+  var total = DADOS_EMPRESAS.reduce(function(s, d){ return s + d.valor; }, 0);
+  document.getElementById('pizza-total').textContent = total;
+
+  var cx = 130, cy = 130, raio = 100;
+  var anguloInicio = 0;
+  var htmlSvg = '';
+  var htmlLegenda = '';
+
+  DADOS_EMPRESAS.forEach(function(d, i){
+    var fracao = d.valor / total;
+    var anguloFim = anguloInicio + fracao * 360;
+    var x1 = cx + raio * Math.cos((anguloInicio - 90) * Math.PI / 180);
+    var y1 = cy + raio * Math.sin((anguloInicio - 90) * Math.PI / 180);
+    var x2 = cx + raio * Math.cos((anguloFim - 90) * Math.PI / 180);
+    var y2 = cy + raio * Math.sin((anguloFim - 90) * Math.PI / 180);
+    var grande = (anguloFim - anguloInicio) > 180 ? 1 : 0;
+    var path = 'M' + cx + ',' + cy + ' L' + x1 + ',' + y1 +
+               ' A' + raio + ',' + raio + ' 0 ' + grande + ' 1 ' + x2 + ',' + y2 + ' Z';
+    htmlSvg += '<path class="fatia" d="' + path + '" fill="' + d.cor + '" data-nome="' + d.nome + '" data-valor="' + d.valor + '">' +
+               '<title>' + d.nome + ': ' + d.valor + ' colaboradores</title></path>';
+    htmlLegenda += '<div class="legenda-item" data-nome="' + d.nome + '">' +
+      '<span class="cor" style="background:' + d.cor + '"></span>' +
+      '<span class="nome">' + d.nome + '</span>' +
+      '<span class="valor">' + d.valor + '</span></div>';
+    anguloInicio = anguloFim;
   });
-}, { threshold:.5 });
-document.querySelectorAll('.numero').forEach(function(n){ obsContador.observe(n); });
+
+  svg.innerHTML = htmlSvg;
+  legenda.innerHTML = htmlLegenda;
+
+  /* Hover: amplia a fatia e destaca a legenda correspondente */
+  svg.querySelectorAll('.fatia').forEach(function(fatia){
+    fatia.addEventListener('mouseenter', function(){
+      fatia.style.transform = 'scale(1.06)';
+      var nome = fatia.dataset.nome;
+      legenda.querySelectorAll('.legenda-item').forEach(function(item){
+        item.style.background = (item.dataset.nome === nome) ? 'var(--cinza-claro)' : '';
+      });
+    });
+    fatia.addEventListener('mouseleave', function(){
+      fatia.style.transform = '';
+      legenda.querySelectorAll('.legenda-item').forEach(function(item){ item.style.background = ''; });
+    });
+  });
+  legenda.querySelectorAll('.legenda-item').forEach(function(item){
+    item.addEventListener('mouseenter', function(){
+      var nome = item.dataset.nome;
+      svg.querySelectorAll('.fatia').forEach(function(fatia){
+        fatia.style.transform = (fatia.dataset.nome === nome) ? 'scale(1.06)' : '';
+      });
+    });
+    item.addEventListener('mouseleave', function(){
+      svg.querySelectorAll('.fatia').forEach(function(fatia){ fatia.style.transform = ''; });
+    });
+  });
+}
 
 /* ===== TABS ===== */
 document.querySelectorAll('.tab').forEach(function(tab){
@@ -484,9 +613,20 @@ modal.addEventListener('click', function(e){ if(e.target === modal){ fecharModal
 /* ===== BOTÕES DA SIDEBAR ===== */
 document.querySelectorAll('.btn-acao').forEach(function(btn){
   btn.addEventListener('click', function(){
-    /* Botão Administração: navega para a plataforma de administração */
     if(btn.dataset.acao === 'admin'){
       window.location.href = 'plataforma-mater-group.html';
+      return;
+    }
+    if(btn.dataset.acao === 'treinamentos'){
+      var lista = TREINAMENTOS_TODOS.map(function(t){
+        return '<a href="' + t.url + '" target="_blank" rel="noopener" style="display:block;padding:12px 14px;border:1px solid var(--borda);border-radius:10px;margin-bottom:8px;text-decoration:none;color:var(--texto);font-size:14px;font-weight:600;transition:all .2s">' +
+          t.nome + ' <span style="float:right;color:var(--azul)">→</span></a>';
+      }).join('');
+      abrirModal(
+        '<div class="modal-titulo">Treinamentos Mater Prime</div>' +
+        '<p style="font-size:13px;color:#6B7280;margin-top:8px;margin-bottom:14px">Todos os treinamentos disponíveis. Clique para abrir o conteúdo no site da Mater Prime.</p>' +
+        lista
+      );
       return;
     }
     if(btn.dataset.acao === 'ponto'){
@@ -505,7 +645,7 @@ document.querySelectorAll('.btn-acao').forEach(function(btn){
           img.parentNode.replaceChild(aviso, img);
         });
       }
-    } else {
+    } else if(btn.dataset.acao !== 'treinamentos'){
       abrirModal(
         '<div class="modal-emoji">🚧</div>' +
         '<div class="modal-titulo">Em breve</div>' +
@@ -540,9 +680,13 @@ setTimeout(hideLoader, 2500);
 
 /* ===== BOTÃO EXPLORAR ===== */
 document.getElementById('btnExplorar').addEventListener('click', function(){
-  var alvo = document.querySelector('.stats');
+  var alvo = document.querySelector('.treinamentos-titulo');
   if(alvo){ alvo.scrollIntoView({ behavior:'smooth', block:'center' }); }
 });
+
+/* ===== INICIALIZAÇÃO ===== */
+montarTreinamentos();
+desenharPizza();
 </script>
 </body>
 </html>
