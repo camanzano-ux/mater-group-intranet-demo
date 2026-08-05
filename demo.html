@@ -55,7 +55,7 @@
       transparent 0 30px, rgba(196,34,126,.25) 30px 32px, transparent 32px 60px);
     transform:skewY(-8deg);
   }
-  /* ===== ÓVULO 3D (estilo da imagem: borda recortada + núcleo roxo) ===== */
+  /* ===== ÓVULO 3D ===== */
   .ovulo-3d{
     position:absolute;
     right:295px;
@@ -65,37 +65,42 @@
     box-shadow:inset -6px -8px 14px rgba(196,34,126,.4), 0 4px 14px rgba(196,34,126,.35);
     z-index:10;
   }
-  /* Núcleo roxo profundo */
   .ovulo-3d::after{
     content:"";position:absolute;width:14px;height:14px;border-radius:50%;
     right:8px;bottom:8px;background:radial-gradient(circle at 40% 35%, #B06AB3, #6C3483 70%);
     box-shadow:0 0 8px rgba(108,52,131,.6);
   }
-  /* ===== Espermatozoides (cabeça NA DIREÇÃO do óvulo, à direita) ===== */
+  /* ===== Espermatozoides (cabeça à direita, cauda à esquerda) ===== */
   .esperma{position:absolute;left:-120px;top:50%;pointer-events:none;z-index:9;opacity:0}
   .esperma svg{width:90px;height:30px;overflow:visible}
-  .esperma .cabeca{
-    fill:#7EC8E3;
-    filter:drop-shadow(0 0 5px rgba(126,200,227,.6));
-  }
-  .esperma .cauda{
-    stroke:#7EC8E3;stroke-width:2;fill:none;stroke-linecap:round;
-    opacity:.8;filter:drop-shadow(0 0 3px rgba(126,200,227,.5));
-  }
+  .esperma .cabeca{fill:#7EC8E3;filter:drop-shadow(0 0 5px rgba(126,200,227,.6))}
+  .esperma .cauda{stroke:#7EC8E3;stroke-width:2;fill:none;stroke-linecap:round;opacity:.8;filter:drop-shadow(0 0 3px rgba(126,200,227,.5))}
+  .esperma.roxo .cabeca{fill:#B06AB3;filter:drop-shadow(0 0 5px rgba(176,106,179,.6))}
+  .esperma.roxo .cauda{stroke:#B06AB3;filter:drop-shadow(0 0 3px rgba(176,106,179,.5))}
+  .esperma.rosa .cabeca{fill:#E89AC0;filter:drop-shadow(0 0 5px rgba(232,154,192,.6))}
+  .esperma.rosa .cauda{stroke:#E89AC0;filter:drop-shadow(0 0 3px rgba(232,154,192,.5))}
   .esperma .esp-corpo{animation:ondula 1.2s ease-in-out infinite;transform-origin:left center}
   @keyframes ondula{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
-  .esp1{animation:corre1 7s linear infinite}
-  .esp2{animation:corre2 8.5s linear infinite;top:36%}
-  .esp3{animation:corre3 6.5s linear infinite;top:64%}
+  /* Meio centímetro para cima (~19px) */
+  .esp1{animation:corre1 7s linear infinite;top:calc(50% - 19px)}
+  .esp2{animation:corre2 8.5s linear infinite;top:calc(36% - 19px)}
+  .esp3{animation:corre3 6.5s linear infinite;top:calc(64% - 19px)}
+  .esp4{animation:corre4 9s linear infinite;top:calc(28% - 19px)}
+  .esp5{animation:corre5 7.5s linear infinite;top:calc(72% - 19px)}
+  .esp6{animation:corre6 8s linear infinite;top:calc(50% - 19px)}
   @keyframes corre1{0%{left:-120px;opacity:0}8%{opacity:1}82%{left:calc(100% - 340px);opacity:1}100%{left:calc(100% - 340px);opacity:0}}
   @keyframes corre2{0%{left:-120px;opacity:0}8%{opacity:1}82%{left:calc(100% - 340px);opacity:1}100%{left:calc(100% - 340px);opacity:0}}
   @keyframes corre3{0%{left:-120px;opacity:0}8%{opacity:1}82%{left:calc(100% - 340px);opacity:1}100%{left:calc(100% - 340px);opacity:0}}
+  @keyframes corre4{0%{left:-120px;opacity:0}8%{opacity:1}82%{left:calc(100% - 340px);opacity:1}100%{left:calc(100% - 340px);opacity:0}}
+  @keyframes corre5{0%{left:-120px;opacity:0}8%{opacity:1}82%{left:calc(100% - 340px);opacity:1}100%{left:calc(100% - 340px);opacity:0}}
+  @keyframes corre6{0%{left:-120px;opacity:0}8%{opacity:1}82%{left:calc(100% - 340px);opacity:1}100%{left:calc(100% - 340px);opacity:0}}
   .boas-vindas{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;z-index:4}
   .boas-vindas .msg{
     position:absolute;font-size:32px;font-weight:800;letter-spacing:2px;color:var(--mp-rosa);
     opacity:0;transition:opacity 1.2s ease;text-shadow:0 2px 8px rgba(196,34,126,.15);
   }
-  .boas-vindas .msg span{color:var(--mp-teal)}
+  /* "Mater Group" em cinza claro */
+  .boas-vindas .msg span{color:#B0A0A8}
   .boas-vindas .msg.ativa{opacity:1}
   .clima{
     position:absolute;left:22px;top:50%;transform:translateY(-50%);
@@ -342,37 +347,62 @@
 <header class="topo">
   <div class="dna-fundo"></div>
   <div class="dna-helix"></div>
-<!-- Espermatozoides: cabeça à direita (em direção ao óvulo), cauda à esquerda -->
-<div class="esperma esp1">
-  <svg viewBox="0 0 90 30">
-    <g class="esp-corpo">
-      <!-- Cauda para a ESQUERDA (atrás) -->
-      <path class="cauda" d="M40 15 C 25 8, 12 22, -4 12"/>
-      <!-- Cabeça à DIREITA (apontando para o óvulo) -->
-      <ellipse class="cabeca" cx="44" cy="15" rx="10" ry="6.5"/>
-      <ellipse cx="41" cy="13" rx="3" ry="2" fill="#fff" opacity=".6"/>
-    </g>
-  </svg>
-</div>
-<div class="esperma esp2">
-  <svg viewBox="0 0 90 30">
-    <g class="esp-corpo">
-      <path class="cauda" d="M40 15 C 25 8, 12 22, -4 12"/>
-      <ellipse class="cabeca" cx="44" cy="15" rx="10" ry="6.5"/>
-      <ellipse cx="41" cy="13" rx="3" ry="2" fill="#fff" opacity=".6"/>
-    </g>
-  </svg>
-</div>
-<div class="esperma esp3">
-  <svg viewBox="0 0 90 30">
-    <g class="esp-corpo">
-      <path class="cauda" d="M40 15 C 25 8, 12 22, -4 12"/>
-      <ellipse class="cabeca" cx="44" cy="15" rx="10" ry="6.5"/>
-      <ellipse cx="41" cy="13" rx="3" ry="2" fill="#fff" opacity=".6"/>
-    </g>
-  </svg>
-</div>
-  <!-- Óvulo 3D (estilo da imagem) -->
+  <!-- 6 espermatozoides: cabeça à direita (em direção ao óvulo), cauda à esquerda -->
+  <div class="esperma esp1">
+    <svg viewBox="0 0 90 30">
+      <g class="esp-corpo">
+        <path class="cauda" d="M40 15 C 25 8, 12 22, -4 12"/>
+        <ellipse class="cabeca" cx="44" cy="15" rx="10" ry="6.5"/>
+        <ellipse cx="41" cy="13" rx="3" ry="2" fill="#fff" opacity=".6"/>
+      </g>
+    </svg>
+  </div>
+  <div class="esperma roxo esp2">
+    <svg viewBox="0 0 90 30">
+      <g class="esp-corpo">
+        <path class="cauda" d="M40 15 C 25 8, 12 22, -4 12"/>
+        <ellipse class="cabeca" cx="44" cy="15" rx="10" ry="6.5"/>
+        <ellipse cx="41" cy="13" rx="3" ry="2" fill="#fff" opacity=".6"/>
+      </g>
+    </svg>
+  </div>
+  <div class="esperma rosa esp3">
+    <svg viewBox="0 0 90 30">
+      <g class="esp-corpo">
+        <path class="cauda" d="M40 15 C 25 8, 12 22, -4 12"/>
+        <ellipse class="cabeca" cx="44" cy="15" rx="10" ry="6.5"/>
+        <ellipse cx="41" cy="13" rx="3" ry="2" fill="#fff" opacity=".6"/>
+      </g>
+    </svg>
+  </div>
+  <div class="esperma roxo esp4">
+    <svg viewBox="0 0 90 30">
+      <g class="esp-corpo">
+        <path class="cauda" d="M40 15 C 25 8, 12 22, -4 12"/>
+        <ellipse class="cabeca" cx="44" cy="15" rx="10" ry="6.5"/>
+        <ellipse cx="41" cy="13" rx="3" ry="2" fill="#fff" opacity=".6"/>
+      </g>
+    </svg>
+  </div>
+  <div class="esperma esp5">
+    <svg viewBox="0 0 90 30">
+      <g class="esp-corpo">
+        <path class="cauda" d="M40 15 C 25 8, 12 22, -4 12"/>
+        <ellipse class="cabeca" cx="44" cy="15" rx="10" ry="6.5"/>
+        <ellipse cx="41" cy="13" rx="3" ry="2" fill="#fff" opacity=".6"/>
+      </g>
+    </svg>
+  </div>
+  <div class="esperma rosa esp6">
+    <svg viewBox="0 0 90 30">
+      <g class="esp-corpo">
+        <path class="cauda" d="M40 15 C 25 8, 12 22, -4 12"/>
+        <ellipse class="cabeca" cx="44" cy="15" rx="10" ry="6.5"/>
+        <ellipse cx="41" cy="13" rx="3" ry="2" fill="#fff" opacity=".6"/>
+      </g>
+    </svg>
+  </div>
+  <!-- Óvulo 3D -->
   <div class="ovulo-3d"></div>
 
   <div class="clima" id="clima-widget">
@@ -562,7 +592,7 @@
       </div>
     </div>
 
-    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v1.4 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
+    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v1.6 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
   </main>
 </div>
 
