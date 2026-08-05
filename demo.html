@@ -7,19 +7,12 @@
 <style>
   /* ===== TEMA MATER PRIME (cores suaves) ===== */
   :root{
-    --mp-rosa:#C4227E;      /* magenta principal Mater Prime */
-    --mp-rosa-suave:#F8E1EE;/* rosa claro suave */
-    --mp-rosa-bg:#FDF2F8;   /* fundo rosado suave */
-    --mp-rosa-hover:#A01B68;
-    --mp-lavanda:#E8E0F5;   /* lavanda suave */
-    --mp-teal:#0D9488;      /* teal (TheraSeq) */
-    --mp-vinho:#7A1F3D;     /* vinho (Mater Group) */
-    --cinza-texto:#4A4A4A;
-    --cinza-sec:#8A8A8A;
-    --cinza-claro:#F7F7F9;
-    --fundo:#FDF8FB;        /* fundo geral rosado suave */
-    --branco:#ffffff;
-    --borda:#F0E0EA;
+    --mp-rosa:#C4227E;      --mp-rosa-hover:#A01B68;
+    --mp-rosa-suave:#F8E1EE;--mp-rosa-bg:#FDF2F8;
+    --mp-teal:#0D9488;      --mp-vinho:#7A1F3D;
+    --cinza-texto:#4A4A4A;  --cinza-sec:#8A8A8A;
+    --cinza-claro:#F7F7F9;  --fundo:#FDF8FB;
+    --branco:#ffffff;       --borda:#F0E0EA;
     --shadow:0 4px 16px rgba(196,34,126,.08),0 2px 4px rgba(0,0,0,.04);
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -42,7 +35,7 @@
   .loader-bar span{display:block;height:100%;width:40%;border-radius:4px;background:linear-gradient(90deg,var(--mp-rosa),var(--mp-teal));animation:carrega 1.2s ease-in-out infinite}
   @keyframes carrega{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
   @keyframes pulso{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:.85}}
-  /* ===== BARRA SUPERIOR (com óvulo, espermatozoides e DNA) ===== */
+  /* ===== BARRA SUPERIOR ===== */
   .topo{
     position:relative; z-index:5; display:flex; align-items:center; justify-content:center;
     height:100px; padding:0 22px;
@@ -50,60 +43,44 @@
     border-bottom:1px solid var(--borda);
     box-shadow:0 2px 12px rgba(196,34,126,.08); overflow:hidden;
   }
-  /* Fita de DNA ao fundo */
   .dna-fundo{
     position:absolute;inset:0;pointer-events:none;opacity:.5;
-    background:
-      repeating-linear-gradient(90deg,
-        transparent 0 18px,
-        rgba(196,34,126,.10) 18px 20px,
-        transparent 20px 38px,
-        rgba(13,148,136,.10) 38px 40px);
+    background:repeating-linear-gradient(90deg,
+      transparent 0 18px, rgba(196,34,126,.10) 18px 20px,
+      transparent 20px 38px, rgba(13,148,136,.10) 38px 40px);
     mask-image:linear-gradient(90deg,transparent,#000 20%,#000 80%,transparent);
   }
   .dna-helix{
     position:absolute;inset:0;pointer-events:none;opacity:.35;
     background:repeating-linear-gradient(90deg,
-      transparent 0 30px,
-      rgba(196,34,126,.25) 30px 32px,
-      transparent 32px 60px);
+      transparent 0 30px, rgba(196,34,126,.25) 30px 32px, transparent 32px 60px);
     transform:skewY(-8deg);
   }
-  /* Óvulo 3D à direita */
+  /* Óvulo 3D — travado à esquerda do relógio */
   .ovulo-3d{
-  position:absolute;right:250px;              /* à esquerda do relógio */
-  top:50%;transform:translateY(-50%);
-  width:46px;height:46px;border-radius:50%;pointer-events:none;
-  background:radial-gradient(circle at 35% 30%, #fff, #F8C8DC 45%, #E89AC0 70%, #C4227E 100%);
-  box-shadow:inset -6px -8px 14px rgba(196,34,126,.35), 0 4px 12px rgba(196,34,126,.3);
-  z-index:6;
-}
+    position:absolute;
+    right:255px;                 /* encostado à esquerda do relógio (right:22px) */
+    top:50%;transform:translateY(-50%);
+    width:44px;height:44px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle at 35% 30%, #fff, #F8C8DC 45%, #E89AC0 70%, #C4227E 100%);
+    box-shadow:inset -6px -8px 14px rgba(196,34,126,.35), 0 4px 12px rgba(196,34,126,.3);
+    z-index:8;
+  }
   .ovulo-3d::after{
     content:"";position:absolute;top:8px;left:10px;width:10px;height:6px;border-radius:50%;
     background:rgba(255,255,255,.8);filter:blur(1px);
   }
-  /* Espermatozoides correndo da esquerda para a direita */
-  .esperma{position:absolute;left:-60px;top:50%;pointer-events:none;z-index:2}
-  .esperma .cabeca{
-    width:12px;height:12px;border-radius:50%;background:var(--mp-rosa);
-    box-shadow:0 0 8px rgba(196,34,126,.5);
-  }
-  .esperma .cauda{
-    position:absolute;top:5px;right:10px;width:34px;height:2px;border-radius:2px;
-    background:linear-gradient(90deg,transparent,var(--mp-rosa));
-  }
-  .esperma .cauda::after{
-    content:"";position:absolute;top:-3px;right:0;width:8px;height:8px;border-radius:50%;
-    border:1.5px solid var(--mp-rosa);border-left-color:transparent;border-bottom-color:transparent;
-    animation:flagela .3s linear infinite;
-  }
-  @keyframes flagela{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-  .esp1{animation:corre1 3.5s linear infinite}
-  .esp2{animation:corre2 4.2s linear infinite;top:38%}
-  .esp3{animation:corre3 3s linear infinite;top:62%}
-  @keyframes corre1{0%{left:-60px;top:50%}100%{left:calc(100% - 220px);top:50%}}
-  @keyframes corre2{0%{left:-60px;top:38%}100%{left:calc(100% - 220px);top:38%}}
-  @keyframes corre3{0%{left:-60px;top:62%}100%{left:calc(100% - 220px);top:62%}}
+  /* Espermatozoides elegantes (mais lentos, somem no óvulo) */
+  .esperma{position:absolute;left:-90px;top:50%;pointer-events:none;z-index:7;opacity:0}
+  .esperma svg{width:70px;height:26px;overflow:visible}
+  .esperma .esp-corpo{animation:ondula 1.4s ease-in-out infinite;transform-origin:center}
+  @keyframes ondula{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+  .esp1{animation:corre1 7s linear infinite}
+  .esp2{animation:corre2 8.5s linear infinite;top:36%}
+  .esp3{animation:corre3 6.5s linear infinite;top:64%}
+  @keyframes corre1{0%{left:-90px;opacity:0}8%{opacity:1}82%{left:calc(100% - 300px);opacity:1}100%{left:calc(100% - 300px);opacity:0}}
+  @keyframes corre2{0%{left:-90px;opacity:0}8%{opacity:1}82%{left:calc(100% - 300px);opacity:1}100%{left:calc(100% - 300px);opacity:0}}
+  @keyframes corre3{0%{left:-90px;opacity:0}8%{opacity:1}82%{left:calc(100% - 300px);opacity:1}100%{left:calc(100% - 300px);opacity:0}}
   .boas-vindas{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;z-index:4}
   .boas-vindas .msg{
     position:absolute;font-size:32px;font-weight:800;letter-spacing:2px;color:var(--mp-rosa);
@@ -125,7 +102,7 @@
     position:absolute;right:22px;top:50%;transform:translateY(-50%);
     display:flex;align-items:center;gap:10px;font-size:13px;white-space:nowrap;
     background:rgba(255,255,255,.9);border:1px solid var(--borda);border-radius:30px;
-    padding:8px 16px;color:var(--cinza-sec);box-shadow:var(--shadow);z-index:7;
+    padding:8px 16px;color:var(--cinza-sec);box-shadow:var(--shadow);z-index:9;
   }
   .topo-info .hora{font-weight:800;font-size:16px;color:var(--mp-rosa)}
   .faixa-avisos{
@@ -356,14 +333,31 @@
 </div>
 
 <header class="topo">
-  <!-- Fita de DNA ao fundo -->
   <div class="dna-fundo"></div>
   <div class="dna-helix"></div>
-  <!-- Espermatozoides correndo -->
-  <div class="esperma esp1"><div class="cabeca"></div><div class="cauda"></div></div>
-  <div class="esperma esp2"><div class="cabeca"></div><div class="cauda"></div></div>
-  <div class="esperma esp3"><div class="cabeca"></div><div class="cauda"></div></div>
-  <!-- Óvulo 3D à direita -->
+  <!-- Espermatozoides elegantes -->
+  <div class="esperma esp1">
+    <svg viewBox="0 0 70 26">
+      <path class="esp-corpo" d="M2 13 C 22 2, 40 22, 58 10 L 68 6" stroke="#C4227E" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="10" cy="13" rx="9" ry="5.5" fill="#C4227E" opacity=".9"/>
+      <ellipse cx="8" cy="11.5" rx="3" ry="1.8" fill="#fff" opacity=".7"/>
+    </svg>
+  </div>
+  <div class="esperma esp2">
+    <svg viewBox="0 0 70 26">
+      <path class="esp-corpo" d="M2 13 C 22 2, 40 22, 58 10 L 68 6" stroke="#6C3483" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="10" cy="13" rx="9" ry="5.5" fill="#6C3483" opacity=".9"/>
+      <ellipse cx="8" cy="11.5" rx="3" ry="1.8" fill="#fff" opacity=".7"/>
+    </svg>
+  </div>
+  <div class="esperma esp3">
+    <svg viewBox="0 0 70 26">
+      <path class="esp-corpo" d="M2 13 C 22 2, 40 22, 58 10 L 68 6" stroke="#0D9488" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="10" cy="13" rx="9" ry="5.5" fill="#0D9488" opacity=".9"/>
+      <ellipse cx="8" cy="11.5" rx="3" ry="1.8" fill="#fff" opacity=".7"/>
+    </svg>
+  </div>
+  <!-- Óvulo 3D à esquerda do relógio -->
   <div class="ovulo-3d"></div>
 
   <div class="clima" id="clima-widget">
@@ -553,7 +547,7 @@
       </div>
     </div>
 
-    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v1.1 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
+    <p class="rodape-final">Protótipo de demonstração — Mater Group Intranet · v1.2 · As peças finais de produção são publicadas em arquivos HTML separados.</p>
   </main>
 </div>
 
@@ -616,12 +610,14 @@ function atualizarClima(){
 }
 atualizarClima();
 
-/* ===== STAND BY ===== */
+/* ===== STAND BY — Metrô / CPTM / Trânsito ===== */
 var STANDBY = [
-  { texto:'Corpo clínico Mater Lab — medicina reprodutiva', cor:'#6C3483' },
-  { texto:'Mater Prime — unidades São Paulo, Sorocaba e Nordeste', cor:'#C4227E' },
-  { texto:'TheraSeq — análise genética (NGS + IA)', cor:'#0D9488' },
-  { texto:'Lüna — health tech do grupo', cor:'#A32684' }
+  { texto:'🚇 Metrô Linha 2-Verde: operação normal, sem lentidão', cor:'#008000' },
+  { texto:'🚆 CPTM Linha 7-Rubi: lentidão por falha de sinalização entre Luz e Palmeiras-Barra Funda', cor:'#C4227E' },
+  { texto:'🚗 Marginal Tietê: trânsito intenso no sentido Castello Branco por acidente na Ponte do Limão', cor:'#0D9488' },
+  { texto:'🚇 Metrô Linha 9-Esmeralda: greve parcial dos operadores — intervalos maiores', cor:'#6C3483' },
+  { texto:'🚆 CPTM Linha 11-Coral: operação normal', cor:'#E30613' },
+  { texto:'🚗 Av. dos Bandeirantes: lentidão por obras — previsão de normalização às 10h', cor:'#B45309' }
 ];
 (function(){
   var slidesBox = document.getElementById('slidesStandby');
@@ -700,7 +696,7 @@ var tooltip = document.getElementById('anel-tooltip');
 function desenharAnel(){
   var svg = document.getElementById('svg-anel');
   var total = DADOS_EMPRESAS.reduce(function(s, d){ return s + d.valor; }, 0);
-  var cx = 100, cy = 100, raio = 82, espessura = 34; // anel maior e mais grosso
+  var cx = 100, cy = 100, raio = 82, espessura = 34;
   var anguloInicio = 0;
   var htmlSvg = '';
   DADOS_EMPRESAS.forEach(function(d, i){
